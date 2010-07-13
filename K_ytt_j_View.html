@@ -1,0 +1,105 @@
+{% extends "index.html" %}
+{% block content %}
+<div class="zc-formcontainer" style="width: auto;">
+<div class="zc-formheader">
+<span elname="zc-formNameEl"><label class="zc-formtitle">Käyttäjä View</label></span>
+</div>
+<div class="zc-formcontent zc-appformcontent">
+<form name="sortK_ytt_j_View" id="sortK_ytt_j_View" method="post" action="sortK_ytt_j_View">
+<input type="hidden" name="SortBy" id="SortBy">
+<input type="hidden" name="order" id="order">
+</form>
+<form name="searchK_ytt_j_View" id="searchK_ytt_j_View" action="searchK_ytt_j_View" method="post">
+<table class="zc-formtable zc-appformtable" border="0" cellspacing="0">
+<tbody>
+<thead>
+<tr class="zc-viewrowheader" height="25">
+<td id="Sukupuoli" fieldValue="Sukupuoli" onClick="sort(this.id)" align="center"><b>Sukupuoli</b>&nbsp;&nbsp;<label>&#9660;</label></td>
+<td id="Etunimi" fieldValue="Etunimi" onClick="sort(this.id)" align="center"><b>Etunimi</b>&nbsp;&nbsp;<label>&#9660;</label></td>
+<td id="Sukunimi" fieldValue="Sukunimi" onClick="sort(this.id)" align="center"><b>Sukunimi</b>&nbsp;&nbsp;<label>&#9660;</label></td>
+<td id="Puhelin" fieldValue="Puhelin" onClick="sort(this.id)" align="center"><b>Puhelin</b>&nbsp;&nbsp;<label>&#9660;</label></td>
+</tr>
+<tr id="searchRow" style="display:none;" class="zc-searchrow">
+<td align="center">
+<input id="Sukupuoli" name="Sukupuoli" type="text" value="">
+</td><td align="center">
+<input id="Etunimi" name="Etunimi" type="text" value="">
+</td><td align="center">
+<input id="Sukunimi" name="Sukunimi" type="text" value="">
+</td><td align="center">
+<input id="Puhelin" name="Puhelin" type="text" value="">
+</td></tr>
+<tr id="searchButtonRow" style="display:none;"  class="zc-searchbuttonrow">
+<td></td>
+<td></td>
+<td align="center">
+<input class="zc-view-button" type="button" onClick="searchRec()" onmouseout="this.className='zc-view-button';" onmouseover="this.className='zc-view-button-hover';" value="Search"/>
+<input class="zc-view-button" type="button" onClick="cancelSearch()" onmouseout="this.className='zc-view-button';" onmouseover="this.className='zc-view-button-hover';" value="Cancel"/>
+</td>
+<td></td>
+<td></td>
+</tr>
+<script type="text/javascript">
+function sort(elem)
+{
+        var el = document.getElementById(elem);
+        var xe = parseInt(findPosX(el));
+        var corr = 0;
+        var ye = parseInt(findPosY(el) + el.offsetHeight - corr);
+        document.getElementById("sortDiv").style.left = xe+"px" ;
+        document.getElementById("sortDiv").style.top = ye+"px" ;
+        document.getElementById("sortDiv").style.display="";
+        var fieldName = document.getElementById(elem);
+        var val = fieldName.getAttribute("fieldValue");
+        document.getElementById("SortBy").value=val;
+}
+function selectSortOrder(element)
+{
+        var fieldName = document.getElementById(element);
+        var val = fieldName.getAttribute("sortingOrder");
+        document.getElementById("order").value=val;
+        document.sortK_ytt_j_View.submit();
+}
+function search()
+{
+        document.getElementById("sortDiv").style.display="none";
+        document.getElementById("searchRow").style.display="";
+        document.getElementById("searchButtonRow").style.display="";
+}
+function searchRec()
+{
+    document.searchK_ytt_j_View.submit();
+}
+function cancelSearch()
+{
+        document.getElementById("searchRow").style.display="none";
+        document.getElementById("searchButtonRow").style.display="none";
+}
+</script>
+{% for x in records %}
+<tr class="zc-viewrow zc-row-1">
+<td align="center"> {{ x.Sukupuoli }} </td>
+<td align="center"> {{x.Etunimi }}</td>
+<td align="center"> {{x.Sukunimi }}</td>
+<td align="center"> {{x.Puhelin }}</td>
+</tr>
+{% endfor %}
+</thead>
+</tbody>
+</table>
+</div>
+</div><div id="sortDiv" style="position:absolute;display:none;">
+	<table class="zc-viewoptionsdivtable" cellpadding="0" cellspacing="0" border="0">
+		<tr class="zc-viewoptionsdivtr" onmouseover="this.className='zc-viewoptionsdivtrhover'" onmouseout="this.className='zc-viewoptionsdivtr'">
+			<td>
+				<table id="zc-sortSubMenu" cellpadding="0" cellspacing="0" border="0" class="zc-viewoptionsdivtable">
+						<tr class="zc-viewoptionsdivtr" onmouseover="this.className='zc-viewoptionsdivtrhover'" onmouseout="this.className='zc-viewoptionsdivtr'"><td id="Ascending"  onClick="selectSortOrder(this.id)" sortingOrder="ASC" class="zc-viewmenu">Sort By Asc</td></tr>
+						<tr class="zc-viewoptionsdivtr" onmouseover="this.className='zc-viewoptionsdivtrhover'" onmouseout="this.className='zc-viewoptionsdivtr'"><td id="Descending"  onClick="selectSortOrder(this.id)" sortingOrder="DESC" class="zc-viewmenu">Sort By Desc</td></tr>
+						<tr class="zc-viewoptionsdivtr" onmouseover="this.className='zc-viewoptionsdivtrhover'" onmouseout="this.className='zc-viewoptionsdivtr'"><td id="searchRec"  onClick="search()" class="zc-viewmenu">Search</td></tr>
+				</table>
+			</td>
+		</tr>
+	</table>
+</div>
+</form>
+{% endblock %}

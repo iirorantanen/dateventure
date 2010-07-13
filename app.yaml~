@@ -1,0 +1,17 @@
+application: dateventure
+version: 3
+runtime: python
+api_version: 1
+
+handlers:
+- url: /favicon.gif
+  static_files: images/favicon.gif
+  upload: images/favicon.gif
+- url: /images
+  static_dir: images
+- url: /css
+  static_dir: css
+- url: /js
+  static_dir: js
+- url: /.*
+  script: main.py

@@ -1,0 +1,51 @@
+{% extends "index.html" %}
+{% block content %}
+<script type="text/javascript">
+function validateaddK_ytt_j()
+{
+    if(validateFormFields($("#addK_ytt_j")))
+    {
+        document.addK_ytt_j.submit();
+    }
+}
+</script>
+<div class="zc-formcontainer" style="width: auto;">
+<div class="zc-formheader"><span elname="zc-formNameEl"><label class="zc-formtitle">Käyttäjä</label></span></div>
+<div class="zc-formcontent zc-appformcontent">
+<form style="margin: 0px; padding: 0px;" method="post" id="addK_ytt_j" name="addK_ytt_j" action="addK_ytt_j" enctype="multipart/form-data">
+<table class="zc-formtable zc-appformtable" border="0" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td class="zc-labelheader" style="width: auto;"><label>Etunimi</label></td>
+<td class="zc-inputheader" style="width: auto;"><input class="zc-inputtext" id="Etunimi" name="Etunimi" value="" type="text"><p id="Etunimi_Error"></p></td>
+</tr>
+<tr>
+<td class="zc-labelheader" style="width: auto;"><label>Sukunimi</label></td>
+<td class="zc-inputheader" style="width: auto;"><input class="zc-inputtext" id="Sukunimi" name="Sukunimi" value="" type="text"><p id="Sukunimi_Error"></p></td>
+</tr>
+<tr>
+<td class="zc-labelheader" style="width: auto;"><label>Sukupuoli</label></td>
+<td class="zc-inputheader" style="width: auto;"><select name="Sukupuoli">
+{% for x in Sukupuoli %}
+<option value='{{x}}'>{{x}}</option>
+{% endfor %}
+</select>
+</td>
+</tr>
+<tr>
+<td class="zc-labelheader" style="width: auto;"><label>Puhelin</label></td>
+<td class="zc-inputheader" style="width: auto;"><input class="zc-inputtext" id="Puhelin" name="Puhelin" value="" type="text"><p id="Puhelin_Error"></p></td>
+</tr>
+<tr>
+<td class="zc-button-row" style="border:medium none;"/>
+<td class="zc-button-row" style="border:medium none; text-align:left;" >
+<input type="button" class="zc-formbutton"value="Submit" onClick="validateaddK_ytt_j()">
+<input class="zc-formbutton" type="reset" value="Reset"/>
+</td>
+</tr>
+</tbody>
+</table>
+</form>
+</div>
+</div>
+{% endblock %}

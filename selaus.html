@@ -1,0 +1,36 @@
+{% extends "index.html" %}
+{% block content %}
+<script type="text/javascript">
+function validateaddselaus()
+{
+    if(validateFormFields($("#addselaus")))
+    {
+        document.addselaus.submit();
+    }
+}
+</script>
+<div class="zc-formcontainer" style="width: auto;">
+<div class="zc-formheader"><span elname="zc-formNameEl"><label class="zc-formtitle">selaus</label></span></div>
+<div class="zc-formcontent zc-appformcontent">
+<form style="margin: 0px; padding: 0px;" method="post" id="addselaus" name="addselaus" action="addselaus" enctype="multipart/form-data">
+<table class="zc-formtable zc-appformtable" border="0" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td class="zc-labelheader" style="width: auto;"><label>Lookup 1</label></td>
+<td class="zc-inputheader" style="width: auto;">{% for x in Lookup_1 %}
+{% endfor %}
+</td>
+</tr>
+<tr>
+<td class="zc-button-row" style="border:medium none;"/>
+<td class="zc-button-row" style="border:medium none; text-align:left;" >
+<input type="button" class="zc-formbutton"value="Submit" onClick="validateaddselaus()">
+<input class="zc-formbutton" type="reset" value="Reset"/>
+</td>
+</tr>
+</tbody>
+</table>
+</form>
+</div>
+</div>
+{% endblock %}
