@@ -1,5 +1,6 @@
 {% extends "index.html" %}
 {% block content %}
+
 <div class="zc-formcontainer" style="width: auto;">
 <div class="zc-formheader">
 <span elname="zc-formNameEl"><label class="zc-formtitle">ilmoitus View</label></span>
@@ -42,6 +43,9 @@
 <td></td>
 <td></td>
 <td></td>
+
+
+
 <td align="center">
 <input class="zc-view-button" type="button" onClick="searchRec()" onmouseout="this.className='zc-view-button';" onmouseover="this.className='zc-view-button-hover';" value="Search"/>
 <input class="zc-view-button" type="button" onClick="cancelSearch()" onmouseout="this.className='zc-view-button';" onmouseover="this.className='zc-view-button-hover';" value="Cancel"/>
@@ -86,8 +90,16 @@ function cancelSearch()
         document.getElementById("searchRow").style.display="none";
         document.getElementById("searchButtonRow").style.display="none";
 }
-function vastaa()
-{}
+
+function vastaa(key)
+{
+
+if (window.XMLHttpRequest)
+
+document.getElementById("myDiv").innerHTML="ii"
+
+
+}
 	 
 </script>
 {% for x in records %}
@@ -96,13 +108,14 @@ function vastaa()
 <td align="center"> {{x.Paikka }}</td>
 <td align="center"> {{x.P_iv_m_r_Aika }}</td>
 <td align="center"> {{x.Kuvaus }}</td>
-<td align="center"> <input id= name="vastaa" type="button" value={{x.key_name}} > </td>
+<td align="center"> <input id= name="vastaa" type="button" value="{{x.key}}" onClick="vastaa({{x.key}})"> </td>
 </tr>
 {% endfor %}
 </thead>
 </tbody>
 </table>
 </div>
+<div id="myDiv"> <a href="#" onClick="vastaa('kek')"> kek </a> </div>
 </div><div id="sortDiv" style="position:absolute;display:none;">
 	<table class="zc-viewoptionsdivtable" cellpadding="0" cellspacing="0" border="0">
 		<tr class="zc-viewoptionsdivtr" onmouseover="this.className='zc-viewoptionsdivtrhover'" onmouseout="this.className='zc-viewoptionsdivtr'">
@@ -114,7 +127,9 @@ function vastaa()
 				</table>
 			</td>
 		</tr>
+
 	</table>
+
 </div>
 </form>
 {% endblock %}
