@@ -94,10 +94,6 @@ function cancelSearch()
 function vastaa(key)
 {
 
-if (window.XMLHttpRequest)
-
-document.getElementById("myDiv").innerHTML="ii"
-
 
 }
 	 
@@ -108,14 +104,14 @@ document.getElementById("myDiv").innerHTML="ii"
 <td align="center"> {{x.Paikka }}</td>
 <td align="center"> {{x.P_iv_m_r_Aika }}</td>
 <td align="center"> {{x.Kuvaus }}</td>
-<td align="center"> <input id= name="vastaa" type="button" value="{{x.key}}" onClick="vastaa({{x.key}})"> </td>
+<td align="center"> <a href="#" onClick="vastaa('{{x.key}}')" <input id= name="vastaa" type="button" value="{{x.key}}"> </a> </td>
 </tr>
 {% endfor %}
 </thead>
 </tbody>
 </table>
 </div>
-<div id="myDiv"> <a href="#" onClick="vastaa('kek')"> kek </a> </div>
+<div id="myDiv">  kek </div>
 </div><div id="sortDiv" style="position:absolute;display:none;">
 	<table class="zc-viewoptionsdivtable" cellpadding="0" cellspacing="0" border="0">
 		<tr class="zc-viewoptionsdivtr" onmouseover="this.className='zc-viewoptionsdivtrhover'" onmouseout="this.className='zc-viewoptionsdivtr'">
