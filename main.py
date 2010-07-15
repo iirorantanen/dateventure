@@ -36,6 +36,16 @@ class MainPage(webapp.RequestHandler):
         path = os.path.join(os.path.dirname(__file__),theHtmlPage)
         self.response.out.write(template.render(path,template_values))
 
+class Showetusivu(webapp.RequestHandler):
+    def get(self):
+        user = users.get_current_user()
+        if user:
+          template_values={"url":users.create_logout_url("/")}
+        else:
+          template_values={"loginurl":users.create_login_url("/")}
+        path = os.path.join(os.path.dirname(__file__),'etusivu.html')
+        self.response.out.write(template.render(path,template_values))        
+
 
 class Showilmoitus(webapp.RequestHandler):
     def get(self):
@@ -254,7 +264,8 @@ def main():
                 ('/showilmoitus_View',Showilmoitus_View),
                 ('/sortilmoitus_View',sortilmoitus_ViewAction),
                 ('/searchilmoitus_View',searchilmoitus_ViewAction),
-		('/showomat_ilmoitukset',Showomat_ilmoitukset)],
+		('/showomat_ilmoitukset',Showomat_ilmoitukset),
+		('/showetusivu',Showetusivu)],
                 debug=True)
 
     wsgiref.handlers.CGIHandler().run(application)
