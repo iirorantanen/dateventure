@@ -125,10 +125,6 @@ function post(key) {
 </thead>
 </tbody>
 </table>
-<<<<<<< HEAD:ilmoitus_View.html
-<input type="button" value="Vastaa" onClick="vastaa('tissit')">
-=======
->>>>>>> 85ef22eec4d60fa7ab42d57ef988d8a353786595:ilmoitus_View.html
 </div>
 
 </div><div id="sortDiv" style="position:absolute;display:none;">

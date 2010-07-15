@@ -11,7 +11,7 @@ from google.appengine.api import mail
 from google.appengine.ext.db import Model
 #from dateventure import selaus
 from dateventure import ilmoitus
-from dateventure import ilmoitus_Olens
+from dateventure import alignment
 from dateventure import palaute
 
 class MainPage(webapp.RequestHandler):
@@ -21,7 +21,7 @@ class MainPage(webapp.RequestHandler):
         if user:
             template_values={
 
-            'Olen': ilmoitus_Olens ,
+            'Olen': alignment ,
 
                 "nickname":user.nickname(),
                 "url":users.create_logout_url("/")
@@ -42,7 +42,7 @@ class Showilmoitus(webapp.RequestHandler):
         user = users.get_current_user()
         global ilmoitus_Olen
         template_values={
-            'Olen': ilmoitus_Olens ,
+            'Olen': alignment ,
             "nickname":user.nickname(),
             "url":users.create_logout_url("/")
         }
@@ -77,6 +77,9 @@ class ilmoitusAction (webapp.RequestHandler):
         VastattuTemp =self.request.get('Vastattu')
         if VastattuTemp!="":
             ilmoitusVar.Vastattu = int(VastattuTemp)
+	AgeTemp = self.request.get('Age')
+	if AgeTemp != "":
+	  ilmoitusVar.Age = int(self.request.get('Age'))
 
         ilmoitusVar.put()
         self.redirect('/showilmoitus')
@@ -182,7 +185,7 @@ class searchilmoitus_ViewAction(webapp.RequestHandler):
 # palautelomake
 class palaute_View(webapp.RequestHandler):
     def get(self):
-        template_values = {'Olen': ilmoitus_Olens}
+        template_values = {'Olen': alignment}
 	path=os.path.join(os.path.dirname(__file__),'palaute.html')
 	self.response.out.write(template.render(path,template_values))
 	

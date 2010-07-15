@@ -2,12 +2,12 @@ from google.appengine.ext import db
 from google.appengine.ext import search
 from google.appengine.api import users
 K_ytt_j_Sukupuolis=('Mies','Nainen','En kerro')
-ilmoitus_Olens=('Mies','Nainen','En kerro')
+alignment=('Mies','Nainen','En kerro')
 
 
 class ilmoitus(search.SearchableModel):
-    global ilmoitus_Olens
-    Olen = db.StringProperty(choices=ilmoitus_Olens)
+    global alignment
+    Olen = db.StringProperty(choices=alignment)
     Paikka = db.StringProperty()
     P_iv_m_r_Aika = db.DateTimeProperty()
     Kuvaus = db.StringProperty()
@@ -15,6 +15,7 @@ class ilmoitus(search.SearchableModel):
     vKuvaus = db.StringProperty()
     Ilmoittaja = db.UserProperty(auto_current_user=True, required=True)
     Vastaaja = db.UserProperty()
+    Age = db.IntegerProperty(default=0)
     def vastaa(self, vastaajaKuvaus):
       Vastattu = True
       vKuvaus = vastaajaKuvaus

@@ -3,7 +3,7 @@
 <script type="text/javascript">
 function validateaddilmoitus()
 {
-    if(validateFormFields($("#addilmoitus")))
+    if(validateFormFields($("#addilmoitus")) && (Age.value >= 18))
     {
         document.addilmoitus.submit();
     }
@@ -34,13 +34,19 @@ function validateaddilmoitus()
 <script type="text/javascript">Calendar.setup({
 inputField     :    "P_iv_m_r_Aika",
 ifFormat     :    "%d %m %y %H:%M",
-showsTime   : true,
+showsTime   : false,
 button     :    "IMG_P_iv_m_r_Aika"
 });
 </script></tr>
 <tr>
 <td class="zc-labelheader" style="width: auto;"><label>Kuvaus<font color="#ec3e3e">*</font></label></td>
-<td class="zc-inputheader" style="width: auto;"><input class="zc-inputtext" id="Kuvaus" name="Kuvaus" value="" type="text" mandatory="true"><p id="Kuvaus_Error"></p></td>
+<td class="zc-inputheader" style="width: auto;"><input class="zc-inputtext" id="Kuvaus" name="Kuvaus" value="" type="text" mandatory="true">
+<p id="Kuvaus_Error"></p></td>
+</tr>
+<tr>
+<td class="zc-labelheader" style="width: auto;"><label>Ikä<font color="#ec3e3e">*</font></label></td>
+<td class="zc-inputheader" style="width: auto;"><input class="zc-inputtext" id="Age" name="Age" value="" type="int" mandatory="true">
+<p id="Age_Error"></p></td>
 </tr>
 
 <tr>
