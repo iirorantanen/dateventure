@@ -8,10 +8,8 @@ from google.appengine.ext import db
 from google.appengine.ext.webapp import template
 from google.appengine.api import users
 from google.appengine.api import mail
-from dateventure import K_ytt_j
 #from dateventure import selaus
 from dateventure import ilmoitus
-from dateventure import K_ytt_j_Sukupuolis
 from dateventure import ilmoitus_Olens
 from dateventure import palaute
 
@@ -37,66 +35,6 @@ class MainPage(webapp.RequestHandler):
         path = os.path.join(os.path.dirname(__file__),theHtmlPage)
         self.response.out.write(template.render(path,template_values))
 
-class ShowK_ytt_j(webapp.RequestHandler):
-    def get(self):
-        user = users.get_current_user()
-        global K_ytt_j_Sukupuoli
-        template_values={
-            'Sukupuoli': K_ytt_j_Sukupuolis ,
-            "nickname":user.nickname(),
-            "url":users.create_logout_url("/")
-        }
-        path = os.path.join(os.path.dirname(__file__),'K_ytt_j.html')
-        self.response.out.write(template.render(path,template_values))
-
-class K_ytt_jAction (webapp.RequestHandler):
-    def post(self):
-        user = users.get_current_user()
-        K_ytt_jVar = K_ytt_j()
-        EtunimiTemp = self.request.get('Etunimi')
-        if EtunimiTemp!="":
-            K_ytt_jVar.Etunimi = self.request.get('Etunimi')
-        SukunimiTemp = self.request.get('Sukunimi')
-        if SukunimiTemp!="":
-            K_ytt_jVar.Sukunimi = self.request.get('Sukunimi')
-        SukupuoliTemp =self.request.get('Sukupuoli')
-        K_ytt_jVar.Sukupuoli = self.request.get('Sukupuoli')
-        PuhelinTemp = self.request.get('Puhelin')
-        if PuhelinTemp!="":
-            K_ytt_jVar.Puhelin = self.request.get('Puhelin')
-        
-        Nick = user.nickname()
-        K_ytt_jVar.put()
-        self.redirect('/showK_ytt_j')
-
-class Showselaus(webapp.RequestHandler):
-    def get(self):
-        user = users.get_current_user()
-        ilmoitusVar =ilmoitus.all()
-        template_values={
-            'Lookup_1': ilmoitusVar ,
-            "nickname":user.nickname(),
-            "url":users.create_logout_url("/")
-        }
-        path = os.path.join(os.path.dirname(__file__),'selaus.html')
-        self.response.out.write(template.render(path,template_values))
-
-class selausAction (webapp.RequestHandler):
-    def post(self):
-        user = users.get_current_user()
-        selausVar = selaus()
-        Lookup_1Name = self.request.get('Lookup_1')
-        query = ilmoitus.all()
-        query.filter('P_iv_m_r_Aika = ',Lookup_1Name)
-        results =  query.fetch(100)
-        Lookup_1 = ilmoitus()
-        for result in results:
-            Lookup_1 = result
-        if (Lookup_1.is_saved()):
-            selausVar.Lookup_1 = Lookup_1
-
-        selausVar.put()
-        self.redirect('/showselaus')
 
 class Showilmoitus(webapp.RequestHandler):
     def get(self):
@@ -144,130 +82,17 @@ class ilmoitusAction (webapp.RequestHandler):
 
 
 
-class Showhaku_View(webapp.RequestHandler):
-    def get(self):
-        user = users.get_current_user()
-        selausVar = selaus.all()
-        records = selausVar.fetch(limit=100)
-        template_values = { 'records': records,"nickname":user.nickname(),"url":users.create_logout_url("/")}
-        path=os.path.join(os.path.dirname(__file__),'haku_View.html')
-        self.response.out.write(template.render(path,template_values))
-
-
-class sorthaku_ViewAction(webapp.RequestHandler):
-    def post(self):
-        user = users.get_current_user()
-        selausVar = selaus.all()
-        selaus_tempVal = self.request.get('SortBy')
-        selaus_tempOrder = self.request.get('order')
-        selausVar = db.GqlQuery("SELECT * FROM selaus ORDER BY " + selaus_tempVal+ " " + selaus_tempOrder)
-        records = selausVar.fetch(limit=100)
-        template_values = { 'records': records,"nickname":user.nickname(),"url":users.create_logout_url("/")}
-        path=os.path.join(os.path.dirname(__file__),'haku_View.html')
-        self.response.out.write(template.render(path,template_values))
-
-
-class searchhaku_ViewAction(webapp.RequestHandler):
-    def post(self):
-        user = users.get_current_user()
-        selausVar = selaus.all()
-        selaus_Lookup_1 = self.request.get('Lookup_1')
-        queryString_selaus_Lookup_1 = ""
-        if selaus_Lookup_1!="":
-            queryString_selaus_Lookup_1 = " Lookup_1 = \'" + selaus_Lookup_1 + "\'"
-        query = "SELECT * FROM selaus WHERE "
-        queryString =""
-        if queryString_selaus_Lookup_1!="":
-            queryString = queryString + queryString_selaus_Lookup_1
-
-        finalQueryString = query + queryString
-        if queryString !="":
-            selausVar = db.GqlQuery(finalQueryString)
-        records = selausVar.fetch(limit=100)
-        template_values = { 'records': records,"nickname":user.nickname(),"url":users.create_logout_url("/")}
-        path=os.path.join(os.path.dirname(__file__),'haku_View.html')
-        self.response.out.write(template.render(path,template_values))
-
-class ShowK_ytt_j_View(webapp.RequestHandler):
-    def get(self):
-        user = users.get_current_user()
-        K_ytt_jVar = K_ytt_j.all()
-        records = K_ytt_jVar.fetch(limit=100)
-        template_values = { 'records': records,"nickname":user.nickname(),"url":users.create_logout_url("/")}
-        path=os.path.join(os.path.dirname(__file__),'K_ytt_j_View.html')
-        self.response.out.write(template.render(path,template_values))
-
-
-class sortK_ytt_j_ViewAction(webapp.RequestHandler):
-    def post(self):
-        user = users.get_current_user()
-        K_ytt_jVar = K_ytt_j.all()
-        K_ytt_j_tempVal = self.request.get('SortBy')
-        K_ytt_j_tempOrder = self.request.get('order')
-        K_ytt_jVar = db.GqlQuery("SELECT * FROM K_ytt_j ORDER BY " + K_ytt_j_tempVal+ " " + K_ytt_j_tempOrder)
-        records = K_ytt_jVar.fetch(limit=100)
-        template_values = { 'records': records,"nickname":user.nickname(),"url":users.create_logout_url("/")}
-        path=os.path.join(os.path.dirname(__file__),'K_ytt_j_View.html')
-        self.response.out.write(template.render(path,template_values))
-
-
-class searchK_ytt_j_ViewAction(webapp.RequestHandler):
-    def post(self):
-        user = users.get_current_user()
-        K_ytt_jVar = K_ytt_j.all()
-        K_ytt_j_Etunimi = self.request.get('Etunimi')
-        queryString_K_ytt_j_Etunimi = ""
-        if K_ytt_j_Etunimi!="":
-            queryString_K_ytt_j_Etunimi = " Etunimi = \'" + K_ytt_j_Etunimi + "\'"
-        K_ytt_j_Sukunimi = self.request.get('Sukunimi')
-        queryString_K_ytt_j_Sukunimi = ""
-        if K_ytt_j_Sukunimi!="":
-            queryString_K_ytt_j_Sukunimi = " Sukunimi = \'" + K_ytt_j_Sukunimi + "\'"
-        K_ytt_j_Sukupuoli = self.request.get('Sukupuoli')
-        queryString_K_ytt_j_Sukupuoli = ""
-        if K_ytt_j_Sukupuoli!="":
-            queryString_K_ytt_j_Sukupuoli = " Sukupuoli = \'" + K_ytt_j_Sukupuoli + "\'"
-        K_ytt_j_Puhelin = self.request.get('Puhelin')
-        queryString_K_ytt_j_Puhelin = ""
-        if K_ytt_j_Puhelin!="":
-            queryString_K_ytt_j_Puhelin = " Puhelin = \'" + K_ytt_j_Puhelin + "\'"
-        query = "SELECT * FROM K_ytt_j WHERE "
-        queryString =""
-        if queryString_K_ytt_j_Etunimi!="":
-            queryString = queryString + queryString_K_ytt_j_Etunimi
-        if queryString != "":
-            if queryString_K_ytt_j_Sukunimi !="":
-                queryString = queryString + " AND " + queryString_K_ytt_j_Sukunimi
-        else:
-            queryString = queryString + queryString_K_ytt_j_Sukunimi
-        if queryString != "":
-            if queryString_K_ytt_j_Sukupuoli !="":
-                queryString = queryString + " AND " + queryString_K_ytt_j_Sukupuoli
-        else:
-            queryString = queryString + queryString_K_ytt_j_Sukupuoli
-        if queryString != "":
-            if queryString_K_ytt_j_Puhelin !="":
-                queryString = queryString + " AND " + queryString_K_ytt_j_Puhelin
-        else:
-            queryString = queryString + queryString_K_ytt_j_Puhelin
-
-        finalQueryString = query + queryString
-        if queryString !="":
-            K_ytt_jVar = db.GqlQuery(finalQueryString)
-        records = K_ytt_jVar.fetch(limit=100)
-        template_values = { 'records': records,"nickname":user.nickname(),"url":users.create_logout_url("/")}
-        path=os.path.join(os.path.dirname(__file__),'K_ytt_j_View.html')
-        self.response.out.write(template.render(path,template_values))
-
 class Showomat_ilmoitukset(webapp.RequestHandler):
     def get(self):
         user = users.get_current_user()
-#        ilmoitusVar = ilmoitus.all()
-        ilmoitusVar = ilmoitus.gql("WHERE Ilmoittaja = :y", y = user)
-        records = ilmoitusVar.fetch(limit=100)
-        template_values = { 'records': records,"nickname":user.nickname(),"url":users.create_logout_url("/")}
-        path=os.path.join(os.path.dirname(__file__),'omat_ilmoitukset.html')
-        self.response.out.write(template.render(path,template_values))
+	if not user:
+	  self.redirect(users.create_login_url(self.request.uri))
+	else: 
+          ilmoitusVar = ilmoitus.gql("WHERE Ilmoittaja = :y", y = user)
+          records = ilmoitusVar.fetch(limit=100)
+          template_values = { 'records': records,"nickname":user.nickname(),"url":users.create_logout_url("/")}
+          path=os.path.join(os.path.dirname(__file__),'omat_ilmoitukset.html')
+          self.response.out.write(template.render(path,template_values))
 
 class Showilmoitus_View(webapp.RequestHandler):
     def get(self):
@@ -399,22 +224,12 @@ def main():
 		('/palaute', palaute_View),
 		('/addpalaute', palauteAction),
 		('/kiitos', kiitos),
-                ('/addK_ytt_j',K_ytt_jAction),
-                ('/showK_ytt_j',ShowK_ytt_j),
-                ('/addselaus',selausAction),
-                ('/showselaus',Showselaus),
                 ('/addilmoitus',ilmoitusAction),
                 ('/showilmoitus',Showilmoitus),
-                ('/showhaku_View',Showhaku_View),                
-		('/sorthaku_View',sorthaku_ViewAction),             
-	        ('/searchhaku_View',searchhaku_ViewAction),
-                ('/showK_ytt_j_View',ShowK_ytt_j_View),              
-	        ('/sortK_ytt_j_View',sortK_ytt_j_ViewAction),
-                ('/searchK_ytt_j_View',searchK_ytt_j_ViewAction),
                 ('/showilmoitus_View',Showilmoitus_View),
                 ('/sortilmoitus_View',sortilmoitus_ViewAction),
                 ('/searchilmoitus_View',searchilmoitus_ViewAction),
-		('/Showomat_ilmoitukset',Showomat_ilmoitukset)],
+		('/showomat_ilmoitukset',Showomat_ilmoitukset)],
                 debug=True)
 
     wsgiref.handlers.CGIHandler().run(application)
