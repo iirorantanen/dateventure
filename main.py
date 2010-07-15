@@ -97,11 +97,15 @@ class Showomat_ilmoitukset(webapp.RequestHandler):
 class Showilmoitus_View(webapp.RequestHandler):
     def get(self):
         user = users.get_current_user()
-        ilmoitusVar = ilmoitus.all()
-        records = ilmoitusVar.fetch(limit=100)
-        template_values = { 'records': records,"nickname":user.nickname(),"url":users.create_logout_url("/")}
-        path=os.path.join(os.path.dirname(__file__),'ilmoitus_View.html')
-        self.response.out.write(template.render(path,template_values))
+        if not user:
+	  self.redirect(users.create_login_url(self.request.uri))
+	else:
+          user = users.get_current_user()
+          ilmoitusVar = ilmoitus.all()
+          records = ilmoitusVar.fetch(limit=100)
+          template_values = { 'records': records,"nickname":user.nickname(),"url":users.create_logout_url("/")}
+          path=os.path.join(os.path.dirname(__file__),'ilmoitus_View.html')
+          self.response.out.write(template.render(path,template_values))
 
 
 class sortilmoitus_ViewAction(webapp.RequestHandler):
@@ -177,8 +181,7 @@ class searchilmoitus_ViewAction(webapp.RequestHandler):
 # palautelomake
 class palaute_View(webapp.RequestHandler):
     def get(self):
-	user = users.get_current_user()
-	template_values = {'Olen': ilmoitus_Olens}
+        template_values = {'Olen': ilmoitus_Olens}
 
 	path=os.path.join(os.path.dirname(__file__),'palaute.html')
 	self.response.out.write(template.render(path,template_values))
@@ -214,7 +217,7 @@ class palauteAction(webapp.RequestHandler):
 # Palautelomakkeen kiitossivu
 class kiitos(webapp.RequestHandler):
     def get(self):
-	path=os.path.join(os.path.dirname(__file__),'kiitos.html')
+        path=os.path.join(os.path.dirname(__file__),'kiitos.html')
         template_values = {}
 	self.response.out.write(template.render(path,template_values))
 
