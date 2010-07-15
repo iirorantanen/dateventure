@@ -1,0 +1,130 @@
+{% extends "index.html" %}
+{% block content %}
+
+<div class="zc-formcontainer" style="width: auto;">
+<div class="zc-formheader">
+<span elname="zc-formNameEl"><label class="zc-formtitle">ilmoitus View</label></span>
+</div>
+<div class="zc-formcontent zc-appformcontent">
+<form name="sortilmoitus_View" id="sortilmoitus_View" method="post" action="sortilmoitus_View">
+<input type="hidden" name="SortBy" id="SortBy">
+<input type="hidden" name="order" id="order">
+</form>
+<form name="searchilmoitus_View" id="searchilmoitus_View" action="searchilmoitus_View" method="post">
+<table class="zc-formtable zc-appformtable" border="0" cellspacing="0">
+<tbody>
+<thead>
+<tr class="zc-viewrowheader" height="25">
+<td id="Olen" fieldValue="Olen" onClick="sort(this.id)" align="center"><b>Olen</b>&nbsp;&nbsp;<label>&#9660;</label></td>
+<td id="Paikka" fieldValue="Paikka" onClick="sort(this.id)" align="center"><b>Paikka</b>&nbsp;&nbsp;<label>&#9660;</label></td>
+<td id="P_iv_m_r_Aika" fieldValue="P_iv_m_r_Aika" onClick="sort(this.id)" align="center"><b>Päivämäärä & Aika</b>&nbsp;&nbsp;<label>&#9660;</label></td>
+<td id="Kuvaus" fieldValue="Kuvaus" onClick="sort(this.id)" align="center"><b>Kuvaus</b>&nbsp;&nbsp;<label>&#9660;</label></td>
+<td id="Added_Time" fieldValue="Added_Time" onClick="sort(this.id)" align="center"><b>Added Time</b>&nbsp;&nbsp;<label>&#9660;</label></td>
+<td id="Added_User" fieldValue="Added_User" onClick="sort(this.id)" align="center"><b>Added User</b>&nbsp;&nbsp;<label>&#9660;</label></td>
+<td id="Added_User" fieldValue="Added_User" onClick="sort(this.id)" align="center"><b>Added User</b>&nbsp;&nbsp;<label>&#9660;</label></td>
+</tr>
+<tr id="searchRow" style="display:none;" class="zc-searchrow">
+<td align="center">
+<input id="Olen" name="Olen" type="text" value="">
+</td><td align="center">
+<input id="Paikka" name="Paikka" type="text" value="">
+</td><td align="center">
+<input id="P_iv_m_r_Aika" name="P_iv_m_r_Aika" type="text" value="">
+</td><td align="center">
+<input id="Kuvaus" name="Kuvaus" type="text" value="">
+</td><td align="center">
+<input id="Added_Time" name="Added_Time" type="text" value="">
+</td><td align="center">
+<input id="Added_User" name="Added_User" type="text" value="">
+</td><td align="center">
+<input id="Added_User" name="Added_User" type="text" value="">
+</td></tr>
+<tr id="searchButtonRow" style="display:none;"  class="zc-searchbuttonrow">
+<td></td>
+<td></td>
+<td></td>
+
+
+
+<td align="center">
+<input class="zc-view-button" type="button" onClick="searchRec()" onmouseout="this.className='zc-view-button';" onmouseover="this.className='zc-view-button-hover';" value="Search"/>
+<input class="zc-view-button" type="button" onClick="cancelSearch()" onmouseout="this.className='zc-view-button';" onmouseover="this.className='zc-view-button-hover';" value="Cancel"/>
+</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<script type="text/javascript">
+function sort(elem)
+{
+        var el = document.getElementById(elem);
+        var xe = parseInt(findPosX(el));
+        var corr = 0;
+        var ye = parseInt(findPosY(el) + el.offsetHeight - corr);
+        document.getElementById("sortDiv").style.left = xe+"px" ;
+        document.getElementById("sortDiv").style.top = ye+"px" ;
+        document.getElementById("sortDiv").style.display="";
+        var fieldName = document.getElementById(elem);
+        var val = fieldName.getAttribute("fieldValue");
+        document.getElementById("SortBy").value=val;
+}
+function selectSortOrder(element)
+{
+        var fieldName = document.getElementById(element);
+        var val = fieldName.getAttribute("sortingOrder");
+        document.getElementById("order").value=val;
+        document.sortilmoitus_View.submit();
+}
+function search()
+{
+        document.getElementById("sortDiv").style.display="none";
+        document.getElementById("searchRow").style.display="";
+        document.getElementById("searchButtonRow").style.display="";
+}
+function searchRec()
+{
+    document.searchilmoitus_View.submit();
+}
+function cancelSearch()
+{
+        document.getElementById("searchRow").style.display="none";
+        document.getElementById("searchButtonRow").style.display="none";
+}
+
+function vastaa(key)
+{
+
+
+}
+	 
+</script>
+{% for x in records %}
+<tr class="zc-viewrow zc-row-1">
+<td align="center"> {{ x.Olen }} </td>
+<td align="center"> {{x.Paikka }}</td>
+<td align="center"> {{x.P_iv_m_r_Aika }}</td>
+<td align="center"> {{x.Kuvaus }}</td>
+<td align="center"> <a href="#" onClick="vastaa('{{x.key}}')" <input id= name="vastaa" type="button" value="{{x.key}}"> </a> </td>
+</tr>
+{% endfor %}
+</thead>
+</tbody>
+</table>
+</div>
+</div><div id="sortDiv" style="position:absolute;display:none;">
+	<table class="zc-viewoptionsdivtable" cellpadding="0" cellspacing="0" border="0">
+		<tr class="zc-viewoptionsdivtr" onmouseover="this.className='zc-viewoptionsdivtrhover'" onmouseout="this.className='zc-viewoptionsdivtr'">
+			<td>
+				<table id="zc-sortSubMenu" cellpadding="0" cellspacing="0" border="0" class="zc-viewoptionsdivtable">
+						<tr class="zc-viewoptionsdivtr" onmouseover="this.className='zc-viewoptionsdivtrhover'" onmouseout="this.className='zc-viewoptionsdivtr'"><td id="Ascending"  onClick="selectSortOrder(this.id)" sortingOrder="ASC" class="zc-viewmenu">Sort By Asc</td></tr>
+						<tr class="zc-viewoptionsdivtr" onmouseover="this.className='zc-viewoptionsdivtrhover'" onmouseout="this.className='zc-viewoptionsdivtr'"><td id="Descending"  onClick="selectSortOrder(this.id)" sortingOrder="DESC" class="zc-viewmenu">Sort By Desc</td></tr>
+						<tr class="zc-viewoptionsdivtr" onmouseover="this.className='zc-viewoptionsdivtrhover'" onmouseout="this.className='zc-viewoptionsdivtr'"><td id="searchRec"  onClick="search()" class="zc-viewmenu">Search</td></tr>
+				</table>
+			</td>
+		</tr>
+
+	</table>
+
+</div>
+</form>
+{% endblock %}
