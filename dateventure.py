@@ -32,8 +32,9 @@ class palaute(search.SearchableModel):
     ika = db.IntegerProperty()
 
     # Palautteen osat
-    ekaAjatus = db.StringProperty(multiline=True)
-    ekaAjatusRating = db.IntegerProperty()
+    kayttaisitko = db.BooleanProperty()
+    hyodyllisyys = db.StringProperty(multiline=True)
+    hyodyllisyysRating = db.IntegerProperty()
     kaytettavyys = db.StringProperty(multiline=True)
     kaytettavyysRating = db.IntegerProperty()
     vapaaSana = db.StringProperty(multiline=True)

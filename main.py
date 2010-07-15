@@ -360,16 +360,19 @@ class palauteAction(webapp.RequestHandler):
 	palauteVar.sukupuoli = self.request.get('sukupuoli')
 
 	# kerätään palaute
-	palauteVar.ekaAjatus = self.request.get('ekaajatus')
-	if self.request.get('ekaajatusrating') != "valitse":
-            palauteVar.ekaAjatusRating = int(self.request.get('ekaajatusrating'))
+	if self.request.get('kayttaisitko') != "":
+	    palauteVar.kayttaisitko = bool(self.request.get('kayttaisitko'))
+
+	palauteVar.hyodyllisyys = self.request.get('hyodyllisyys')
+	if self.request.get('hyodyllisyysrating') != "valitse":
+            palauteVar.hyodyllisyysrating = int(self.request.get('hyodyllisyysrating'))
 
         palauteVar.kaytettavyys = self.request.get('kaytettavyys')
 	if self.request.get('kaytettavyysrating') != "valitse":
 	    palauteVar.kaytettavyysRating = int(self.request.get('kaytettavyysrating'))
 	
+	# pannaan kantaan ja muistetaan ylistää palautteenantajaa
 	palauteVar.put()
-
 	self.redirect('/kiitos')
 
 
