@@ -1,0 +1,58 @@
+{% extends "index.html" %}
+{% block content %}
+<script type="text/javascript">
+function validateaddilmoitus()
+{
+    if(validateFormFields($("#addilmoitus")))
+    {
+        document.addilmoitus.submit();
+    }
+}
+</script>
+<div class="zc-formcontainer" style="width: auto;">
+<div class="zc-formheader"><span elname="zc-formNameEl"><label class="zc-formtitle">ilmoitus</label></span></div>
+<div class="zc-formcontent zc-appformcontent">
+<form style="margin: 0px; padding: 0px;" method="post" id="addilmoitus" name="addilmoitus" action="addilmoitus" enctype="multipart/form-data">
+<table class="zc-formtable zc-appformtable" border="0" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td class="zc-labelheader" style="width: auto;"><label>Olen<font color="#ec3e3e">*</font></label></td>
+<td class="zc-inputheader" style="width: auto;"><select name="Olen">
+{% for x in Olen %}
+<option value='{{x}}'>{{x}}</option>
+{% endfor %}
+</select>
+</td>
+</tr>
+<tr>
+<td class="zc-labelheader" style="width: auto;"><label>Paikka<font color="#ec3e3e">*</font></label></td>
+<td class="zc-inputheader" style="width: auto;"><input class="zc-inputtext" id="Paikka" name="Paikka" value="" type="text" mandatory="true"><p id="Paikka_Error"></p></td>
+</tr>
+<tr>
+<td class="zc-labelheader" style="width: auto;"><label>Päivämäärä & Aika<font color="#ec3e3e">*</font></label></td>
+<td class="zc-inputheader" style="width: auto;"><input type="text" class="zc-inputtext" value="" id="P_iv_m_r_Aika" name="P_iv_m_r_Aika">&nbsp;&nbsp;<a href="javascript:void(0);"><img id="IMG_P_iv_m_r_Aika" width="16" height="17" border="0" src="/images/date_icon.gif" name="Img_P_iv_m_r_Aika"></a>
+<script type="text/javascript">Calendar.setup({
+inputField     :    "P_iv_m_r_Aika",
+ifFormat     :    "%d %m %y %H:%M",
+showsTime   : true,
+button     :    "IMG_P_iv_m_r_Aika"
+});
+</script></tr>
+<tr>
+<td class="zc-labelheader" style="width: auto;"><label>Kuvaus<font color="#ec3e3e">*</font></label></td>
+<td class="zc-inputheader" style="width: auto;"><input class="zc-inputtext" id="Kuvaus" name="Kuvaus" value="" type="text" mandatory="true"><p id="Kuvaus_Error"></p></td>
+</tr>
+
+<tr>
+<td class="zc-button-row" style="border:medium none;"/>
+<td class="zc-button-row" style="border:medium none; text-align:left;" >
+<input type="button" class="zc-formbutton"value="Lähetä" onClick="validateaddilmoitus()">
+<input class="zc-formbutton" type="reset" value="Tyhjennä"/>
+</td>
+</tr>
+</tbody>
+</table>
+</form>
+</div>
+</div>
+{% endblock %}
