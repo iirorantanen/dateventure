@@ -339,27 +339,41 @@ class searchilmoitus_ViewAction(webapp.RequestHandler):
         path=os.path.join(os.path.dirname(__file__),'ilmoitus_View.html')
         self.response.out.write(template.render(path,template_values))
 
+# palautelomake
 class palaute_View(webapp.RequestHandler):
     def get(self):
 	user = users.get_current_user()
-	template_values = {'user': user, 'palaute': palaute, 'Olen': ilmoitus_Olens , "nickname":user.nickname(), "url":users.create_logout_url("/")}
+	template_values = {'Olen': ilmoitus_Olens}
 
 	path=os.path.join(os.path.dirname(__file__),'palaute.html')
 	self.response.out.write(template.render(path,template_values))
 	
 
+# Vie palautelomakkeesta lähetetyt tiedot tietokantaan
 class palauteAction(webapp.RequestHandler):
     def post(self):
 	palauteVar = palaute()
 
-        palauteVar.Palaute = self.request.get('palaute')
+	# kerätään tiedot palautteenantajasta
+	if self.request.get('ika') != "":
+	    palauteVar.ika = int(self.request.get('ika'))
+	palauteVar.sukupuoli = self.request.get('sukupuoli')
+
+	# kerätään palaute
+	palauteVar.ekaAjatus = self.request.get('ekaajatus')
+	if self.request.get('ekaajatusrating') != "valitse":
+            palauteVar.ekaAjatusRating = int(self.request.get('ekaajatusrating'))
+
+        palauteVar.kaytettavyys = self.request.get('kaytettavyys')
+	if self.request.get('kaytettavyysrating') != "valitse":
+	    palauteVar.kaytettavyysRating = int(self.request.get('kaytettavyysrating'))
 	
 	palauteVar.put()
 
 	self.redirect('/kiitos')
 
 
-
+# Palautelomakkeen kiitossivu
 class kiitos(webapp.RequestHandler):
     def get(self):
 	path=os.path.join(os.path.dirname(__file__),'kiitos.html')
