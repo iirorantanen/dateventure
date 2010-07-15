@@ -259,6 +259,16 @@ class searchK_ytt_j_ViewAction(webapp.RequestHandler):
         path=os.path.join(os.path.dirname(__file__),'K_ytt_j_View.html')
         self.response.out.write(template.render(path,template_values))
 
+class Showomat_ilmoitukset(webapp.RequestHandler):
+    def get(self):
+        user = users.get_current_user()
+#        ilmoitusVar = ilmoitus.all()
+        ilmoitusVar = ilmoitus.gql("WHERE Ilmoittaja = :y", y = user)
+        records = ilmoitusVar.fetch(limit=100)
+        template_values = { 'records': records,"nickname":user.nickname(),"url":users.create_logout_url("/")}
+        path=os.path.join(os.path.dirname(__file__),'omat_ilmoitukset.html')
+        self.response.out.write(template.render(path,template_values))
+
 class Showilmoitus_View(webapp.RequestHandler):
     def get(self):
         user = users.get_current_user()
@@ -395,9 +405,16 @@ def main():
                 ('/showselaus',Showselaus),
                 ('/addilmoitus',ilmoitusAction),
                 ('/showilmoitus',Showilmoitus),
-                ('/showhaku_View',Showhaku_View),                ('/sorthaku_View',sorthaku_ViewAction),                ('/searchhaku_View',searchhaku_ViewAction),
-                ('/showK_ytt_j_View',ShowK_ytt_j_View),                ('/sortK_ytt_j_View',sortK_ytt_j_ViewAction),                ('/searchK_ytt_j_View',searchK_ytt_j_ViewAction),
-                ('/showilmoitus_View',Showilmoitus_View),                ('/sortilmoitus_View',sortilmoitus_ViewAction),                ('/searchilmoitus_View',searchilmoitus_ViewAction)],
+                ('/showhaku_View',Showhaku_View),                
+		('/sorthaku_View',sorthaku_ViewAction),             
+	        ('/searchhaku_View',searchhaku_ViewAction),
+                ('/showK_ytt_j_View',ShowK_ytt_j_View),              
+	        ('/sortK_ytt_j_View',sortK_ytt_j_ViewAction),
+                ('/searchK_ytt_j_View',searchK_ytt_j_ViewAction),
+                ('/showilmoitus_View',Showilmoitus_View),
+                ('/sortilmoitus_View',sortilmoitus_ViewAction),
+                ('/searchilmoitus_View',searchilmoitus_ViewAction),
+		('/Showomat_ilmoitukset',Showomat_ilmoitukset)],
                 debug=True)
 
     wsgiref.handlers.CGIHandler().run(application)

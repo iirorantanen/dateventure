@@ -14,11 +14,11 @@
 <body class="body-class">
 <table border="0" width="100%" class="zc-pane-header-table zc-header-table">
 <tr>
-<td width="104" height="53">
+<!--<td width="104" height="53">
 <img src="/images/creator-logo.png">
-</td>
+</td>!-->
 <td class="zc-pane-header-appname">
-Dateventure
+Dateventures <br /> TISSITLOLLOLLOLLOo
 </td>
 <td valign="top" align="right">
 <a href={{url}} class="zc-pane-header-a-menu">Sign Out</a>&nbsp;
@@ -31,12 +31,15 @@ Dateventure
 <div class="zc-pane-left-section zc-pane-left-section">Dateventure
 </div>
 <div comelname="zc-panesection" id="page-Home">
+<<<<<<< HEAD:index.html
+<a class="zc-pane-left-a" href="/showilmoitus">Jätä ilmoitus</a>
+<a class="zc-pane-left-a" href="/showilmoitus_View">Selaa ilmoituksia</a>
+<a class="zc-pane-left-a" href="/showomat_ilmoitukset">Omat ilmoituksesi</a>
+=======
 <a class="zc-pane-left-a" href="/showilmoitus">ilmoitus</a>
 <a class="zc-pane-left-a" href="/showilmoitus_View">ilmoitus View</a>
-<a class="zc-pane-left-a" href="/showselaus">selaus</a>
-<a class="zc-pane-left-a" href="/showhaku_View">haku View</a>
-<a class="zc-pane-left-a" href="/showK_ytt_j">Käyttäjä</a>
-<a class="zc-pane-left-a" href="/showK_ytt_j_View">Käyttäjä View</a>
+<a class="zc-pane-left-a" href="/palaute"> Anna palautetta</a>
+>>>>>>> d81ad17bbb1f78d733739a5888b33dde2442980a:index.html
 </div>
 </td><td width="90%" class="zc-component zc-pane-right"><div id="content" align="center">
 {% block content %} {% endblock %}</div></td></tr></table></body></html>
