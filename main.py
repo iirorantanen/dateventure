@@ -8,6 +8,7 @@ from google.appengine.ext import db
 from google.appengine.ext.webapp import template
 from google.appengine.api import users
 from google.appengine.api import mail
+from google.appengine.ext.db import Model
 from dateventure import K_ytt_j
 #from dateventure import selaus
 from dateventure import ilmoitus
@@ -390,8 +391,25 @@ class palauteAction(webapp.RequestHandler):
 class kiitos(webapp.RequestHandler):
     def get(self):
 	path=os.path.join(os.path.dirname(__file__),'kiitos.html')
-        template_values = {}
+        template_values = {"url":users.create_logout_url("/")}
 	self.response.out.write(template.render(path,template_values))
+
+class ukk(webapp.RequestHandler):
+    def get(self):
+	path=os.path.join(os.path.dirname(__file__),'ukk.html')
+	template_values = {"url":users.create_logout_url("/")}
+	self.response.out.write(template.render(path,template_values))
+
+
+class vahvistaIlmoituksenAvaus(webapp.RequestHandler):
+    def post(self):
+	path=os.path.join(os.path.dirname(__file__),'confirm.html')	
+	postKey = self.request.get('key')
+	ilmoitusVar = Model.get_by_key_name(postKey)
+	template_values = {"url":users.create_logout_url("/"), 'key':postKey}
+	self.response.out.write(template.render(path,template_values))
+	
+	
 
 def main():
     application = webapp.WSGIApplication(
@@ -399,6 +417,8 @@ def main():
 		('/palaute', palaute_View),
 		('/addpalaute', palauteAction),
 		('/kiitos', kiitos),
+		('/ukk', ukk),
+		('/confirm', vahvistaIlmoituksenAvaus),
                 ('/addK_ytt_j',K_ytt_jAction),
                 ('/showK_ytt_j',ShowK_ytt_j),
                 ('/addselaus',selausAction),

@@ -91,12 +91,26 @@ function cancelSearch()
         document.getElementById("searchButtonRow").style.display="none";
 }
 
-function vastaa(key)
-{
-alert(key);
 
+function post(key) {
+
+    // The rest of this code assumes you are not using a library.
+    // It can be made less wordy if you use one.
+    var form = document.createElement("form");
+    form.setAttribute("method", "post");
+    form.setAttribute("action", "confirm");
+
+    var hiddenField = document.createElement("input");
+    hiddenField.setAttribute("type", "hidden");
+    hiddenField.setAttribute("name", "key");
+    hiddenField.setAttribute("value", key);
+    form.appendChild(hiddenField);
+
+    document.body.appendChild(form);    // Not entirely sure if this is necessary
+    form.submit();
 }
-	 
+
+ 
 </script>
 {% for x in records %}
 <tr class="zc-viewrow zc-row-1">
@@ -104,15 +118,15 @@ alert(key);
 <td align="center"> {{x.Paikka }}</td>
 <td align="center"> {{x.P_iv_m_r_Aika }}</td>
 <td align="center"> {{x.Kuvaus }}</td>
-<td align="center"> <a href="#" onClick="vastaa('{{x.key}}')" <input id= name="vastaa" type="button" value="{{x.key}}"> </a> </td>
+<td align="center"> <a href="#" onClick="post('{{x.key}}')"> Vastaa </a> </td>
 </tr>
+
 {% endfor %}
 </thead>
 </tbody>
 </table>
-<input type="button" value="Vastaa" onClick="vastaa(tissit)">
 </div>
-<div id="myDiv">  kek </div>
+
 </div><div id="sortDiv" style="position:absolute;display:none;">
 	<table class="zc-viewoptionsdivtable" cellpadding="0" cellspacing="0" border="0">
 		<tr class="zc-viewoptionsdivtr" onmouseover="this.className='zc-viewoptionsdivtrhover'" onmouseout="this.className='zc-viewoptionsdivtr'">
