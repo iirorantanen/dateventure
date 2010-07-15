@@ -1,4 +1,5 @@
 import wsgiref.handlers
+import cgi
 import os
 import logging
 import datetime
@@ -12,6 +13,7 @@ from dateventure import K_ytt_j
 from dateventure import ilmoitus
 from dateventure import K_ytt_j_Sukupuolis
 from dateventure import ilmoitus_Olens
+from dateventure import palaute
 
 class MainPage(webapp.RequestHandler):
     def get(self):
@@ -34,6 +36,7 @@ class MainPage(webapp.RequestHandler):
 
         path = os.path.join(os.path.dirname(__file__),theHtmlPage)
         self.response.out.write(template.render(path,template_values))
+
 class ShowK_ytt_j(webapp.RequestHandler):
     def get(self):
         user = users.get_current_user()
@@ -346,9 +349,53 @@ class searchilmoitus_ViewAction(webapp.RequestHandler):
         path=os.path.join(os.path.dirname(__file__),'ilmoitus_View.html')
         self.response.out.write(template.render(path,template_values))
 
+# palautelomake
+class palaute_View(webapp.RequestHandler):
+    def get(self):
+	user = users.get_current_user()
+	template_values = {'Olen': ilmoitus_Olens}
+
+	path=os.path.join(os.path.dirname(__file__),'palaute.html')
+	self.response.out.write(template.render(path,template_values))
+	
+
+# Vie palautelomakkeesta lähetetyt tiedot tietokantaan
+class palauteAction(webapp.RequestHandler):
+    def post(self):
+	palauteVar = palaute()
+
+	# kerätään tiedot palautteenantajasta
+	if self.request.get('ika') != "":
+	    palauteVar.ika = int(self.request.get('ika'))
+	palauteVar.sukupuoli = self.request.get('sukupuoli')
+
+	# kerätään palaute
+	palauteVar.ekaAjatus = self.request.get('ekaajatus')
+	if self.request.get('ekaajatusrating') != "valitse":
+            palauteVar.ekaAjatusRating = int(self.request.get('ekaajatusrating'))
+
+        palauteVar.kaytettavyys = self.request.get('kaytettavyys')
+	if self.request.get('kaytettavyysrating') != "valitse":
+	    palauteVar.kaytettavyysRating = int(self.request.get('kaytettavyysrating'))
+	
+	palauteVar.put()
+
+	self.redirect('/kiitos')
+
+
+# Palautelomakkeen kiitossivu
+class kiitos(webapp.RequestHandler):
+    def get(self):
+	path=os.path.join(os.path.dirname(__file__),'kiitos.html')
+        template_values = {}
+	self.response.out.write(template.render(path,template_values))
+
 def main():
     application = webapp.WSGIApplication(
                 [('/', MainPage),
+		('/palaute', palaute_View),
+		('/addpalaute', palauteAction),
+		('/kiitos', kiitos),
                 ('/addK_ytt_j',K_ytt_jAction),
                 ('/showK_ytt_j',ShowK_ytt_j),
                 ('/addselaus',selausAction),

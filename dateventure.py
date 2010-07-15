@@ -26,6 +26,23 @@ class ilmoitus(search.SearchableModel):
       Vastattu = True
       vKuvaus = vastaajaKuvaus
       
+class palaute(search.SearchableModel):
+    # Palautteen lahettajan tiedot
+    sukupuoli = db.StringProperty(choices=K_ytt_j_Sukupuolis)
+    ika = db.IntegerProperty()
+
+    # Palautteen osat
+    ekaAjatus = db.StringProperty(multiline=True)
+    ekaAjatusRating = db.IntegerProperty()
+    kaytettavyys = db.StringProperty(multiline=True)
+    kaytettavyysRating = db.IntegerProperty()
+    vapaaSana = db.StringProperty(multiline=True)
+
+
+    date = db.DateTimeProperty(auto_now_add=True)
+
+
+    
 
 #class selaus(search.SearchableModel):
 #    Lookup_1 = db.ReferenceProperty(ilmoitus,collection_name="selaus_1_set")

@@ -35,3 +35,11 @@ indexes:
   properties:
   - name: Vastattu
     direction: desc
+- kind: Palaute
+  properties:
+  - name: L_hett_j
+    direction: desc
+- kind: Palaute
+  properties:
+  - name: Palaute
+    direction: desc
