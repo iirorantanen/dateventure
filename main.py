@@ -353,7 +353,7 @@ class searchilmoitus_ViewAction(webapp.RequestHandler):
 class palaute_View(webapp.RequestHandler):
     def get(self):
 	user = users.get_current_user()
-	template_values = {'Olen': ilmoitus_Olens}
+	template_values = {'Olen': ilmoitus_Olens, "nickname":user.nickname(), "url":users.create_logout_url("/")}
 
 	path=os.path.join(os.path.dirname(__file__),'palaute.html')
 	self.response.out.write(template.render(path,template_values))
