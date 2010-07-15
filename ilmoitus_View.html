@@ -90,18 +90,11 @@ function cancelSearch()
         document.getElementById("searchRow").style.display="none";
         document.getElementById("searchButtonRow").style.display="none";
 }
-<<<<<<< HEAD:ilmoitus_View.html
-=======
 
->>>>>>> d81ad17bbb1f78d733739a5888b33dde2442980a:ilmoitus_View.html
 function vastaa(key)
 {
-<<<<<<< HEAD:ilmoitus_View.html
 alert(key);
-=======
 
-
->>>>>>> d81ad17bbb1f78d733739a5888b33dde2442980a:ilmoitus_View.html
 }
 	 
 </script>
@@ -111,11 +104,7 @@ alert(key);
 <td align="center"> {{x.Paikka }}</td>
 <td align="center"> {{x.P_iv_m_r_Aika }}</td>
 <td align="center"> {{x.Kuvaus }}</td>
-<<<<<<< HEAD:ilmoitus_View.html
-<td align="center"> <a href="#" onClick="vastaa('{{x.key}}')"><input id= name={{x.key}} type="button" value="Vastaa" > </a></td>
-=======
 <td align="center"> <a href="#" onClick="vastaa('{{x.key}}')" <input id= name="vastaa" type="button" value="{{x.key}}"> </a> </td>
->>>>>>> d81ad17bbb1f78d733739a5888b33dde2442980a:ilmoitus_View.html
 </tr>
 {% endfor %}
 </thead>

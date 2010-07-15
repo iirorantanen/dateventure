@@ -31,9 +31,15 @@ Dateventures <br /> TISSITLOLLOLLOLLOo
 <div class="zc-pane-left-section zc-pane-left-section">Dateventure
 </div>
 <div comelname="zc-panesection" id="page-Home">
+<<<<<<< HEAD:index.html
 <a class="zc-pane-left-a" href="/showilmoitus">Jätä ilmoitus</a>
 <a class="zc-pane-left-a" href="/showilmoitus_View">Selaa ilmoituksia</a>
-<a class="zc-pane-left-a" href="/Showomat_ilmoitukset">Omat ilmoituksesi</a>
+<a class="zc-pane-left-a" href="/showomat_ilmoitukset">Omat ilmoituksesi</a>
+=======
+<a class="zc-pane-left-a" href="/showilmoitus">ilmoitus</a>
+<a class="zc-pane-left-a" href="/showilmoitus_View">ilmoitus View</a>
+<a class="zc-pane-left-a" href="/palaute"> Anna palautetta</a>
+>>>>>>> d81ad17bbb1f78d733739a5888b33dde2442980a:index.html
 </div>
 </td><td width="90%" class="zc-component zc-pane-right"><div id="content" align="center">
 {% block content %} {% endblock %}</div></td></tr></table></body></html>
