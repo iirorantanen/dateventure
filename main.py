@@ -122,7 +122,7 @@ class Showilmoitus_View(webapp.RequestHandler):
 	  self.redirect(users.create_login_url(self.request.uri))
 	else:
           user = users.get_current_user()
-          ilmoitusVar = ilmoitus.all()
+          ilmoitusVar = ilmoitus.gql("WHERE Vastattu = :y", y = False)
           records = ilmoitusVar.fetch(limit=100)
           template_values = { 'records': records,"nickname":user.nickname(),"url":users.create_logout_url("/")}
           path=os.path.join(os.path.dirname(__file__),'ilmoitus_View.html')
