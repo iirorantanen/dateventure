@@ -51,11 +51,10 @@ class Showilmoitus(webapp.RequestHandler):
     def get(self):
         user = users.get_current_user()
         global ilmoitus_Olen
-        template_values={
-            'Olen': alignment ,
-            "nickname":user.nickname(),
-            "url":users.create_logout_url("/")
-        }
+        if user:
+          template_values={"url":users.create_logout_url("/")}
+        else:
+          template_values={"loginurl":users.create_login_url("/")}
         path = os.path.join(os.path.dirname(__file__),'ilmoitus.html')
         self.response.out.write(template.render(path,template_values))
 
@@ -195,22 +194,26 @@ class searchilmoitus_ViewAction(webapp.RequestHandler):
 # palautelomake
 class palaute_View(webapp.RequestHandler):
     def get(self):
-        template_values = {'Olen': alignment}
+	user=users.get_current_user()
+        if user:
+          template_values={"url":users.create_logout_url("/")}
+        else:
+          template_values={"loginurl":users.create_login_url("/")}
 	path=os.path.join(os.path.dirname(__file__),'palaute.html')
 	self.response.out.write(template.render(path,template_values))
 	
 
-# Vie palautelomakkeesta lähetetyt tiedot tietokantaan
+# Vie palautelomakkeesta lahetetyt tiedot tietokantaan
 class palauteAction(webapp.RequestHandler):
     def post(self):
 	palauteVar = palaute()
 
-	# kerätään tiedot palautteenantajasta
+	# kerataan tiedot palautteenantajasta
 	if self.request.get('ika') != "":
 	    palauteVar.ika = int(self.request.get('ika'))
 	palauteVar.sukupuoli = self.request.get('sukupuoli')
 
-	# kerätään palaute
+	# kerataan palaute
 	if self.request.get('kayttaisitko') != "":
 	    palauteVar.kayttaisitko = bool(self.request.get('kayttaisitko'))
 
@@ -222,7 +225,7 @@ class palauteAction(webapp.RequestHandler):
 	if self.request.get('kaytettavyysrating') != "valitse":
 	    palauteVar.kaytettavyysRating = int(self.request.get('kaytettavyysrating'))
 	
-	# pannaan kantaan ja muistetaan ylistää palautteenantajaa
+	# pannaan kantaan ja muistetaan ylistaa palautteenantajaa
 	palauteVar.put()
 	self.redirect('/kiitos')
 

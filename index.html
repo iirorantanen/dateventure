@@ -11,7 +11,7 @@
 <link href="/css/l1t1c1.css" rel="stylesheet" type="text/css">
 <link href="/css/calendar.css" rel="stylesheet" type="text/css">
 <style type="text/css">
-div.tissipeelo
+div.piilo
 {
 visibility:hidden;
 }
@@ -28,7 +28,9 @@ visibility:hidden;
 Dateventures <br />
 </td>
 <td valign="top" align="right">
-<div id="urk" name="homonaama" class="tissipeelo">{{loginurl}}</div>
+
+<!-- Hyvin outo saato sign in- ja out-nappien vaihtamiseksi. Toimii ehka. !-->
+<div id="urk" class="piilo">{{loginurl}}</div>
 <script type="text/javascript">
 var a = document.getElementById("urk").innerHTML;
 if(a!="")
@@ -40,6 +42,7 @@ else
 document.write("<a href={{url}} class=\"zc-pane-header-a-menu\">Sign Out</a>&nbsp;");
 }
 </script>
+<!-- Saato loppuu!-->
 
 </td>
 </tr>

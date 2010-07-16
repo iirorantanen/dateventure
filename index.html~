@@ -28,16 +28,21 @@ visibility:hidden;
 Dateventures <br />
 </td>
 <td valign="top" align="right">
+
+<!-- Hyvin outo saato sign in- ja out-nappien vaihtamiseksi. Toimii ehka. !-->
 <div id="urk" name="homonaama" class="tissipeelo">{{loginurl}}</div>
 <script type="text/javascript">
-if(true)
+var a = document.getElementById("urk").innerHTML;
+if(a!="")
 {
-  var a = document.getElementById("urk");
-  document.write(a.innerHTML);
-  document.write("<a href={{loginurl}} class=\"zc-pane-header-a-menu\">Sign In</a>&nbsp;");
-  document.write("<a href={{url}} class=\"zc-pane-header-a-menu\">Sign Out</a>&nbsp;");
+document.write("<a href={{loginurl}} class=\"zc-pane-header-a-menu\">Sign In</a>&nbsp;");
+}
+else
+{
+document.write("<a href={{url}} class=\"zc-pane-header-a-menu\">Sign Out</a>&nbsp;");
 }
 </script>
+<!-- Saato loppuu!-->
 
 </td>
 </tr>

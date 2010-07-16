@@ -51,11 +51,10 @@ class Showilmoitus(webapp.RequestHandler):
     def get(self):
         user = users.get_current_user()
         global ilmoitus_Olen
-        template_values={
-            'Olen': alignment ,
-            "nickname":user.nickname(),
-            "url":users.create_logout_url("/")
-        }
+        if user:
+          template_values={'Olen': alignment, "url":users.create_logout_url("/")}
+        else:
+          template_values={'Olen': alignment, "loginurl":users.create_login_url("/")}
         path = os.path.join(os.path.dirname(__file__),'ilmoitus.html')
         self.response.out.write(template.render(path,template_values))
 
@@ -195,7 +194,11 @@ class searchilmoitus_ViewAction(webapp.RequestHandler):
 # palautelomake
 class palaute_View(webapp.RequestHandler):
     def get(self):
-        template_values = {'Olen': alignment}
+	user=users.get_current_user()
+        if user:
+          template_values={"url":users.create_logout_url("/")}
+        else:
+          template_values={"loginurl":users.create_login_url("/")}
 	path=os.path.join(os.path.dirname(__file__),'palaute.html')
 	self.response.out.write(template.render(path,template_values))
 	

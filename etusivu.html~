@@ -4,6 +4,7 @@
 <div class="zc-formcontainer" style="width: auto;">
 <div class="zc-formheader">
 <span elname="zc-formNameEl"><label class="zc-formtitle">ilmoitus View</label></span>
+<p>jollotijolloti</p>
 </div>
 <div class="zc-formcontent zc-appformcontent">
 <form name="sortetusivu" id="sortetusivu" method="post" action="sortetusivu">
@@ -19,9 +20,6 @@
 <td id="Paikka" fieldValue="Paikka" onClick="sort(this.id)" align="center"><b>Paikka</b>&nbsp;&nbsp;<label>&#9660;</label></td>
 <td id="P_iv_m_r_Aika" fieldValue="P_iv_m_r_Aika" onClick="sort(this.id)" align="center"><b>Päivämäärä & Aika</b>&nbsp;&nbsp;<label>&#9660;</label></td>
 <td id="Kuvaus" fieldValue="Kuvaus" onClick="sort(this.id)" align="center"><b>Kuvaus</b>&nbsp;&nbsp;<label>&#9660;</label></td>
-<td id="Added_Time" fieldValue="Added_Time" onClick="sort(this.id)" align="center"><b>Added Time</b>&nbsp;&nbsp;<label>&#9660;</label></td>
-<td id="Added_User" fieldValue="Added_User" onClick="sort(this.id)" align="center"><b>Added User</b>&nbsp;&nbsp;<label>&#9660;</label></td>
-<td id="Added_User" fieldValue="Added_User" onClick="sort(this.id)" align="center"><b>Added User</b>&nbsp;&nbsp;<label>&#9660;</label></td>
 </tr>
 <tr id="searchRow" style="display:none;" class="zc-searchrow">
 <td align="center">
@@ -32,12 +30,6 @@
 <input id="P_iv_m_r_Aika" name="P_iv_m_r_Aika" type="text" value="">
 </td><td align="center">
 <input id="Kuvaus" name="Kuvaus" type="text" value="">
-</td><td align="center">
-<input id="Added_Time" name="Added_Time" type="text" value="">
-</td><td align="center">
-<input id="Added_User" name="Added_User" type="text" value="">
-</td><td align="center">
-<input id="Added_User" name="Added_User" type="text" value="">
 </td></tr>
 <tr id="searchButtonRow" style="display:none;"  class="zc-searchbuttonrow">
 <td></td>
