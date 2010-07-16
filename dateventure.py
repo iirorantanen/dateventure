@@ -3,12 +3,15 @@ from google.appengine.ext import search
 from google.appengine.api import users
 K_ytt_j_Sukupuolis=('Mies','Nainen','En kerro')
 alignment=('Mies','Nainen','En kerro')
+etsin=('Mies', 'Nainen', 'Ei')
 
 
 class ilmoitus(search.SearchableModel):
     global alignment
     Olen = db.StringProperty(choices=alignment)
+    Etsin = db.StringProperty(choices=etsin)
     Paikka = db.StringProperty()
+    Paikkakunta = db.StringProperty(default="Turku")
     P_iv_m_r_Aika = db.DateTimeProperty()
     Kuvaus = db.StringProperty()
     Vastattu = db.BooleanProperty(default=False)

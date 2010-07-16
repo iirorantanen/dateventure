@@ -24,6 +24,28 @@ function validateaddilmoitus()
 </select>
 </td>
 </tr>
+
+<tr>
+<td class="zc-labelheader" style="width: auto;"><label>Etsin<font color="#ec3e3e">*</font></label></td>
+<td><select name="Olen">
+<option value=miesta>Miestä</option>
+<option value=naista>Naista</option>
+<option value=ihansama>Ei väliä</option>
+</select>
+</td>
+</tr>
+
+<tr>
+<td class="zc-labelheader" style="width: auto;"><label>Ikäni<font color="#ec3e3e">*</font></label></td>
+<td class="zc-inputheader" style="width: auto;"><input class="zc-inputtext" id="Age" name="Age" value="" type="int" mandatory="true">
+<p id="Age_Error"></p></td>
+</tr>
+
+<tr>
+<td class="zc-labelheader" style="width: auto;"><label>Paikkakunta<font color="#ec3e3e">*</font></label></td>
+<td><input id="Paikkakunta" name="Paikkakunta" value="Turku" type="text" mandatory="true" readonly="readonly"><p id="Paikka_Error"></p></td>
+</tr>
+
 <tr>
 <td class="zc-labelheader" style="width: auto;"><label>Paikka<font color="#ec3e3e">*</font></label></td>
 <td><input id="Paikka" name="Paikka" value="" type="text" mandatory="true"><p id="Paikka_Error"></p></td>
@@ -43,11 +65,7 @@ button     :    "IMG_P_iv_m_r_Aika"
 <td class="zc-inputheader" style="width: auto;"><input class="zc-inputtext" id="Kuvaus" name="Kuvaus" value="" type="text" mandatory="true">
 <p id="Kuvaus_Error"></p></td>
 </tr>
-<tr>
-<td class="zc-labelheader" style="width: auto;"><label>Ikä<font color="#ec3e3e">*</font></label></td>
-<td class="zc-inputheader" style="width: auto;"><input class="zc-inputtext" id="Age" name="Age" value="" type="int" mandatory="true">
-<p id="Age_Error"></p></td>
-</tr>
+
 
 <tr>
 <td class="zc-button-row" style="border:medium none;"/>
