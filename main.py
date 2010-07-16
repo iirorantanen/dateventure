@@ -103,9 +103,17 @@ class Showomat_ilmoitukset(webapp.RequestHandler):
 	else: 
           ilmoitusVar = ilmoitus.gql("WHERE Ilmoittaja = :y", y = user)
           records = ilmoitusVar.fetch(limit=100)
-          template_values = { 'records': records,"nickname":user.nickname(),"url":users.create_logout_url("/")}
+	  
+	  query = ilmoitus.gql("WHERE Vastaaja = :x", x = user)
+	  responses = query.fetch(limit=100)
+
+          template_values = { 'records': records, 'responses': responses, "nickname":user.nickname(),"url":users.create_logout_url("/")}
+
+	  
           path=os.path.join(os.path.dirname(__file__),'omat_ilmoitukset.html')
           self.response.out.write(template.render(path,template_values))
+	  
+	  
 
 class Showilmoitus_View(webapp.RequestHandler):
     def get(self):
@@ -246,22 +254,32 @@ class ukk(webapp.RequestHandler):
 # This will review the details and ask the user if they want to set up the date.
 class vahvistaIlmoituksenAvaus(webapp.RequestHandler):
     def post(self):
-	path=os.path.join(os.path.dirname(__file__),'confirm.html')	
-	postKey = self.request.get('key')
-	ilmoitusVar = Model.get(postKey)
-	template_values = {"url":users.create_logout_url("/"), 'key':postKey, 'datetime':ilmoitusVar.P_iv_m_r_Aika, 'age':ilmoitusVar.Age, 'gender':ilmoitusVar.Olen, 'location':ilmoitusVar.Paikka }
-	self.response.out.write(template.render(path,template_values))
+        user = users.get_current_user()
+	if not user:
+	    self.redirect(users.create_login_url(self.request.uri))
+	else: 
+	    path=os.path.join(os.path.dirname(__file__),'confirm.html')	
+	    postKey = self.request.get('key')
+	    ilmoitusVar = Model.get(postKey)
+	    template_values = {"url":users.create_logout_url("/"), 'key':postKey, 'datetime':ilmoitusVar.P_iv_m_r_Aika, 'age':ilmoitusVar.Age, 'gender':ilmoitusVar.Olen, 'location':ilmoitusVar.Paikka }
+	    self.response.out.write(template.render(path,template_values))
 
 # This page is shown when the date is confirmed
 class ilmoitusVahvistettu(webapp.RequestHandler):
     def post(self):
-	path=os.path.join(os.path.dirname(__file__),'confirmed.html')
-	postKey = self.request.get('key')
-	ilmoitusVar = Model.get(postKey)
-	ilmoitusVar.vKuvaus = self.request.get('description')
-	ilmoitusVar.Vastattu = True
-	template_values = {"url":users.create_logout_url("/"), 'key':postKey, 'datetime':ilmoitusVar.P_iv_m_r_Aika, 'age':ilmoitusVar.Age, 'gender':ilmoitusVar.Olen, 'location':ilmoitusVar.Paikka, 'owndescription':ilmoitusVar.vKuvaus, 'description':ilmoitusVar.Kuvaus }
-	self.response.out.write(template.render(path,template_values))
+        user = users.get_current_user()
+	if not user:
+	    self.redirect(users.create_login_url(self.request.uri))
+	else: 	
+	    path=os.path.join(os.path.dirname(__file__),'confirmed.html')
+	    postKey = self.request.get('key')
+	    ilmoitusVar = Model.get(postKey)
+	    ilmoitusVar.vKuvaus = self.request.get('description')
+	    ilmoitusVar.Vastattu = True
+	    ilmoitusVar.Vastaaja = user
+	
+	    template_values = {"url":users.create_logout_url("/"), 'key':postKey, 'datetime':ilmoitusVar.P_iv_m_r_Aika, 'age':ilmoitusVar.Age, 'gender':ilmoitusVar.Olen, 'location':ilmoitusVar.Paikka, 'owndescription':ilmoitusVar.vKuvaus, 'description':ilmoitusVar.Kuvaus }
+	    self.response.out.write(template.render(path,template_values))
 
 def main():
     application = webapp.WSGIApplication(

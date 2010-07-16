@@ -98,9 +98,18 @@ alert(key);
 <td align="center"> {{x.Paikka }}</td>
 <td align="center"> {{x.P_iv_m_r_Aika }}</td>
 <td align="center"> {{x.Kuvaus }}</td>
-<td align="center"> <a href="#" onClick="vastaa('{{x.key}}')"><input id= name={{x.key}} type="button" value="Vastaa" > </a></td>
 </tr>
 {% endfor %}
+
+{% for y in responses %}
+<tr class="zc-viewrow zc-row-1">
+<td align="center"> {{y.Olen }} </td>
+<td align="center"> {{y.Paikka }}</td>
+<td align="center"> {{y.P_iv_m_r_Aika }}</td>
+<td align="center"> {{y.Kuvaus }}</td>
+</tr>
+{% endfor %}
+
 </thead>
 </tbody>
 </table>
