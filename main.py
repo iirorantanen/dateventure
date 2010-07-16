@@ -67,19 +67,26 @@ class ilmoitusAction (webapp.RequestHandler):
         PaikkaTemp = self.request.get('Paikka')
         if PaikkaTemp!="":
             ilmoitusVar.Paikka = self.request.get('Paikka')
-        P_iv_m_r_Aikatemp = self.request.get('P_iv_m_r_Aika')
-        if P_iv_m_r_Aikatemp!="":
-            P_iv_m_r_AikaTemp = self.request.get('P_iv_m_r_Aika')
-            P_iv_m_r_Aika_res = P_iv_m_r_AikaTemp.split()
-            P_iv_m_r_Aika_dt = P_iv_m_r_Aika_res[0]
-            P_iv_m_r_Aika_mnth = P_iv_m_r_Aika_res[1]
-            P_iv_m_r_Aika_yr = P_iv_m_r_Aika_res[2]
-            P_iv_m_r_Aika_selTime = P_iv_m_r_Aika_res[3]
-            P_iv_m_r_Aika_finalRes = P_iv_m_r_Aika_selTime.split(':')
-            P_iv_m_r_Aika_hr = P_iv_m_r_Aika_finalRes[0]
-            P_iv_m_r_Aika_min = P_iv_m_r_Aika_finalRes[1]
+
+        ilmoitusVar.Time = datetime.time(int(self.request.get('Hour')), int(self.request.get('Min')))
+
+	DateTemp = self.request.get('Date')
+	Date_res = DateTemp.split('.')
+	ilmoitusVar.Date = datetime.date(int(Date_res[2]), int(Date_res[1]), int(Date_res[0]))	    
+
+#        P_iv_m_r_Aikatemp = self.request.get('P_iv_m_r_Aika')
+#        if P_iv_m_r_Aikatemp!="":
+#            P_iv_m_r_AikaTemp = self.request.get('P_iv_m_r_Aika')
+#            P_iv_m_r_Aika_res = P_iv_m_r_AikaTemp.split()
+#            P_iv_m_r_Aika_dt = P_iv_m_r_Aika_res[0]
+#            P_iv_m_r_Aika_mnth = P_iv_m_r_Aika_res[1]
+#            P_iv_m_r_Aika_yr = P_iv_m_r_Aika_res[2]
+#            P_iv_m_r_Aika_selTime = P_iv_m_r_Aika_res[3]
+#            P_iv_m_r_Aika_finalRes = P_iv_m_r_Aika_selTime.split(':')
+#            P_iv_m_r_Aika_hr = P_iv_m_r_Aika_finalRes[0]
+#            P_iv_m_r_Aika_min = P_iv_m_r_Aika_finalRes[1]
 #            P_iv_m_r_Aika_sec = P_iv_m_r_Aika_finalRes[2]
-            ilmoitusVar.P_iv_m_r_Aika = datetime.datetime(int(P_iv_m_r_Aika_yr),int(P_iv_m_r_Aika_mnth),int(P_iv_m_r_Aika_dt),int(P_iv_m_r_Aika_hr),int(P_iv_m_r_Aika_min))
+#            ilmoitusVar.P_iv_m_r_Aika = datetime.datetime(int(P_iv_m_r_Aika_yr),int(P_iv_m_r_Aika_mnth),int(P_iv_m_r_Aika_dt),int(P_iv_m_r_Aika_hr),int(P_iv_m_r_Aika_min))
         KuvausTemp = self.request.get('Kuvaus')
         if KuvausTemp!="":
             ilmoitusVar.Kuvaus = self.request.get('Kuvaus')
