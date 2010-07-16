@@ -15,7 +15,7 @@ class ilmoitus(search.SearchableModel):
     vKuvaus = db.StringProperty()
     Ilmoittaja = db.UserProperty(auto_current_user=True, required=True)
     Vastaaja = db.UserProperty()
-    Age = db.IntegerProperty(required=True)
+    Age = db.IntegerProperty(default=0)
     def vastaa(self, vastaajaKuvaus):
       Vastattu = True
       vKuvaus = vastaajaKuvaus
