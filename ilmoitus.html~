@@ -25,7 +25,7 @@ function validateaddilmoitus()
 </td>
 </tr>
 <tr>
-<td class="zc-labelheader" style="width: auto;"><label>Paikka<font color="#ec3e3e">Ö</font></label></td>
+<td class="zc-labelheader" style="width: auto;"><label>Paikka<font color="#ec3e3e">*</font></label></td>
 <td><input id="Paikka" name="Paikka" value="" type="text" mandatory="true"><p id="Paikka_Error"></p></td>
 </tr>
 <tr>
