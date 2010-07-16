@@ -24,7 +24,7 @@ class ilmoitus(search.SearchableModel):
 class palaute(search.SearchableModel):
     # Palautteen lahettajan tiedot
     sukupuoli = db.StringProperty(choices=K_ytt_j_Sukupuolis)
-    ika = db.IntegerProperty()
+    ika = db.StringProperty()
 
     # Palautteen osat
     kayttaisitko = db.BooleanProperty()
