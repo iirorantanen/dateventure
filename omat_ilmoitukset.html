@@ -42,56 +42,12 @@
 <td></td>
 <td></td>
 <td></td>
-<td align="center">
-<input class="zc-view-button" type="button" onClick="searchRec()" onmouseout="this.className='zc-view-button';" onmouseover="this.className='zc-view-button-hover';" value="Search"/>
-<input class="zc-view-button" type="button" onClick="cancelSearch()" onmouseout="this.className='zc-view-button';" onmouseover="this.className='zc-view-button-hover';" value="Cancel"/>
-</td>
+
 <td></td>
 <td></td>
 <td></td>
 </tr>
-<script type="text/javascript">
-function sort(elem)
-{
-        var el = document.getElementById(elem);
-        var xe = parseInt(findPosX(el));
-        var corr = 0;
-        var ye = parseInt(findPosY(el) + el.offsetHeight - corr);
-        document.getElementById("sortDiv").style.left = xe+"px" ;
-        document.getElementById("sortDiv").style.top = ye+"px" ;
-        document.getElementById("sortDiv").style.display="";
-        var fieldName = document.getElementById(elem);
-        var val = fieldName.getAttribute("fieldValue");
-        document.getElementById("SortBy").value=val;
-}
-function selectSortOrder(element)
-{
-        var fieldName = document.getElementById(element);
-        var val = fieldName.getAttribute("sortingOrder");
-        document.getElementById("order").value=val;
-        document.sortomat_ilmoitukset.submit();
-}
-function search()
-{
-        document.getElementById("sortDiv").style.display="none";
-        document.getElementById("searchRow").style.display="";
-        document.getElementById("searchButtonRow").style.display="";
-}
-function searchRec()
-{
-    document.searchomat_ilmoitukset.submit();
-}
-function cancelSearch()
-{
-        document.getElementById("searchRow").style.display="none";
-        document.getElementById("searchButtonRow").style.display="none";
-}
-function vastaa(key)
-{
-alert(key);
-}
-	 
-</script>
+
 {% for x in records %}
 <tr class="zc-viewrow zc-row-1">
 <td align="center"> {{ x.Olen }} </td>

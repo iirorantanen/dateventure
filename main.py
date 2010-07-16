@@ -277,7 +277,7 @@ class ilmoitusVahvistettu(webapp.RequestHandler):
 	    ilmoitusVar.vKuvaus = self.request.get('description')
 	    ilmoitusVar.Vastattu = True
 	    ilmoitusVar.Vastaaja = user
-	
+	    ilmoitusVar.put()
 	    template_values = {"url":users.create_logout_url("/"), 'key':postKey, 'datetime':ilmoitusVar.P_iv_m_r_Aika, 'age':ilmoitusVar.Age, 'gender':ilmoitusVar.Olen, 'location':ilmoitusVar.Paikka, 'owndescription':ilmoitusVar.vKuvaus, 'description':ilmoitusVar.Kuvaus }
 	    self.response.out.write(template.render(path,template_values))
 
