@@ -28,11 +28,12 @@ class palaute(search.SearchableModel):
 
     # Palautteen osat
     kayttaisitko = db.BooleanProperty()
-    hyodyllisyys = db.StringProperty(multiline=True)
+    hyodyllisyys = db.TextProperty()
     hyodyllisyysRating = db.IntegerProperty()
-    kaytettavyys = db.StringProperty(multiline=True)
+    kaytettavyys = db.TextProperty()
     kaytettavyysRating = db.IntegerProperty()
-    vapaaSana = db.StringProperty(multiline=True)
+    vapaaSana = db.TextProperty()
+    kehitys = db.TextProperty()
 
 
     date = db.DateTimeProperty(auto_now_add=True)

@@ -232,6 +232,8 @@ class palauteAction(webapp.RequestHandler):
         palauteVar.kaytettavyys = self.request.get('kaytettavyys')
 	if self.request.get('kaytettavyysrating') != "valitse":
 	    palauteVar.kaytettavyysRating = int(self.request.get('kaytettavyysrating'))
+
+	palauteVar.kehitys = self.request.get('kehitys')
 	
 	# pannaan kantaan ja muistetaan ylistaa palautteenantajaa
 	palauteVar.put()
