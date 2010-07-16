@@ -8,14 +8,10 @@ from google.appengine.ext import db
 from google.appengine.ext.webapp import template
 from google.appengine.api import users
 from google.appengine.api import mail
-<<<<<<< HEAD:main.py
-=======
 from google.appengine.ext.db import Model
-from dateventure import K_ytt_j
->>>>>>> 85ef22eec4d60fa7ab42d57ef988d8a353786595:main.py
 #from dateventure import selaus
 from dateventure import ilmoitus
-from dateventure import ilmoitus_Olens
+from dateventure import alignment
 from dateventure import palaute
 
 class MainPage(webapp.RequestHandler):
@@ -25,7 +21,7 @@ class MainPage(webapp.RequestHandler):
         if user:
             template_values={
 
-            'Olen': ilmoitus_Olens ,
+            'Olen': alignment ,
 
                 "nickname":user.nickname(),
                 "url":users.create_logout_url("/")
@@ -40,13 +36,23 @@ class MainPage(webapp.RequestHandler):
         path = os.path.join(os.path.dirname(__file__),theHtmlPage)
         self.response.out.write(template.render(path,template_values))
 
+class Showetusivu(webapp.RequestHandler):
+    def get(self):
+        user = users.get_current_user()
+        if user:
+          template_values={"url":users.create_logout_url("/")}
+        else:
+          template_values={"loginurl":users.create_login_url("/")}
+        path = os.path.join(os.path.dirname(__file__),'etusivu.html')
+        self.response.out.write(template.render(path,template_values))        
+
 
 class Showilmoitus(webapp.RequestHandler):
     def get(self):
         user = users.get_current_user()
         global ilmoitus_Olen
         template_values={
-            'Olen': ilmoitus_Olens ,
+            'Olen': alignment ,
             "nickname":user.nickname(),
             "url":users.create_logout_url("/")
         }
@@ -81,6 +87,9 @@ class ilmoitusAction (webapp.RequestHandler):
         VastattuTemp =self.request.get('Vastattu')
         if VastattuTemp!="":
             ilmoitusVar.Vastattu = int(VastattuTemp)
+	AgeTemp = self.request.get('Age')
+	if AgeTemp != "":
+	  ilmoitusVar.Age = int(self.request.get('Age'))
 
         ilmoitusVar.put()
         self.redirect('/showilmoitus')
@@ -186,13 +195,7 @@ class searchilmoitus_ViewAction(webapp.RequestHandler):
 # palautelomake
 class palaute_View(webapp.RequestHandler):
     def get(self):
-<<<<<<< HEAD:main.py
-        template_values = {'Olen': ilmoitus_Olens}
-=======
-	user = users.get_current_user()
-	template_values = {'Olen': ilmoitus_Olens, "nickname":user.nickname(), "url":users.create_logout_url("/")}
->>>>>>> 85ef22eec4d60fa7ab42d57ef988d8a353786595:main.py
-
+        template_values = {'Olen': alignment}
 	path=os.path.join(os.path.dirname(__file__),'palaute.html')
 	self.response.out.write(template.render(path,template_values))
 	
@@ -227,13 +230,8 @@ class palauteAction(webapp.RequestHandler):
 # Palautelomakkeen kiitossivu
 class kiitos(webapp.RequestHandler):
     def get(self):
-<<<<<<< HEAD:main.py
         path=os.path.join(os.path.dirname(__file__),'kiitos.html')
         template_values = {}
-=======
-	path=os.path.join(os.path.dirname(__file__),'kiitos.html')
-        template_values = {"url":users.create_logout_url("/")}
->>>>>>> 85ef22eec4d60fa7ab42d57ef988d8a353786595:main.py
 	self.response.out.write(template.render(path,template_values))
 
 class ukk(webapp.RequestHandler):
@@ -259,21 +257,15 @@ def main():
 		('/palaute', palaute_View),
 		('/addpalaute', palauteAction),
 		('/kiitos', kiitos),
-<<<<<<< HEAD:main.py
-=======
 		('/ukk', ukk),
 		('/confirm', vahvistaIlmoituksenAvaus),
-                ('/addK_ytt_j',K_ytt_jAction),
-                ('/showK_ytt_j',ShowK_ytt_j),
-                ('/addselaus',selausAction),
-                ('/showselaus',Showselaus),
->>>>>>> 85ef22eec4d60fa7ab42d57ef988d8a353786595:main.py
                 ('/addilmoitus',ilmoitusAction),
                 ('/showilmoitus',Showilmoitus),
                 ('/showilmoitus_View',Showilmoitus_View),
                 ('/sortilmoitus_View',sortilmoitus_ViewAction),
                 ('/searchilmoitus_View',searchilmoitus_ViewAction),
-		('/showomat_ilmoitukset',Showomat_ilmoitukset)],
+		('/showomat_ilmoitukset',Showomat_ilmoitukset),
+		('/showetusivu',Showetusivu)],
                 debug=True)
 
     wsgiref.handlers.CGIHandler().run(application)

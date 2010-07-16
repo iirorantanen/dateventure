@@ -1,0 +1,45 @@
+indexes:
+- kind: K_ytt_j
+  properties:
+  - name: Etunimi
+    direction: desc
+- kind: K_ytt_j
+  properties:
+  - name: Sukunimi
+    direction: desc
+- kind: K_ytt_j
+  properties:
+  - name: Sukupuoli
+    direction: desc
+- kind: K_ytt_j
+  properties:
+  - name: Puhelin
+    direction: desc
+- kind: ilmoitus
+  properties:
+  - name: Olen
+    direction: desc
+- kind: ilmoitus
+  properties:
+  - name: Paikka
+    direction: desc
+- kind: ilmoitus
+  properties:
+  - name: P_iv_m_r_Aika
+    direction: desc
+- kind: ilmoitus
+  properties:
+  - name: Kuvaus
+    direction: desc
+- kind: ilmoitus
+  properties:
+  - name: Vastattu
+    direction: desc
+- kind: Palaute
+  properties:
+  - name: L_hett_j
+    direction: desc
+- kind: Palaute
+  properties:
+  - name: Palaute
+    direction: desc

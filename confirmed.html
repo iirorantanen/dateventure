@@ -1,19 +1,11 @@
 {% extends "index.html" %}
 {% block content %}
-<script type="text/javascript">
 
-function validate()
-{
-    if(validateFormFields($("#confirm")))
-    {
-        document.confirm.submit();
-    }
-}
 
-</script>
+<div class="zc-formheader"><span elname="zc-formNameEl"><label class="zc-formtitle">Tapaaminen on nyt sovittu</label></span></div>
 
-<form style="margin: 0px; padding: 0px;" method="post" id="confirm" name="confirm" action="confirmed" enctype="multipart/form-data">
-<div class="zc-formheader"><span elname="zc-formNameEl"><label class="zc-formtitle">Vahvista vastaus</label></span></div>
+
+
 <table class="zc-formtable zc-appformtable" border="0" cellspacing="0" cellpadding="0">
 <tbody>
 
@@ -40,24 +32,25 @@ function validate()
 </tr>
 
 <tr>
-<td class="zc-labelheader" style="width: 150px;"><label>Lyhyt kuvaus itsestäsi</label></td>
-<td class="zc-inputheader" style="width: auto;"><textarea cols=40 rows=5 id="description" name="description" value="" mandatory="true"></textarea><p id="description_Error"></p></td>
+<td class="zc-labelheader" style="width: 150px;"><label>Oma kuvauksesi</label></td>
+<td class="zc-inputheader" style="width: auto;">{{owndescription}}</td>
 </tr>
 
+<tr>
+<td class="zc-labelheader" style="width: 150px;"><label>Kumppanisi kuvaus</label></td>
+<td class="zc-inputheader" style="width: auto;">{{description}}</td>
+</tr>
 
 <tr>
 <td class="zc-button-row" style="border:medium none;"/>
 <td class="zc-button-row" style="border:medium none; text-align:left;" >
-<input type="button" class="zc-formbutton"value="Submit" onClick="validate()">
-<input class="zc-formbutton" type="reset" value="Reset"/>
+<a class="zc-formbutton" href="/"> Takaisin etusivulle </a>
 </td>
 </tr>
 </tbody>
 </table>
 
 </div>
-
-</form>
 
 
 {% endblock %}

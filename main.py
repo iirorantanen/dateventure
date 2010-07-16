@@ -11,7 +11,7 @@ from google.appengine.api import mail
 from google.appengine.ext.db import Model
 #from dateventure import selaus
 from dateventure import ilmoitus
-from dateventure import ilmoitus_Olens
+from dateventure import alignment
 from dateventure import palaute
 
 class MainPage(webapp.RequestHandler):
@@ -21,7 +21,7 @@ class MainPage(webapp.RequestHandler):
         if user:
             template_values={
 
-            'Olen': ilmoitus_Olens ,
+            'Olen': alignment ,
 
                 "nickname":user.nickname(),
                 "url":users.create_logout_url("/")
@@ -36,13 +36,23 @@ class MainPage(webapp.RequestHandler):
         path = os.path.join(os.path.dirname(__file__),theHtmlPage)
         self.response.out.write(template.render(path,template_values))
 
+class Showetusivu(webapp.RequestHandler):
+    def get(self):
+        user = users.get_current_user()
+        if user:
+          template_values={"url":users.create_logout_url("/")}
+        else:
+          template_values={"loginurl":users.create_login_url("/")}
+        path = os.path.join(os.path.dirname(__file__),'etusivu.html')
+        self.response.out.write(template.render(path,template_values))        
+
 
 class Showilmoitus(webapp.RequestHandler):
     def get(self):
         user = users.get_current_user()
         global ilmoitus_Olen
         template_values={
-            'Olen': ilmoitus_Olens ,
+            'Olen': alignment ,
             "nickname":user.nickname(),
             "url":users.create_logout_url("/")
         }
@@ -77,6 +87,9 @@ class ilmoitusAction (webapp.RequestHandler):
         VastattuTemp =self.request.get('Vastattu')
         if VastattuTemp!="":
             ilmoitusVar.Vastattu = int(VastattuTemp)
+	AgeTemp = self.request.get('Age')
+	if AgeTemp != "":
+	  ilmoitusVar.Age = int(self.request.get('Age'))
 
         ilmoitusVar.put()
         self.redirect('/showilmoitus')
@@ -182,22 +195,22 @@ class searchilmoitus_ViewAction(webapp.RequestHandler):
 # palautelomake
 class palaute_View(webapp.RequestHandler):
     def get(self):
-        template_values = {'Olen': ilmoitus_Olens}
+        template_values = {'Olen': alignment}
 	path=os.path.join(os.path.dirname(__file__),'palaute.html')
 	self.response.out.write(template.render(path,template_values))
 	
 
-# Vie palautelomakkeesta lähetetyt tiedot tietokantaan
+# Vie palautelomakkeesta lahetetyt tiedot tietokantaan
 class palauteAction(webapp.RequestHandler):
     def post(self):
 	palauteVar = palaute()
 
-	# kerätään tiedot palautteenantajasta
+	# kerataan tiedot palautteenantajasta
 	if self.request.get('ika') != "":
 	    palauteVar.ika = int(self.request.get('ika'))
 	palauteVar.sukupuoli = self.request.get('sukupuoli')
 
-	# kerätään palaute
+	# kerataan palaute
 	if self.request.get('kayttaisitko') != "":
 	    palauteVar.kayttaisitko = bool(self.request.get('kayttaisitko'))
 
@@ -209,7 +222,7 @@ class palauteAction(webapp.RequestHandler):
 	if self.request.get('kaytettavyysrating') != "valitse":
 	    palauteVar.kaytettavyysRating = int(self.request.get('kaytettavyysrating'))
 	
-	# pannaan kantaan ja muistetaan ylistää palautteenantajaa
+	# pannaan kantaan ja muistetaan ylistaa palautteenantajaa
 	palauteVar.put()
 	self.redirect('/kiitos')
 
@@ -227,16 +240,25 @@ class ukk(webapp.RequestHandler):
 	template_values = {"url":users.create_logout_url("/")}
 	self.response.out.write(template.render(path,template_values))
 
-
+# This will review the details and ask the user if they want to set up the date.
 class vahvistaIlmoituksenAvaus(webapp.RequestHandler):
     def post(self):
 	path=os.path.join(os.path.dirname(__file__),'confirm.html')	
 	postKey = self.request.get('key')
-	ilmoitusVar = Model.get_by_key_name(postKey)
-	template_values = {"url":users.create_logout_url("/"), 'key':postKey}
+	ilmoitusVar = Model.get(postKey)
+	template_values = {"url":users.create_logout_url("/"), 'key':postKey, 'datetime':ilmoitusVar.P_iv_m_r_Aika, 'age':ilmoitusVar.Age, 'gender':ilmoitusVar.Olen, 'location':ilmoitusVar.Paikka }
 	self.response.out.write(template.render(path,template_values))
-	
-	
+
+# This page is shown when the date is confirmed
+class ilmoitusVahvistettu(webapp.RequestHandler):
+    def post(self):
+	path=os.path.join(os.path.dirname(__file__),'confirmed.html')
+	postKey = self.request.get('key')
+	ilmoitusVar = Model.get(postKey)
+	ilmoitusVar.vKuvaus = self.request.get('description')
+	ilmoitusVar.Vastattu = True
+	template_values = {"url":users.create_logout_url("/"), 'key':postKey, 'datetime':ilmoitusVar.P_iv_m_r_Aika, 'age':ilmoitusVar.Age, 'gender':ilmoitusVar.Olen, 'location':ilmoitusVar.Paikka, 'owndescription':ilmoitusVar.vKuvaus, 'description':ilmoitusVar.Kuvaus }
+	self.response.out.write(template.render(path,template_values))
 
 def main():
     application = webapp.WSGIApplication(
@@ -246,12 +268,14 @@ def main():
 		('/kiitos', kiitos),
 		('/ukk', ukk),
 		('/confirm', vahvistaIlmoituksenAvaus),
+		('/confirmed', ilmoitusVahvistettu),
                 ('/addilmoitus',ilmoitusAction),
                 ('/showilmoitus',Showilmoitus),
                 ('/showilmoitus_View',Showilmoitus_View),
                 ('/sortilmoitus_View',sortilmoitus_ViewAction),
                 ('/searchilmoitus_View',searchilmoitus_ViewAction),
-		('/showomat_ilmoitukset',Showomat_ilmoitukset)],
+		('/showomat_ilmoitukset',Showomat_ilmoitukset),
+		('/showetusivu',Showetusivu)],
                 debug=True)
 
     wsgiref.handlers.CGIHandler().run(application)

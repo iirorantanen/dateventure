@@ -10,6 +10,13 @@
 <script type="text/javascript" src="/js/utils.js"></script>
 <link href="/css/l1t1c1.css" rel="stylesheet" type="text/css">
 <link href="/css/calendar.css" rel="stylesheet" type="text/css">
+<style type="text/css">
+div.tissipeelo
+{
+visibility:hidden;
+}
+
+</style>
 </head>
 <body class="body-class">
 <table border="0" width="100%" class="zc-pane-header-table zc-header-table">
@@ -18,10 +25,20 @@
 <img src="/images/creator-logo.png">
 </td>!-->
 <td class="zc-pane-header-appname">
-Dateventures <br /> TISSITLOLLOLLOLLOo
+Dateventures <br />
 </td>
 <td valign="top" align="right">
-<a href={{url}} class="zc-pane-header-a-menu">Sign Out</a>&nbsp;
+<div id="urk" name="homonaama" class="tissipeelo">{{loginurl}}</div>
+<script type="text/javascript">
+if(true)
+{
+  var a = document.getElementById("urk");
+  document.write(a.innerHTML);
+  document.write("<a href={{loginurl}} class=\"zc-pane-header-a-menu\">Sign In</a>&nbsp;");
+  document.write("<a href={{url}} class=\"zc-pane-header-a-menu\">Sign Out</a>&nbsp;");
+}
+</script>
+
 </td>
 </tr>
 </table>
@@ -31,15 +48,11 @@ Dateventures <br /> TISSITLOLLOLLOLLOo
 <div class="zc-pane-left-section zc-pane-left-section">Dateventure
 </div>
 <div comelname="zc-panesection" id="page-Home">
-<<<<<<< HEAD:index.html
+<a class="zc-pane-left-a" href="/showetusivu">Etusivu</a>
 <a class="zc-pane-left-a" href="/showilmoitus">Jätä ilmoitus</a>
 <a class="zc-pane-left-a" href="/showilmoitus_View">Selaa ilmoituksia</a>
 <a class="zc-pane-left-a" href="/showomat_ilmoitukset">Omat ilmoituksesi</a>
-=======
-<a class="zc-pane-left-a" href="/showilmoitus">ilmoitus</a>
-<a class="zc-pane-left-a" href="/showilmoitus_View">ilmoitus View</a>
 <a class="zc-pane-left-a" href="/palaute"> Anna palautetta</a>
->>>>>>> d81ad17bbb1f78d733739a5888b33dde2442980a:index.html
 </div>
 </td><td width="90%" class="zc-component zc-pane-right"><div id="content" align="center">
 {% block content %} {% endblock %}</div></td></tr></table></body></html>

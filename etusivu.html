@@ -6,11 +6,11 @@
 <span elname="zc-formNameEl"><label class="zc-formtitle">ilmoitus View</label></span>
 </div>
 <div class="zc-formcontent zc-appformcontent">
-<form name="sortilmoitus_View" id="sortilmoitus_View" method="post" action="sortilmoitus_View">
+<form name="sortetusivu" id="sortetusivu" method="post" action="sortetusivu">
 <input type="hidden" name="SortBy" id="SortBy">
 <input type="hidden" name="order" id="order">
 </form>
-<form name="searchilmoitus_View" id="searchilmoitus_View" action="searchilmoitus_View" method="post">
+<form name="searchetusivu" id="searchetusivu" action="searchetusivu" method="post">
 <table class="zc-formtable zc-appformtable" border="0" cellspacing="0">
 <tbody>
 <thead>
@@ -73,7 +73,7 @@ function selectSortOrder(element)
         var fieldName = document.getElementById(element);
         var val = fieldName.getAttribute("sortingOrder");
         document.getElementById("order").value=val;
-        document.sortilmoitus_View.submit();
+        document.sortetusivu.submit();
 }
 function search()
 {
@@ -83,7 +83,7 @@ function search()
 }
 function searchRec()
 {
-    document.searchilmoitus_View.submit();
+    document.searchetusivu.submit();
 }
 function cancelSearch()
 {
@@ -91,24 +91,6 @@ function cancelSearch()
         document.getElementById("searchButtonRow").style.display="none";
 }
 
-
-function post(key) {
-
-    var form = document.createElement("form");
-    form.setAttribute("method", "post");
-    form.setAttribute("action", "confirm");
-
-    var hiddenField = document.createElement("input");
-    hiddenField.setAttribute("type", "hidden");
-    hiddenField.setAttribute("name", "key");
-    hiddenField.setAttribute("value", key);
-    form.appendChild(hiddenField);
-
-    document.body.appendChild(form);    
-    form.submit();
-}
-
- 
 </script>
 {% for x in records %}
 <tr class="zc-viewrow zc-row-1">
@@ -116,7 +98,6 @@ function post(key) {
 <td align="center"> {{x.Paikka }}</td>
 <td align="center"> {{x.P_iv_m_r_Aika }}</td>
 <td align="center"> {{x.Kuvaus }}</td>
-<td align="center"> <a href="#" onClick="post('{{x.key}}')"> Vastaa </a> </td>
 </tr>
 
 {% endfor %}
