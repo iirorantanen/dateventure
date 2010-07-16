@@ -122,7 +122,7 @@ class Showilmoitus_View(webapp.RequestHandler):
 	  self.redirect(users.create_login_url(self.request.uri))
 	else:
           user = users.get_current_user()
-          ilmoitusVar = ilmoitus.gql("WHERE Vastattu = :y", y = True)
+          ilmoitusVar = ilmoitus.gql("WHERE Vastattu = :y", y = False)
           records = ilmoitusVar.fetch(limit=100)
           template_values = { 'records': records,"nickname":user.nickname(),"url":users.create_logout_url("/")}
           path=os.path.join(os.path.dirname(__file__),'ilmoitus_View.html')
@@ -277,7 +277,7 @@ class ilmoitusVahvistettu(webapp.RequestHandler):
 	    ilmoitusVar.vKuvaus = self.request.get('description')
 	    ilmoitusVar.Vastattu = True
 	    ilmoitusVar.Vastaaja = user
-	
+	    ilmoitusVar.put()
 	    template_values = {"url":users.create_logout_url("/"), 'key':postKey, 'datetime':ilmoitusVar.P_iv_m_r_Aika, 'age':ilmoitusVar.Age, 'gender':ilmoitusVar.Olen, 'location':ilmoitusVar.Paikka, 'owndescription':ilmoitusVar.vKuvaus, 'description':ilmoitusVar.Kuvaus }
 	    self.response.out.write(template.render(path,template_values))
 

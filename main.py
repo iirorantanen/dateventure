@@ -204,9 +204,9 @@ class palaute_View(webapp.RequestHandler):
     def get(self):
 	user=users.get_current_user()
         if user:
-          template_values={"url":users.create_logout_url("/")}
+          template_values={'Olen': alignment, "url":users.create_logout_url("/")}
         else:
-          template_values={"loginurl":users.create_login_url("/")}
+          template_values={'Olen': alignment, "loginurl":users.create_login_url("/")}
 	path=os.path.join(os.path.dirname(__file__),'palaute.html')
 	self.response.out.write(template.render(path,template_values))
 	
