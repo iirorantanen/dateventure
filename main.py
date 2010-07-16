@@ -218,7 +218,7 @@ class palauteAction(webapp.RequestHandler):
 
 	# kerataan tiedot palautteenantajasta
 	if self.request.get('ika') != "":
-	    palauteVar.ika = int(self.request.get('ika'))
+	    palauteVar.ika = self.request.get('ika')
 	palauteVar.sukupuoli = self.request.get('sukupuoli')
 
 	# kerataan palaute
