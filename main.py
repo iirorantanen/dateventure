@@ -243,16 +243,25 @@ class ukk(webapp.RequestHandler):
 	template_values = {"url":users.create_logout_url("/")}
 	self.response.out.write(template.render(path,template_values))
 
-
+# This will review the details and ask the user if they want to set up the date.
 class vahvistaIlmoituksenAvaus(webapp.RequestHandler):
     def post(self):
 	path=os.path.join(os.path.dirname(__file__),'confirm.html')	
 	postKey = self.request.get('key')
-	ilmoitusVar = Model.get_by_key_name(postKey)
-	template_values = {"url":users.create_logout_url("/"), 'key':postKey}
+	ilmoitusVar = Model.get(postKey)
+	template_values = {"url":users.create_logout_url("/"), 'key':postKey, 'datetime':ilmoitusVar.P_iv_m_r_Aika, 'age':ilmoitusVar.Age, 'gender':ilmoitusVar.Olen, 'location':ilmoitusVar.Paikka }
 	self.response.out.write(template.render(path,template_values))
-	
-	
+
+# This page is shown when the date is confirmed
+class ilmoitusVahvistettu(webapp.RequestHandler):
+    def post(self):
+	path=os.path.join(os.path.dirname(__file__),'confirmed.html')
+	postKey = self.request.get('key')
+	ilmoitusVar = Model.get(postKey)
+	ilmoitusVar.vKuvaus = self.request.get('description')
+	ilmoitusVar.Vastattu = True
+	template_values = {"url":users.create_logout_url("/"), 'key':postKey, 'datetime':ilmoitusVar.P_iv_m_r_Aika, 'age':ilmoitusVar.Age, 'gender':ilmoitusVar.Olen, 'location':ilmoitusVar.Paikka, 'owndescription':ilmoitusVar.vKuvaus, 'description':ilmoitusVar.Kuvaus }
+	self.response.out.write(template.render(path,template_values))
 
 def main():
     application = webapp.WSGIApplication(
@@ -262,6 +271,7 @@ def main():
 		('/kiitos', kiitos),
 		('/ukk', ukk),
 		('/confirm', vahvistaIlmoituksenAvaus),
+		('/confirmed', ilmoitusVahvistettu),
                 ('/addilmoitus',ilmoitusAction),
                 ('/showilmoitus',Showilmoitus),
                 ('/showilmoitus_View',Showilmoitus_View),
