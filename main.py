@@ -200,17 +200,17 @@ class palaute_View(webapp.RequestHandler):
 	self.response.out.write(template.render(path,template_values))
 	
 
-# Vie palautelomakkeesta lähetetyt tiedot tietokantaan
+# Vie palautelomakkeesta lahetetyt tiedot tietokantaan
 class palauteAction(webapp.RequestHandler):
     def post(self):
 	palauteVar = palaute()
 
-	# kerätään tiedot palautteenantajasta
+	# kerataan tiedot palautteenantajasta
 	if self.request.get('ika') != "":
 	    palauteVar.ika = int(self.request.get('ika'))
 	palauteVar.sukupuoli = self.request.get('sukupuoli')
 
-	# kerätään palaute
+	# kerataan palaute
 	if self.request.get('kayttaisitko') != "":
 	    palauteVar.kayttaisitko = bool(self.request.get('kayttaisitko'))
 
@@ -222,7 +222,7 @@ class palauteAction(webapp.RequestHandler):
 	if self.request.get('kaytettavyysrating') != "valitse":
 	    palauteVar.kaytettavyysRating = int(self.request.get('kaytettavyysrating'))
 	
-	# pannaan kantaan ja muistetaan ylistää palautteenantajaa
+	# pannaan kantaan ja muistetaan ylistaa palautteenantajaa
 	palauteVar.put()
 	self.redirect('/kiitos')
 

@@ -3,7 +3,7 @@
 <script type="text/javascript">
 function validateaddilmoitus()
 {
-    if(validateFormFields($("#addilmoitus")) || (Age.value >= 18))
+    if(validateFormFields($("#addilmoitus")) && (Age.value >= 18))
     {
         document.addilmoitus.submit();
     }
@@ -16,7 +16,7 @@ function validateaddilmoitus()
 <table>
 <tbody>
 <tr>
-<td><label>Olen*</label></td>
+<td class="zc-labelheader" style="width: auto;"><label>Olen<font color="#ec3e3e">*</font></label></td>
 <td><select name="Olen">
 {% for x in Olen %}
 <option value='{{x}}'>{{x}}</option>
@@ -25,11 +25,11 @@ function validateaddilmoitus()
 </td>
 </tr>
 <tr>
-<td><label>Paikka*</font></label></td>
+<td class="zc-labelheader" style="width: auto;"><label>Paikka<font color="#ec3e3e">Ö</font></label></td>
 <td><input id="Paikka" name="Paikka" value="" type="text" mandatory="true"><p id="Paikka_Error"></p></td>
 </tr>
 <tr>
-<td><label>Päivämäärä & Aika *</label></td>
+<td class="zc-labelheader" style="width: auto;"><label>Päivämäärä & Aika<font color="#ec3e3e">*</font></label></td>
 <td><input type="text" class="zc-inputtext" value="" id="P_iv_m_r_Aika" name="P_iv_m_r_Aika">&nbsp;&nbsp;<a href="javascript:void(0);"><img id="IMG_P_iv_m_r_Aika" width="16" height="17" border="0" src="/images/date_icon.gif" name="Img_P_iv_m_r_Aika"></a>
 <script type="text/javascript">Calendar.setup({
 inputField     :    "P_iv_m_r_Aika",
