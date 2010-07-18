@@ -1,6 +1,6 @@
 {% extends "index.html" %}
 {% block content %}
-<div class="zc-formcontainer" >
+<div class="zc-formcontainer" style="width: auto;">
 <p>Tervetuloa Dateventures-deittisivustolle. Dateventures on uudenlainen, sokkotreffipohjalla toimiva treffipalvelu: ihmiset eivät tiedä toisistaan ennen tapaamista juuri mitään muuta kuin iän ja sukupuolen.</p>
 <div class="zc-formheader">
 <span elname="zc-formNameEl"><label class="zc-formtitle">Dateventures</label></span>
