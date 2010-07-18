@@ -101,7 +101,7 @@ class ilmoitusAction (webapp.RequestHandler):
 	  ilmoitusVar.Age = int(self.request.get('Age'))
 
         ilmoitusVar.put()
-        self.redirect('/showilmoitus')
+        self.redirect('/kuittaus')
 
 
 
@@ -257,6 +257,12 @@ class kiitos(webapp.RequestHandler):
         template_values = {}
 	self.response.out.write(template.render(path,template_values))
 
+class kuittaus(webapp.RequestHandler):
+    def get(self):
+        path=os.path.join(os.path.dirname(__file__),'kuittaus.html')
+        template_values = {}
+	self.response.out.write(template.render(path,template_values))
+
 class ukk(webapp.RequestHandler):
     def get(self):
 	path=os.path.join(os.path.dirname(__file__),'ukk.html')
@@ -299,6 +305,7 @@ def main():
 		('/palaute', palaute_View),
 		('/addpalaute', palauteAction),
 		('/kiitos', kiitos),
+		('/kuittaus',kuittaus),
 		('/ukk', ukk),
 		('/confirm', vahvistaIlmoituksenAvaus),
 		('/confirmed', ilmoitusVahvistettu),

@@ -11,7 +11,7 @@
 <tbody>
 <thead>
 <tr class="zc-viewrowheader" height="25">
-<td align="center"><b>Olen</b></td>
+<td align="center"><b>Etsin</b></td>
 <td align="center"><b>Paikka</b></td>
 <td align="center"><b>Päivämäärä & Aika</b></td>
 <td align="center"><b>Kuvaus</b></td>
@@ -23,9 +23,9 @@
 <tr class="zc-viewrow zc-row-1"
 {% if x.Vastattu %} style="background-color:#D3FFC4;"{% endif %}
 >
-<td align="center"> {{x.Olen }} </td>
+<td align="center"> {{x.Etsin }} </td>
 <td align="center"> {{x.Paikka }}</td>
-<td align="center"> {{x.P_iv_m_r_Aika }}</td>
+<td align="center"> {{x.Datetime }}</td>
 <td align="center"> {{x.Kuvaus }}</td>
 <td align="center"> {% if x.Vastattu %}{{x.vKuvaus }}{% else %}.{% endif %} </td>
 
@@ -46,7 +46,7 @@
 <tbody>
 <thead>
 <tr class="zc-viewrowheader" height="25">
-<td align="center"><b>Olen</b></td>
+<td align="center"><b>Ilmoittaja</b></td>
 <td align="center"><b>Paikka</b></td>
 <td align="center"><b>Päivämäärä & Aika</b></td>
 <td align="center"><b>Ilmoittajan Kuvaus</b></td>

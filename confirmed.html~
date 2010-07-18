@@ -1,0 +1,58 @@
+{% extends "index.html" %}
+{% block content %}
+
+
+<div class="zc-formheader"><span elname="zc-formNameEl"><label class="zc-formtitle">Tapaaminen on nyt sovittu</label></span></div>
+
+
+
+<table class="zc-formtable zc-appformtable" border="0" cellspacing="0" cellpadding="0">
+<tbody>
+
+<input type="hidden" name="key" value="{{key}}">
+
+<tr>
+<td class="zc-labelheader" style="width: auto;"><label>Ajankohta</label></td>
+<td class="zc-inputheader" style="width: auto;">{{datetime}}</td>
+</tr>
+
+<tr> 
+<td class="zc-labelheader" style="width: 150px;"><label>Paikka</label></td>
+<td class="zc-inputheader" style="width: auto;">{{location}}</td>
+</tr>
+
+<tr> 
+<td class="zc-labelheader" style="width: 150px;"><label>Kumppanin ikä</label></td>
+<td class="zc-inputheader" style="width: auto;">{{age}}</td>
+</tr>
+
+<tr> 
+<td class="zc-labelheader" style="width: 150px;"><label>Kumppanin sukupuoli</label></td>
+<td class="zc-inputheader" style="width: auto;">{{gender}}</td>
+</tr>
+
+<tr>
+<td class="zc-labelheader" style="width: 150px;"><label>Oma kuvauksesi</label></td>
+<td class="zc-inputheader" style="width: auto;">{{owndescription}}</td>
+</tr>
+
+<tr>
+<td class="zc-labelheader" style="width: 150px;"><label>Kumppanisi kuvaus</label></td>
+<td class="zc-inputheader" style="width: auto;">{{description}}</td>
+</tr>
+
+<tr>
+<td class="zc-button-row" style="border:medium none;"/>
+<td class="zc-button-row" style="border:medium none; text-align:left;" >
+<a class="zc-formbutton" href="/"> Takaisin etusivulle </a>
+</td>
+</tr>
+</tbody>
+</table>
+
+Voit tarkastella jättämiäsi ilmoituksia sekä vastauksiasi <a href="showomat_ilmoitukset">Omat ilmoitukseni</a>-sivulla<
+
+</div>
+
+
+{% endblock %}

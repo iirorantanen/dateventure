@@ -63,8 +63,9 @@ document.write("<a href={{url}} class=\"zc-pane-header-a-menu\">Sign Out</a>&nbs
 <a class="zc-pane-left-a" href="/showetusivu">Etusivu</a>
 <a class="zc-pane-left-a" href="/showilmoitus">Jätä ilmoitus</a>
 <a class="zc-pane-left-a" href="/showilmoitus_View">Selaa ilmoituksia</a>
-<a class="zc-pane-left-a" href="/showomat_ilmoitukset">Omat ilmoituksesi</a>
+<a class="zc-pane-left-a" href="/showomat_ilmoitukset">Omat ilmoitukseni</a>
 <a class="zc-pane-left-a" href="/palaute"> Anna palautetta</a>
 </div>
-</td><td width="90%" class="zc-component zc-pane-right"><div id="content" align="center">
+<!-- white-space:normal on purkkaviritys, joka tuntuu toimivan !-->
+</td><td width="90%" class="zc-component zc-pane-right"><div id="content" align="center" style="white-space:normal">
 {% block content %} {% endblock %}</div></td></tr></table></body></html>

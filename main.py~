@@ -75,7 +75,7 @@ class ilmoitusAction (webapp.RequestHandler):
 	DateTemp = self.request.get('Date')
 	Date_res = DateTemp.split('.')
 	ilmoitusVar.Date = datetime.date(int(Date_res[2]), int(Date_res[1]), int(Date_res[0]))
-	ilmoitusVar.Datetime = datetime.datetime(int(Date_res[2] + 2000), int(Date_res[1]), int(Date_res[0]), int(self.request.get('Hour')), int(self.request.get('Min')))
+	ilmoitusVar.Datetime = datetime.datetime(int(Date_res[2])+2000, int(Date_res[1]), int(Date_res[0]), int(self.request.get('Hour')), int(self.request.get('Min')))
 
 #        Datetimetemp = self.request.get('Datetime')
 #        if Datetimetemp!="":
@@ -257,6 +257,12 @@ class kiitos(webapp.RequestHandler):
         template_values = {}
 	self.response.out.write(template.render(path,template_values))
 
+class kuittaus(webapp.RequestHandler):
+    def get(self):
+        path=os.path.join(os.path.dirname(__file__),'kuittaus.html')
+        template_values = {}
+	self.response.out.write(template.render(path,template_values))
+
 class ukk(webapp.RequestHandler):
     def get(self):
 	path=os.path.join(os.path.dirname(__file__),'ukk.html')
@@ -299,6 +305,7 @@ def main():
 		('/palaute', palaute_View),
 		('/addpalaute', palauteAction),
 		('/kiitos', kiitos),
+		('/kuittaus',kuittaus),
 		('/ukk', ukk),
 		('/confirm', vahvistaIlmoituksenAvaus),
 		('/confirmed', ilmoitusVahvistettu),

@@ -1,0 +1,106 @@
+{% extends "index.html" %}
+{% block content %}
+
+<script type="text/javascript">
+function validateaddpalaute()
+{
+    if(validateFormFields($("#addpalaute")))
+    {
+        document.addpalaute.submit();
+    }
+}
+</script>
+
+<form style="margin: 0px; padding: 0px;" method="post" id="addpalaute" name="addpalaute" action="addpalaute" enctype="multipart/form-data">
+<div class="zc-formheader"><span elname="zc-formNameEl"><label class="zc-formtitle">Käyttäjän tiedot</label></span></div>
+<table class="zc-formtable zc-appformtable" border="0" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td class="zc-labelheader" style="width: 150px;"><label>Olen</label></td>
+<td class="zc-inputheader" style="width: auto;"><select name="sukupuoli">
+{% for x in Olen %}
+<option value='{{x}}'>{{x}}</option>
+{% endfor %}
+</select>
+</td>
+</tr>
+
+<tr>
+<td class="zc-labelheader" style="width: auto;"><label>Ikä<font color="#ec3e3e">*</font></label></td>
+
+<td class="zc-inputheader" style="width: auto;"><input id="ika" type="text" name="ika" value="" mandatory="true"><p id="ika_Error"></p></td>
+
+</tr>
+</tbody>
+</table>
+
+
+<div class="zc-formheader"><span elname="zc-formNameEl"><label class="zc-formtitle">Palaute</label></span></div>
+<table class="zc-formtable zc-appformtable" border="0" cellspacing="0" cellpadding="0">
+<tbody>
+
+<tr> <td class="zc-labelheader" style="width: 150px;"><label>Käyttäisitkö palvelua tulevaisuudessa?</label></td>
+<td>
+<input type="radio" name="kayttaisitko" value="Yes"> Kyllä<br>
+<input type="radio" name="kayttaisitko" value="No"> En
+
+</td>
+
+<tr>
+
+<td class="zc-labelheader" style="width: 150px;"><label>Hyödyllisyys</label><br /><br />
+Arvosana: <select name="hyodyllisyysrating">
+<option value='valitse'>valitse</option>
+<option value='1'>1</option>
+<option value='1'>2</option>
+<option value='1'>3</option>
+<option value='1'>4</option>
+<option value='1'>5</option>
+</select>
+</td>
+<td class="zc-inputheader" style="width: auto;"><textarea cols=50 rows=5 id="hyodyllisyys" name="hyodyllisyys" value="" mandatory="false"></textarea><p id="Palaute_Error"></p></td>
+</tr>
+
+
+<tr>
+<td class="zc-labelheader" style="width: 150px;"><label>Käytettävyys</label><br /><br />
+Arvosana: <select name="kaytettavyysrating">
+<option value='valitse'>valitse</option>
+<option value='1'>1</option>
+<option value='1'>2</option>
+<option value='1'>3</option>
+<option value='1'>4</option>
+<option value='1'>5</option>
+</select>
+<td class="zc-inputheader" style="width: auto;"><textarea cols=50 rows=5 id="kaytettavyys" name="kaytettavyys" value="" mandatory="false"></textarea><p id="Palaute_Error"></p></td>
+</tr>
+
+<tr>
+<td class="zc-labelheader" style="width: 150px;"><label>Kehitysehdotukset</label>
+<td class="zc-inputheader" style="width: auto;"><textarea cols=50 rows=5 id="vapaasana" name="kehitys" value="" mandatory="false"></textarea><p id="Palaute_Error"></p></td>
+</tr>
+
+<tr>
+<td class="zc-labelheader" style="width: 150px;"><label>Vapaa sana</label>
+<td class="zc-inputheader" style="width: auto;"><textarea cols=50 rows=5 id="vapaasana" name="vapaasana" value="" mandatory="false"></textarea><p id="Palaute_Error"></p></td>
+</tr>
+
+
+
+<tr>
+<td class="zc-button-row" style="border:medium none;"/>
+<td class="zc-button-row" style="border:medium none; text-align:left;" >
+<input type="button" class="zc-formbutton"value="Submit" onClick="validateaddpalaute()">
+<input class="zc-formbutton" type="reset" value="Reset"/>
+</td>
+</tr>
+</tbody>
+</table>
+
+
+
+</form>
+
+
+
+{% endblock %}
