@@ -9,7 +9,7 @@ etsin=('Mies', 'Nainen', 'Ei')
 class ilmoitus(search.SearchableModel):
     global alignment
     Olen = db.StringProperty(choices=alignment)
-    Etsin = db.StringProperty(choices=etsin)
+    Etsin = db.StringProperty()
     Paikka = db.StringProperty()
     Paikkakunta = db.StringProperty(default="Turku")
     Datetime = db.DateTimeProperty()

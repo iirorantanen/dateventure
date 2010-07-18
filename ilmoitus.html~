@@ -13,7 +13,7 @@ function validateaddilmoitus()
 <div class="zc-formheader"><span elname="zc-formNameEl"><label class="zc-formtitle">ilmoitus</label></span></div>
 <div class="zc-formcontent zc-appformcontent"><!-->
 
-<p style="align:left">Tervetuloa Dateventures-deittisivustolle. Dateventures on uudenlainen, sokkotreffipohjalla toimiva treffipalvelu: ihmiset eivät tiedä toisistaan ennen tapaamista juuri mitään muuta kuin iän ja sukupuolen.</p>
+<p style="align:left max-width:100%">Tervetuloa Dateventures-deittisivustolle. Dateventures on uudenlainen, sokkotreffipohjalla toimiva treffipalvelu: ihmiset eivät tiedä toisistaan ennen tapaamista juuri mitään muuta kuin iän ja sukupuolen.</p>
 <p>Näin jokaisesta treffistä tulee seikkailu!</p>
 
 <form method="post" id="addilmoitus" name="addilmoitus" action="addilmoitus" enctype="multipart/form-data">
@@ -31,10 +31,10 @@ function validateaddilmoitus()
 
 <tr>
 <td class="zc-labelheader" style="width: auto;"><label>Etsin<font color="#ec3e3e">*</font></label></td>
-<td><select name="Olen">
-<option value=miesta>Miestä</option>
-<option value=naista>Naista</option>
-<option value=ihansama>Ei väliä</option>
+<td><select name="Etsin">
+<option value=Miesta>Miestä</option>
+<option value=Naista>Naista</option>
+<option value=Ihansama>Ei väliä</option>
 </select>
 </td>
 </tr>

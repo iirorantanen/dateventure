@@ -29,7 +29,7 @@ background:gray;
 <img src="/images/creator-logo.png">
 </td>!-->
 <td class="zc-pane-header-appname">
-Dateventures <br />
+Dateventures <br /><div id="beta" class="beta">Beta <br /></div>
 </td>
 <td valign="top" align="right">
 
@@ -64,5 +64,4 @@ document.write("<a href={{url}} class=\"zc-pane-header-a-menu\">Sign Out</a>&nbs
 <a class="zc-pane-left-a" href="/palaute"> Anna palautetta</a>
 </div>
 </td><td width="90%" class="zc-component zc-pane-right"><div id="content" align="center">
-<p>Tähäm kirjoittelen nyt jotain jeejeejee Tähäm kirjoittelen nyt jotain jeejeejee Tähäm kirjoittelen nyt jotain jeejeejee Tähäm kirjoittelen nyt jotain jeejeejee Tähäm kirjoittelen nyt jotain jeejeejee Tähäm kirjoittelen nyt jotain jeejeejee Tähäm kirjoittelen nyt jotain jeejeejee</p>
 {% block content %} {% endblock %}</div></td></tr></table></body></html>
