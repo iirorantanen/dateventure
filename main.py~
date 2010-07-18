@@ -68,13 +68,12 @@ class ilmoitusAction (webapp.RequestHandler):
         if PaikkaTemp!="":
             ilmoitusVar.Paikka = self.request.get('Paikka')
 
-	TimeTemp = self.request.get('Time')
-	Time_res = TimeTemp.split(':')
         ilmoitusVar.Time = datetime.time(int(self.request.get('Hour')), int(self.request.get('Min')))
 
 	DateTemp = self.request.get('Date')
 	Date_res = DateTemp.split('.')
-	ilmoitusVar.Date = datetime.date(int(Date_res[2]), int(Date_res[1]), int(Date_res[0]))	    
+	ilmoitusVar.Date = datetime.date(int(Date_res[2]), int(Date_res[1]), int(Date_res[0]))
+	ilmoitusVar.Datetime = datetime.datetime(int(Date_res[2]), int(Date_res[1]), int(Date_res[0]), int(self.request.get('Hour')), int(self.request.get('Min')))
 
 #        P_iv_m_r_Aikatemp = self.request.get('P_iv_m_r_Aika')
 #        if P_iv_m_r_Aikatemp!="":

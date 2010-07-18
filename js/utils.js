@@ -18,6 +18,12 @@ function validateFormFields($containerToValidate)
     //var url_pattern = /^(?:(?:\w|\d)+\.)+[a-zA-Z0-9]{2,6}$/;
     var url_pattern = /^[http:\/\/][https:\/\/]/;
     var url_message = 'Please enter a valid URL';
+    var age_pattern = /^1[89]|[2-9]\d|[1-9]\d{2,}/;
+    var age_message = 'Palvelu on sallittu vain 18 vuotta täyttäneille';
+    var hour_pattern = /^0[0-9]|1[0-9]|2[0-3]/;
+    var hour_message = 'Anna kellonaika muodossa HH:MM';
+//    var min_pattern = /^[0-59]/;
+//    var min_message = 'Anna kellonaika muodossa HH:MM';
     var pattern_message = 'Sorry. The entered value does not match the required pattern';
     //start the validation process.
     $elementsToValidate
@@ -32,7 +38,7 @@ function validateFormFields($containerToValidate)
         //Check if the mandatory fields have a value
         if($eachItem.val() == "" || $eachItem.val() == "-1" )
         {
-            message = getCustomMessage ($eachItem, $eachItem.attr('title') + " Mandatory field cannot be left blank!");
+            message = getCustomMessage ($eachItem, $eachItem.attr('title') + " Täytäthän kaikki kentät");
             showError ($eachItem,message);
             returnValue = false;
         }//if($eachItem.val() == "")

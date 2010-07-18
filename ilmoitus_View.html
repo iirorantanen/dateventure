@@ -17,7 +17,7 @@
 <tr class="zc-viewrowheader" height="25">
 <td id="Olen" fieldValue="Olen" onClick="sort(this.id)" align="center"><b>Olen</b>&nbsp;&nbsp;<label>&#9660;</label></td>
 <td id="Paikka" fieldValue="Paikka" onClick="sort(this.id)" align="center"><b>Paikka</b>&nbsp;&nbsp;<label>&#9660;</label></td>
-<td id="P_iv_m_r_Aika" fieldValue="P_iv_m_r_Aika" onClick="sort(this.id)" align="center"><b>Päivämäärä & Aika</b>&nbsp;&nbsp;<label>&#9660;</label></td>
+<td id="Datetime" fieldValue="Datetime" onClick="sort(this.id)" align="center"><b>Päivämäärä & Aika</b>&nbsp;&nbsp;<label>&#9660;</label></td>
 <td id="Kuvaus" fieldValue="Kuvaus" onClick="sort(this.id)" align="center"><b>Kuvaus</b>&nbsp;&nbsp;<label>&#9660;</label></td>
 </tr>
 <tr id="searchRow" style="display:none;" class="zc-searchrow">
@@ -26,7 +26,7 @@
 </td><td align="center">
 <input id="Paikka" name="Paikka" type="text" value="">
 </td><td align="center">
-<input id="P_iv_m_r_Aika" name="P_iv_m_r_Aika" type="text" value="">
+<input id="Datetime" name="Datetime" type="text" value="">
 </td><td align="center">
 <input id="Kuvaus" name="Kuvaus" type="text" value="">
 </td></tr>
@@ -105,7 +105,7 @@ function post(key) {
 <tr class="zc-viewrow zc-row-1">
 <td align="center"> {{ x.Olen }} </td>
 <td align="center"> {{x.Paikka }}</td>
-<td align="center"> {{x.P_iv_m_r_Aika }}</td>
+<td align="center"> {{x.Datetime }}</td>
 <td align="center"> {{x.Kuvaus }}</td>
 <td align="center"> <a href="#" onClick="post('{{x.key}}')" class="zc-formbutton"> Vastaa </a> </td>
 </tr>

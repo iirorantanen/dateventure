@@ -11,11 +11,15 @@
 <link href="/css/l1t1c1.css" rel="stylesheet" type="text/css">
 <link href="/css/calendar.css" rel="stylesheet" type="text/css">
 <style type="text/css">
-div.tissipeelo
+div.piilo
 {
 visibility:hidden;
 }
+input.readonly
+{
+background:gray;
 
+}
 </style>
 </head>
 <body class="body-class">
@@ -30,7 +34,7 @@ Dateventures <br />
 <td valign="top" align="right">
 
 <!-- Hyvin outo saato sign in- ja out-nappien vaihtamiseksi. Toimii ehka. !-->
-<div id="urk" name="homonaama" class="tissipeelo">{{loginurl}}</div>
+<div id="urk" class="piilo">{{loginurl}}</div>
 <script type="text/javascript">
 var a = document.getElementById("urk").innerHTML;
 if(a!="")
@@ -60,4 +64,5 @@ document.write("<a href={{url}} class=\"zc-pane-header-a-menu\">Sign Out</a>&nbs
 <a class="zc-pane-left-a" href="/palaute"> Anna palautetta</a>
 </div>
 </td><td width="90%" class="zc-component zc-pane-right"><div id="content" align="center">
+<p>Tähäm kirjoittelen nyt jotain jeejeejee Tähäm kirjoittelen nyt jotain jeejeejee Tähäm kirjoittelen nyt jotain jeejeejee Tähäm kirjoittelen nyt jotain jeejeejee Tähäm kirjoittelen nyt jotain jeejeejee Tähäm kirjoittelen nyt jotain jeejeejee Tähäm kirjoittelen nyt jotain jeejeejee</p>
 {% block content %} {% endblock %}</div></td></tr></table></body></html>

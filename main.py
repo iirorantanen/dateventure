@@ -72,21 +72,22 @@ class ilmoitusAction (webapp.RequestHandler):
 
 	DateTemp = self.request.get('Date')
 	Date_res = DateTemp.split('.')
-	ilmoitusVar.Date = datetime.date(int(Date_res[2]), int(Date_res[1]), int(Date_res[0]))	    
+	ilmoitusVar.Date = datetime.date(int(Date_res[2]), int(Date_res[1]), int(Date_res[0]))
+	ilmoitusVar.Datetime = datetime.datetime(int(Date_res[2]), int(Date_res[1]), int(Date_res[0]), int(self.request.get('Hour')), int(self.request.get('Min')))
 
-#        P_iv_m_r_Aikatemp = self.request.get('P_iv_m_r_Aika')
-#        if P_iv_m_r_Aikatemp!="":
-#            P_iv_m_r_AikaTemp = self.request.get('P_iv_m_r_Aika')
-#            P_iv_m_r_Aika_res = P_iv_m_r_AikaTemp.split()
-#            P_iv_m_r_Aika_dt = P_iv_m_r_Aika_res[0]
-#            P_iv_m_r_Aika_mnth = P_iv_m_r_Aika_res[1]
-#            P_iv_m_r_Aika_yr = P_iv_m_r_Aika_res[2]
-#            P_iv_m_r_Aika_selTime = P_iv_m_r_Aika_res[3]
-#            P_iv_m_r_Aika_finalRes = P_iv_m_r_Aika_selTime.split(':')
-#            P_iv_m_r_Aika_hr = P_iv_m_r_Aika_finalRes[0]
-#            P_iv_m_r_Aika_min = P_iv_m_r_Aika_finalRes[1]
-#            P_iv_m_r_Aika_sec = P_iv_m_r_Aika_finalRes[2]
-#            ilmoitusVar.P_iv_m_r_Aika = datetime.datetime(int(P_iv_m_r_Aika_yr),int(P_iv_m_r_Aika_mnth),int(P_iv_m_r_Aika_dt),int(P_iv_m_r_Aika_hr),int(P_iv_m_r_Aika_min))
+#        Datetimetemp = self.request.get('Datetime')
+#        if Datetimetemp!="":
+#            DatetimeTemp = self.request.get('Datetime')
+#            Datetime_res = DatetimeTemp.split()
+#            Datetime_dt = Datetime_res[0]
+#            Datetime_mnth = Datetime_res[1]
+#            Datetime_yr = Datetime_res[2]
+#            Datetime_selTime = Datetime_res[3]
+#            Datetime_finalRes = Datetime_selTime.split(':')
+#            Datetime_hr = Datetime_finalRes[0]
+#            Datetime_min = Datetime_finalRes[1]
+#            Datetime_sec = Datetime_finalRes[2]
+#            ilmoitusVar.Datetime = datetime.datetime(int(Datetime_yr),int(Datetime_mnth),int(Datetime_dt),int(Datetime_hr),int(Datetime_min))
         KuvausTemp = self.request.get('Kuvaus')
         if KuvausTemp!="":
             ilmoitusVar.Kuvaus = self.request.get('Kuvaus')
@@ -108,10 +109,10 @@ class Showomat_ilmoitukset(webapp.RequestHandler):
 	if not user:
 	  self.redirect(users.create_login_url(self.request.uri))
 	else: 
-          ilmoitusVar = ilmoitus.gql("WHERE Ilmoittaja = :y ORDER BY P_iv_m_r_Aika ASC", y = user)
+          ilmoitusVar = ilmoitus.gql("WHERE Ilmoittaja = :y ORDER BY Datetime ASC", y = user)
           records = ilmoitusVar.fetch(limit=100)
 	  
-	  query = ilmoitus.gql("WHERE Vastaaja = :x ORDER BY P_iv_m_r_Aika ASC", x = user)
+	  query = ilmoitus.gql("WHERE Vastaaja = :x ORDER BY Datetime ASC", x = user)
 	  responses = query.fetch(limit=100)
 
           template_values = { 'records': records, 'responses': responses, "nickname":user.nickname(),"url":users.create_logout_url("/")}
@@ -161,10 +162,10 @@ class searchilmoitus_ViewAction(webapp.RequestHandler):
         queryString_ilmoitus_Paikka = ""
         if ilmoitus_Paikka!="":
             queryString_ilmoitus_Paikka = " Paikka = \'" + ilmoitus_Paikka + "\'"
-        ilmoitus_P_iv_m_r_Aika = self.request.get('P_iv_m_r_Aika')
-        queryString_ilmoitus_P_iv_m_r_Aika = ""
-        if ilmoitus_P_iv_m_r_Aika!="":
-            queryString_ilmoitus_P_iv_m_r_Aika = " P_iv_m_r_Aika = \'" + ilmoitus_P_iv_m_r_Aika + "\'"
+        ilmoitus_Datetime = self.request.get('Datetime')
+        queryString_ilmoitus_Datetime = ""
+        if ilmoitus_Datetime!="":
+            queryString_ilmoitus_Datetime = " Datetime = \'" + ilmoitus_Datetime + "\'"
         ilmoitus_Kuvaus = self.request.get('Kuvaus')
         queryString_ilmoitus_Kuvaus = ""
         if ilmoitus_Kuvaus!="":
@@ -183,10 +184,10 @@ class searchilmoitus_ViewAction(webapp.RequestHandler):
         else:
             queryString = queryString + queryString_ilmoitus_Paikka
         if queryString != "":
-            if queryString_ilmoitus_P_iv_m_r_Aika !="":
-                queryString = queryString + " AND " + queryString_ilmoitus_P_iv_m_r_Aika
+            if queryString_ilmoitus_Datetime !="":
+                queryString = queryString + " AND " + queryString_ilmoitus_Datetime
         else:
-            queryString = queryString + queryString_ilmoitus_P_iv_m_r_Aika
+            queryString = queryString + queryString_ilmoitus_Datetime
         if queryString != "":
             if queryString_ilmoitus_Kuvaus !="":
                 queryString = queryString + " AND " + queryString_ilmoitus_Kuvaus
@@ -270,7 +271,7 @@ class vahvistaIlmoituksenAvaus(webapp.RequestHandler):
 	    path=os.path.join(os.path.dirname(__file__),'confirm.html')	
 	    postKey = self.request.get('key')
 	    ilmoitusVar = Model.get(postKey)
-	    template_values = {"url":users.create_logout_url("/"), 'key':postKey, 'datetime':ilmoitusVar.P_iv_m_r_Aika, 'age':ilmoitusVar.Age, 'gender':ilmoitusVar.Olen, 'location':ilmoitusVar.Paikka }
+	    template_values = {"url":users.create_logout_url("/"), 'key':postKey, 'datetime':ilmoitusVar.Datetime, 'age':ilmoitusVar.Age, 'gender':ilmoitusVar.Olen, 'location':ilmoitusVar.Paikka }
 	    self.response.out.write(template.render(path,template_values))
 
 # This page is shown when the date is confirmed
@@ -287,7 +288,7 @@ class ilmoitusVahvistettu(webapp.RequestHandler):
 	    ilmoitusVar.Vastattu = True
 	    ilmoitusVar.Vastaaja = user
 	    ilmoitusVar.put()
-	    template_values = {"url":users.create_logout_url("/"), 'key':postKey, 'datetime':ilmoitusVar.P_iv_m_r_Aika, 'age':ilmoitusVar.Age, 'gender':ilmoitusVar.Olen, 'location':ilmoitusVar.Paikka, 'owndescription':ilmoitusVar.vKuvaus, 'description':ilmoitusVar.Kuvaus }
+	    template_values = {"url":users.create_logout_url("/"), 'key':postKey, 'datetime':ilmoitusVar.Datetime, 'age':ilmoitusVar.Age, 'gender':ilmoitusVar.Olen, 'location':ilmoitusVar.Paikka, 'owndescription':ilmoitusVar.vKuvaus, 'description':ilmoitusVar.Kuvaus }
 	    self.response.out.write(template.render(path,template_values))
 
 def main():

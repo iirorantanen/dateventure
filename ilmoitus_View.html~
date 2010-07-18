@@ -19,9 +19,6 @@
 <td id="Paikka" fieldValue="Paikka" onClick="sort(this.id)" align="center"><b>Paikka</b>&nbsp;&nbsp;<label>&#9660;</label></td>
 <td id="P_iv_m_r_Aika" fieldValue="P_iv_m_r_Aika" onClick="sort(this.id)" align="center"><b>Päivämäärä & Aika</b>&nbsp;&nbsp;<label>&#9660;</label></td>
 <td id="Kuvaus" fieldValue="Kuvaus" onClick="sort(this.id)" align="center"><b>Kuvaus</b>&nbsp;&nbsp;<label>&#9660;</label></td>
-<td id="Added_Time" fieldValue="Added_Time" onClick="sort(this.id)" align="center"><b>Added Time</b>&nbsp;&nbsp;<label>&#9660;</label></td>
-<td id="Added_User" fieldValue="Added_User" onClick="sort(this.id)" align="center"><b>Added User</b>&nbsp;&nbsp;<label>&#9660;</label></td>
-<td id="Added_User" fieldValue="Added_User" onClick="sort(this.id)" align="center"><b>Added User</b>&nbsp;&nbsp;<label>&#9660;</label></td>
 </tr>
 <tr id="searchRow" style="display:none;" class="zc-searchrow">
 <td align="center">
@@ -32,12 +29,6 @@
 <input id="P_iv_m_r_Aika" name="P_iv_m_r_Aika" type="text" value="">
 </td><td align="center">
 <input id="Kuvaus" name="Kuvaus" type="text" value="">
-</td><td align="center">
-<input id="Added_Time" name="Added_Time" type="text" value="">
-</td><td align="center">
-<input id="Added_User" name="Added_User" type="text" value="">
-</td><td align="center">
-<input id="Added_User" name="Added_User" type="text" value="">
 </td></tr>
 <tr id="searchButtonRow" style="display:none;"  class="zc-searchbuttonrow">
 <td></td>
@@ -94,8 +85,6 @@ function cancelSearch()
 
 function post(key) {
 
-    // The rest of this code assumes you are not using a library.
-    // It can be made less wordy if you use one.
     var form = document.createElement("form");
     form.setAttribute("method", "post");
     form.setAttribute("action", "confirm");
@@ -106,7 +95,7 @@ function post(key) {
     hiddenField.setAttribute("value", key);
     form.appendChild(hiddenField);
 
-    document.body.appendChild(form);    // Not entirely sure if this is necessary
+    document.body.appendChild(form);    
     form.submit();
 }
 
@@ -118,7 +107,7 @@ function post(key) {
 <td align="center"> {{x.Paikka }}</td>
 <td align="center"> {{x.P_iv_m_r_Aika }}</td>
 <td align="center"> {{x.Kuvaus }}</td>
-<td align="center"> <a href="#" onClick="post('{{x.key}}')"> Vastaa </a> </td>
+<td align="center"> <a href="#" onClick="post('{{x.key}}')" class="zc-formbutton"> Vastaa </a> </td>
 </tr>
 
 {% endfor %}

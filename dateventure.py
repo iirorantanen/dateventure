@@ -12,7 +12,7 @@ class ilmoitus(search.SearchableModel):
     Etsin = db.StringProperty(choices=etsin)
     Paikka = db.StringProperty()
     Paikkakunta = db.StringProperty(default="Turku")
-    P_iv_m_r_Aika = db.DateTimeProperty()
+    Datetime = db.DateTimeProperty()
     Date = db.DateProperty()
     Time = db.TimeProperty()
     Kuvaus = db.StringProperty()

@@ -13,6 +13,8 @@ class ilmoitus(search.SearchableModel):
     Paikka = db.StringProperty()
     Paikkakunta = db.StringProperty(default="Turku")
     P_iv_m_r_Aika = db.DateTimeProperty()
+    Date = db.DateProperty()
+    Time = db.TimeProperty()
     Kuvaus = db.StringProperty()
     Vastattu = db.BooleanProperty(default=False)
     vKuvaus = db.StringProperty()

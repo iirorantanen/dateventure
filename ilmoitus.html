@@ -3,7 +3,7 @@
 <script type="text/javascript">
 function validateaddilmoitus()
 {
-    if(validateFormFields($("#addilmoitus")) && (Age.value >= 18))
+    if(validateFormFields($("#addilmoitus")) & (Age.value >= 18))
     {
         document.addilmoitus.submit();
     }
@@ -12,6 +12,10 @@ function validateaddilmoitus()
 <!--<div class="zc-formcontainer" style="width: auto;">
 <div class="zc-formheader"><span elname="zc-formNameEl"><label class="zc-formtitle">ilmoitus</label></span></div>
 <div class="zc-formcontent zc-appformcontent"><!-->
+
+<p style="align:left max-width:100%">Tervetuloa Dateventures-deittisivustolle. Dateventures on uudenlainen, sokkotreffipohjalla toimiva treffipalvelu: ihmiset eivät tiedä toisistaan ennen tapaamista juuri mitään muuta kuin iän ja sukupuolen.</p>
+<p>Näin jokaisesta treffistä tulee seikkailu!</p>
+
 <form method="post" id="addilmoitus" name="addilmoitus" action="addilmoitus" enctype="multipart/form-data">
 <table>
 <tbody>
@@ -37,28 +41,28 @@ function validateaddilmoitus()
 
 <tr>
 <td class="zc-labelheader" style="width: auto;"><label>Ikäni<font color="#ec3e3e">*</font></label></td>
-<td class="zc-inputheader" style="width: auto;"><input class="zc-inputtext" id="Age" name="Age" value="" type="int" mandatory="true">
+<td><input class="zc-inputtext" id="Age" name="Age" value="" datatype="age" type="integer" mandatory="true" maxlength="2">
 <p id="Age_Error"></p></td>
 </tr>
 
 <tr>
 <td class="zc-labelheader" style="width: auto;"><label>Paikkakunta<font color="#ec3e3e">*</font></label></td>
-<td><input id="Paikkakunta" name="Paikkakunta" value="Turku" type="text" mandatory="true" readonly="readonly"><p id="Paikka_Error"></p></td>
+<td><input class="zc-inputtext" style="background:gray" id="Paikkakunta" name="Paikkakunta" value="Turku" type="text" mandatory="true" readonly="readonly"><p id="Paikka_Error"></p></td>
 </tr>
 
 <tr>
 <td class="zc-labelheader" style="width: auto;"><label>Paikka<font color="#ec3e3e">*</font></label></td>
-<td><input id="Paikka" name="Paikka" value="" type="text" mandatory="true"><p id="Paikka_Error"></p></td>
+<td><input class="zc-inputtext" id="Paikka" name="Paikka" value="" type="text" mandatory="true"><p id="Paikka_Error"></p></td>
 </tr>
 
 <tr>
 <td class="zc-labelheader" style="width: auto;"><label>Kello<font color="#ec3e3e">*</font></label></td>
-<td><input maxlength="2" size="2" id="Hour" name="Hour" value="" type="text" mandatory="true">:<input maxlength="2" size="2" id="Min" name="Min" value="" type="text" mandatory="true"><p id="Time_Error"></p></td>
+<td><input maxlength="2" size="2" id="Hour" datatype="hour" name="Hour" value="" type="text" mandatory="true">:<input maxlength="2" size="2" datatype="min" id="Min" name="Min" value="" type="text" mandatory="true"><p id="Min_Error"></p></td>
 </tr>
 
 <tr>
 <td class="zc-labelheader" style="width: auto;"><label>Päivä<font color="#ec3e3e">*</font></label></td>
-<td><input type="text" class="zc-inputtext" readonly="readonly" value="" id="Date" name="Date">&nbsp;&nbsp;<a href="javascript:void(0);"><img id="IMG_Date" width="16" height="17" border="0" src="/images/date_icon.gif" name="Img_Date"></a>
+<td><input class="zc-inputtext" type="text" class="zc-inputtext" readonly="readonly" value="" id="Date" name="Date">&nbsp;&nbsp;<a href="javascript:void(0);"><img id="IMG_Date" width="16" height="17" border="0" src="/images/date_icon.gif" name="Img_Date"></a>
 <script type="text/javascript">Calendar.setup({
 inputField     :    "Date",
 ifFormat     :    "%d.%m.%y",
@@ -68,7 +72,7 @@ button     :    "IMG_Date"
 </script></tr>
 <tr>
 <td class="zc-labelheader" style="width: auto;"><label>Kuvaus<font color="#ec3e3e">*</font></label></td>
-<td class="zc-inputheader" style="width: auto;"><input class="zc-inputtext" id="Kuvaus" name="Kuvaus" value="" type="text" mandatory="true">
+<td><input class="zc-inputtext" id="Kuvaus" name="Kuvaus" maxlength="50" value="" type="text" mandatory="true">
 <p id="Kuvaus_Error"></p></td>
 </tr>
 
