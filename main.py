@@ -113,7 +113,7 @@ class Showomat_ilmoitukset(webapp.RequestHandler):
 	if not user:
 	  self.redirect(users.create_login_url(self.request.uri))
 	else: 
-          ilmoitusVar = ilmoitus.gql("WHERE Ilmoittaja = :y AND Poistettu = :z ORDER BY Datetime ASC", y = user, z = False)
+          ilmoitusVar = ilmoitus.gql("WHERE Ilmoittaja = :y AND Poistettu = False ORDER BY Datetime ASC", y = user)
           records = ilmoitusVar.fetch(limit=100)
 	  
 	  query = ilmoitus.gql("WHERE Vastaaja = :x ORDER BY Datetime ASC", x = user)

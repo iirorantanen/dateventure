@@ -13,7 +13,9 @@
 <style type="text/css">
 div.piilo
 {
-visibility:hidden;
+<!--visibility:hidden;--!-->
+height:1px;
+width:1px;
 }
 input.readonly
 {
@@ -22,7 +24,7 @@ background:gray;
 }
 div.beta
 {
-font-size:small;
+font-size:small;<div id="urk" class="piilo">{{loginurl}}</div>
 }
 p.question
 {
@@ -45,15 +47,16 @@ font-size: small;
 </style>
 </head>
 <body class="body-class">
+
 <table border="0" width="100%" class="zc-pane-header-table zc-header-table">
 <tr>
 <!--<td width="104" height="53">
 <img src="/images/creator-logo.png">
 </td>!-->
+
 <td class="zc-pane-header-appname">
 <a href="/showetusivu"><img src="/images/Deittilogo_small3.png"></img></a>
 Dateventures <span style="font-size:small;">beta</span>
-
 </td>
 <td valign="top" align="right">
 
@@ -78,9 +81,10 @@ document.write("<a href={{url}} class=\"zc-pane-header-a-menu\">Sign Out</a>&nbs
 <table border="0" width="100%" class="zc-pane">
 <tr>
 <td width="10%" valign="top"  class="zc-pane-left-th">
-<div class="zc-pane-left-section zc-pane-left-section">Dateventure
+<div class="zc-pane-left-section zc-pane-left-section">Dateventures
 </div>
 <div comelname="zc-panesection" id="page-Home">
+
 <a class="zc-pane-left-a" href="/showetusivu">Etusivu</a>
 <a class="zc-pane-left-a" href="/showilmoitus">Jätä ilmoitus</a>
 <a class="zc-pane-left-a" href="/showilmoitus_View">Selaa ilmoituksia</a>
@@ -90,4 +94,5 @@ document.write("<a href={{url}} class=\"zc-pane-header-a-menu\">Sign Out</a>&nbs
 </div>
 <!-- white-space:normal on purkkaviritys, joka tuntuu toimivan !-->
 </td><td width="90%" class="zc-component zc-pane-right"><div id="content" align="center" style="white-space:normal">
+
 {% block content %} {% endblock %}</div></td></tr></table></body></html>
