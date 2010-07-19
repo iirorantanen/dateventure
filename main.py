@@ -26,7 +26,7 @@ class MainPage(webapp.RequestHandler):
                 "nickname":user.nickname(),
                 "url":users.create_logout_url("/")
             }
-            theHtmlPage='ilmoitus.html'
+            theHtmlPage='etusivu.html'
         else:
             template_values={
                 "loginurl":users.create_login_url("/")
@@ -111,7 +111,7 @@ class Showomat_ilmoitukset(webapp.RequestHandler):
 	if not user:
 	  self.redirect(users.create_login_url(self.request.uri))
 	else: 
-          ilmoitusVar = ilmoitus.gql("WHERE Ilmoittaja = :y ORDER BY Datetime ASC", y = user)
+          ilmoitusVar = ilmoitus.gql("WHERE Ilmoittaja = :y AND Poistettu = :z ORDER BY Datetime ASC", y = user, z = False)
           records = ilmoitusVar.fetch(limit=100)
 	  
 	  query = ilmoitus.gql("WHERE Vastaaja = :x ORDER BY Datetime ASC", x = user)
@@ -132,7 +132,7 @@ class Showilmoitus_View(webapp.RequestHandler):
 	  self.redirect(users.create_login_url(self.request.uri))
 	else:
           user = users.get_current_user()
-          ilmoitusVar = ilmoitus.gql("WHERE Vastattu = :y", y = False)
+          ilmoitusVar = ilmoitus.gql("WHERE Vastattu = :y AND Poistettu = :y", y = False)
           records = ilmoitusVar.fetch(limit=100)
           template_values = { 'records': records,"nickname":user.nickname(),"url":users.create_logout_url("/")}
           path=os.path.join(os.path.dirname(__file__),'ilmoitus_View.html')

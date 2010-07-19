@@ -2,7 +2,7 @@
 <head>
 <meta http-equiv="Cache-Control" content="no-cache" />
 <meta http-equiv="Pragma" content="no-cache" />
-<link href="/images/favicon.gif" rel="SHORTCUT ICON">
+<link href="/images/favicon.ico" rel="SHORTCUT ICON">
 <script type="text/javascript" src="/js/calendar.js"></script>
 <script type="text/javascript" src="/js/calendar-en.js"></script>
 <script type="text/javascript" src="/js/calendar-setup_stripped.js"></script>
@@ -23,6 +23,25 @@ background:gray;
 div.beta
 {
 font-size:small;
+}
+p.question
+{
+font-size: small;
+font-weight:bold;
+}
+div.question
+{
+font-size: small;
+font-weight:bold;
+}
+p.answer
+{
+font-size: small;
+}
+div.answer
+{
+font-size: small;
+}
 </style>
 </head>
 <body class="body-class">
@@ -32,7 +51,9 @@ font-size:small;
 <img src="/images/creator-logo.png">
 </td>!-->
 <td class="zc-pane-header-appname">
-Dateventures <br /><div id="beta" class="beta">Beta <br /></div>
+<a href="/showetusivu"><img src="/images/Deittilogo_small3.png"></img></a>
+Dateventures <span style="font-size:small;">beta</span>
+
 </td>
 <td valign="top" align="right">
 
@@ -64,6 +85,7 @@ document.write("<a href={{url}} class=\"zc-pane-header-a-menu\">Sign Out</a>&nbs
 <a class="zc-pane-left-a" href="/showilmoitus">Jätä ilmoitus</a>
 <a class="zc-pane-left-a" href="/showilmoitus_View">Selaa ilmoituksia</a>
 <a class="zc-pane-left-a" href="/showomat_ilmoitukset">Omat ilmoitukseni</a>
+<a class="zc-pane-left-a" href="/ukk">Usein kysytyt kysymykset</a>
 <a class="zc-pane-left-a" href="/palaute"> Anna palautetta</a>
 </div>
 <!-- white-space:normal on purkkaviritys, joka tuntuu toimivan !-->

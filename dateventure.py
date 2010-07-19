@@ -21,6 +21,7 @@ class ilmoitus(search.SearchableModel):
     Ilmoittaja = db.UserProperty(auto_current_user=True, required=True)
     Vastaaja = db.UserProperty()
     Age = db.IntegerProperty(default=0)
+    Poistettu = db.BooleanProperty(default=False)
 
       
 class palaute(search.SearchableModel):
