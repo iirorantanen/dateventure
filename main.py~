@@ -26,12 +26,12 @@ class MainPage(webapp.RequestHandler):
                 "nickname":user.nickname(),
                 "url":users.create_logout_url("/")
             }
-            theHtmlPage='ilmoitus.html'
+            theHtmlPage='etusivu.html'
         else:
             template_values={
                 "loginurl":users.create_login_url("/")
             }
-            theHtmlPage='loginPage.html'
+            theHtmlPage='etusivu.html'
 
         path = os.path.join(os.path.dirname(__file__),theHtmlPage)
         self.response.out.write(template.render(path,template_values))
@@ -50,6 +50,8 @@ class Showetusivu(webapp.RequestHandler):
 class Showilmoitus(webapp.RequestHandler):
     def get(self):
         user = users.get_current_user()
+	if not user:
+	  self.redirect(users.create_login_url(self.request.uri))
         global ilmoitus_Olen
         if user:
           template_values={'Olen': alignment, "url":users.create_logout_url("/")}
@@ -101,7 +103,7 @@ class ilmoitusAction (webapp.RequestHandler):
 	  ilmoitusVar.Age = int(self.request.get('Age'))
 
         ilmoitusVar.put()
-        self.redirect('/showilmoitus')
+        self.redirect('/kuittaus')
 
 
 
@@ -111,7 +113,7 @@ class Showomat_ilmoitukset(webapp.RequestHandler):
 	if not user:
 	  self.redirect(users.create_login_url(self.request.uri))
 	else: 
-          ilmoitusVar = ilmoitus.gql("WHERE Ilmoittaja = :y ORDER BY Datetime ASC", y = user)
+          ilmoitusVar = ilmoitus.gql("WHERE Ilmoittaja = :y AND Poistettu = False ORDER BY Datetime ASC", y = user)
           records = ilmoitusVar.fetch(limit=100)
 	  
 	  query = ilmoitus.gql("WHERE Vastaaja = :x ORDER BY Datetime ASC", x = user)
@@ -132,7 +134,7 @@ class Showilmoitus_View(webapp.RequestHandler):
 	  self.redirect(users.create_login_url(self.request.uri))
 	else:
           user = users.get_current_user()
-          ilmoitusVar = ilmoitus.gql("WHERE Vastattu = :y", y = False)
+          ilmoitusVar = ilmoitus.gql("WHERE Vastattu = :y AND Poistettu = :y", y = False)
           records = ilmoitusVar.fetch(limit=100)
           template_values = { 'records': records,"nickname":user.nickname(),"url":users.create_logout_url("/")}
           path=os.path.join(os.path.dirname(__file__),'ilmoitus_View.html')

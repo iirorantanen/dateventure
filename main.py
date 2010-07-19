@@ -261,8 +261,9 @@ class kiitos(webapp.RequestHandler):
 
 class kuittaus(webapp.RequestHandler):
     def get(self):
+	user = users.get_current_user
         path=os.path.join(os.path.dirname(__file__),'kuittaus.html')
-        template_values = {}
+        template_values = {"url":users.create_logout_url("/")}
 	self.response.out.write(template.render(path,template_values))
 
 class ukk(webapp.RequestHandler):
