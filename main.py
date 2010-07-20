@@ -118,7 +118,7 @@ class Showomat_ilmoitukset(webapp.RequestHandler):
           ilmoitusVar = ilmoitus.gql("WHERE Ilmoittaja = :y AND Poistettu = False ORDER BY Datetime ASC", y = user)
           records = ilmoitusVar.fetch(limit=100)
 	  
-	  query = ilmoitus.gql("WHERE Vastaaja = :x ORDER BY Datetime ASC", x = user)
+	  query = ilmoitus.gql("WHERE Vastaaja = :x AND Poistettu = False ORDER BY Datetime ASC", x = user)
 	  responses = query.fetch(limit=100)
 
           template_values = { 'records': records, 'responses': responses, "nickname":user.nickname(),"url":users.create_logout_url("/")}
@@ -127,7 +127,34 @@ class Showomat_ilmoitukset(webapp.RequestHandler):
           path=os.path.join(os.path.dirname(__file__),'omat_ilmoitukset.html')
           self.response.out.write(template.render(path,template_values))
 	  
-	  
+# This will review the details and ask the user if they really want to delete the date ilmoitus.
+class confirmDelete(webapp.RequestHandler):
+    def post(self):
+        user = users.get_current_user()
+	if not user:
+	    self.redirect(users.create_login_url(self.request.uri))
+	else: 
+	    path=os.path.join(os.path.dirname(__file__),'confirmdelete.html')	
+	    postKey = self.request.get('key')
+	    ilmoitusVar = Model.get(postKey)
+	    template_values = {"url":users.create_logout_url("/"), 'datetime':ilmoitusVar.Datetime, 'location':ilmoitusVar.Paikka, 'description':ilmoitusVar.Kuvaus, 'key':postKey }
+	    self.response.out.write(template.render(path,template_values))
+
+
+# This will delete the ilmoitus
+class delete(webapp.RequestHandler):
+    def post(self):
+        user = users.get_current_user()
+	if not user:
+	    self.redirect(users.create_login_url(self.request.uri))
+	else: 
+	    path=os.path.join(os.path.dirname(__file__),'deleted.html')	
+	    postKey = self.request.get('key')
+	    ilmoitusVar = Model.get(postKey)
+	    ilmoitusVar.Poistettu = True
+	    ilmoitusVar.put()
+	    template_values = {"url":users.create_logout_url("/")}
+	    self.response.out.write(template.render(path,template_values))  
 
 class Showilmoitus_View(webapp.RequestHandler):
     def get(self):
@@ -319,6 +346,8 @@ def main():
                 ('/sortilmoitus_View',sortilmoitus_ViewAction),
                 ('/searchilmoitus_View',searchilmoitus_ViewAction),
 		('/showomat_ilmoitukset',Showomat_ilmoitukset),
+		('/delete', delete),
+		('/confirmdelete', confirmDelete),
 		('/showetusivu',Showetusivu)],
                 debug=True)
 

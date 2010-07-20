@@ -1,5 +1,24 @@
 {% extends "index.html" %}
 {% block content %}
+<script>
+function post(key) {
+
+    var form = document.createElement("form");
+    form.setAttribute("method", "post");
+    form.setAttribute("action", "confirmdelete");
+
+    var hiddenField = document.createElement("input");
+    hiddenField.setAttribute("type", "hidden");
+    hiddenField.setAttribute("name", "key");
+    hiddenField.setAttribute("value", key);
+    form.appendChild(hiddenField);
+
+    document.body.appendChild(form);    
+    form.submit();
+}
+</script>
+
+
 <div class="zc-formcontainer" style="width: auto;">
 
 <div class="zc-formheader">
@@ -17,6 +36,7 @@
 <td align="center"><b>Päivämäärä & Aika</b></td>
 <td align="center"><b>Kuvaus</b></td>
 <td align="center"><b>Vastaajan Kuvaus</b></td>
+<td align="center"></td>
 </tr>
 
 
@@ -29,6 +49,7 @@
 <td align="center"> {{x.Datetime }}</td>
 <td align="center"> {{x.Kuvaus }}</td>
 <td align="center"> {% if x.Vastattu %}{{x.vKuvaus }}{% else %}.{% endif %} </td>
+<td align="center"> <a href="#" onClick="post('{{x.key}}')" class="zc-formbutton"> Poista </a></td>
 
 </tr>
 {% endfor %}

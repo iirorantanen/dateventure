@@ -1,0 +1,50 @@
+{% extends "index.html" %}
+{% block content %}
+<script type="text/javascript">
+function post(key) {
+
+    var form = document.createElement("form");
+    form.setAttribute("method", "post");
+    form.setAttribute("action", "delete");
+
+    var hiddenField = document.createElement("input");
+    hiddenField.setAttribute("type", "hidden");
+    hiddenField.setAttribute("name", "key");
+    hiddenField.setAttribute("value", key);
+    form.appendChild(hiddenField);
+
+    document.body.appendChild(form);    
+    form.submit();
+}
+</script>
+
+<div class="zc-formheader"><span elname="zc-formNameEl"><label class="zc-formtitle">Haluatko varmasti poistaa tämän ilmoituksen?</label></span></div>
+<table class="zc-formtable zc-appformtable" border="0" cellspacing="0" cellpadding="0">
+<tbody>
+
+<tr>
+<td class="zc-labelheader" style="width: 150px;"><label>Oma kuvauksesi</label></td>
+<td class="zc-inputheader" style="width: auto;">{{description}}</td>
+</tr>
+
+<tr>
+<td class="zc-labelheader" style="width: auto;"><label>Ajankohta</label></td>
+<td class="zc-inputheader" style="width: auto;">{{datetime}}</td>
+</tr>
+
+<tr> 
+<td class="zc-labelheader" style="width: 150px;"><label>Paikka</label></td>
+<td class="zc-inputheader" style="width: auto;">{{location}}</td>
+</tr>
+
+<tr>
+<td class="zc-labelheader" style="width: 150px;"></td>
+<td class="zc-inputheader" style="width: auto;"><a href="#" onClick="post('{{key}}')" class="zc-formbutton"> Poista </a></td>
+</tbody>
+</table>
+
+</div>
+
+
+
+{% endblock %}
