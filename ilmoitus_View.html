@@ -16,6 +16,7 @@
 <thead>
 <tr class="zc-viewrowheader" height="25">
 <td id="Ilmoittaja" fieldValue="Ilmoittaja" onClick="sort(this.id)" align="center"><b>Ilmoittaja</b>&nbsp;&nbsp;<label>&#9660;</label></td>
+<td id="Ilmoittaja" fieldValue="Ilmoittaja" onClick="sort(this.id)" align="center"><b>Ikä</b>&nbsp;&nbsp;<label>&#9660;</label></td>
 <td id="Etsii" fieldValue="Etsii" onClick="sort(this.id)" align="center"><b>Etsii</b>&nbsp;&nbsp;<label>&#9660;</label></td>
 <td id="Datetime" fieldValue="Datetime" onClick="sort(this.id)" align="center"><b>Päivämäärä & Aika</b>&nbsp;&nbsp;<label>&#9660;</label></td>
 <td id="Paikka" fieldValue="Paikka" onClick="sort(this.id)" align="center"><b>Paikka</b>&nbsp;&nbsp;<label>&#9660;</label></td>
@@ -106,6 +107,7 @@ function post(key) {
 {% for x in records %}
 <tr class="zc-viewrow zc-row-1">
 <td align="center"> {{ x.Olen }} </td>
+<td align="center"> {{ x.Age }} </td>
 <td align="center"> {{ x.Etsin }} </td>
 <td align="center"> {{x.Datetime }}</td>
 <td align="center"> {{x.Paikka }}</td>
