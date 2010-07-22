@@ -49,7 +49,7 @@ function post(key) {
 <td align="center"> {{x.Paikka }}</td>
 <td align="center"> {{x.Datetime }}</td>
 <td align="center"> {{x.Kuvaus }}</td>
-<td align="center"> {% if x.Vastattu %}{{x.vKuvaus }}{% else %}.{% endif %} </td>
+<td align="center"> {% if x.Vastattu %}{{x.vKuvaus }}{% else %}&nbsp;{% endif %} </td>
 <td align="center"> <a href="#" onClick="post('{{x.key}}')" class="zc-formbutton"> Poista </a></td>
 
 </tr>

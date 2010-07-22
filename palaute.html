@@ -11,7 +11,7 @@ function validateaddpalaute()
 }
 </script>
 
-<form style="margin: 0px; padding: 0px;" method="post" id="addpalaute" name="addpalaute" action="addpalaute" enctype="multipart/form-data">
+<form style="margin: 0px; padding: 0px;" method="POST" id="addpalaute" name="addpalaute" action="addpalaute" enctype="multipart/form-data">
 <div class="zc-formheader"><span elname="zc-formNameEl"><label class="zc-formtitle">Käyttäjän tiedot</label></span></div>
 <table class="zc-formtable zc-appformtable" border="0" cellspacing="0" cellpadding="0">
 <tbody>
@@ -41,7 +41,7 @@ function validateaddpalaute()
 
 <tr> <td class="zc-labelheader" style="width: 150px;"><label>Käyttäisitkö palvelua tulevaisuudessa?</label></td>
 <td>
-<input type="radio" name="kayttaisitko" value="Yes"> Kyllä<br>
+<input type="radio" name="kayttaisitko" value="Yes"> Kyllä<br />
 <input type="radio" name="kayttaisitko" value="No"> En
 
 </td>
@@ -58,7 +58,7 @@ Arvosana: <select name="hyodyllisyysrating">
 <option value='1'>5</option>
 </select>
 </td>
-<td class="zc-inputheader" style="width: auto;"><textarea cols=50 rows=5 id="hyodyllisyys" name="hyodyllisyys" value="" mandatory="false"></textarea><p id="Palaute_Error"></p></td>
+<td class="zc-inputheader" style="width: auto;"><textarea cols=50 rows=5 id="hyodyllisyys" name="hyodyllisyys" value=""></textarea><p id="Palaute_Error"></p></td>
 </tr>
 
 
@@ -72,17 +72,17 @@ Arvosana: <select name="kaytettavyysrating">
 <option value='1'>4</option>
 <option value='1'>5</option>
 </select>
-<td class="zc-inputheader" style="width: auto;"><textarea cols=50 rows=5 id="kaytettavyys" name="kaytettavyys" value="" mandatory="false"></textarea><p id="Palaute_Error"></p></td>
+<td class="zc-inputheader" style="width: auto;"><textarea cols=50 rows=5 id="kaytettavyys" name="kaytettavyys" value=""></textarea><p id="Palaute_Error"></p></td>
 </tr>
 
 <tr>
 <td class="zc-labelheader" style="width: 150px;"><label>Kehitysehdotukset</label>
-<td class="zc-inputheader" style="width: auto;"><textarea cols=50 rows=5 id="vapaasana" name="kehitys" value="" mandatory="false"></textarea><p id="Palaute_Error"></p></td>
+<td class="zc-inputheader" style="width: auto;"><textarea cols=50 rows=5 id="vapaasana" name="kehitys" value="" ></textarea><p id="Palaute_Error"></p></td>
 </tr>
 
 <tr>
 <td class="zc-labelheader" style="width: 150px;"><label>Vapaa sana</label>
-<td class="zc-inputheader" style="width: auto;"><textarea cols=50 rows=5 id="vapaasana" name="vapaasana" value="" mandatory="false"></textarea><p id="Palaute_Error"></p></td>
+<td class="zc-inputheader" style="width: auto;"><textarea cols=50 rows=5 id="vapaasana" name="vapaasana" value="" ></textarea><p id="Palaute_Error"></p></td>
 </tr>
 
 
@@ -90,7 +90,7 @@ Arvosana: <select name="kaytettavyysrating">
 <tr>
 <td class="zc-button-row" style="border:medium none;"/>
 <td class="zc-button-row" style="border:medium none; text-align:left;" >
-<input type="button" class="zc-formbutton"value="Submit" onClick="validateaddpalaute()">
+<input type="submit" class="zc-formbutton" value="Submit" onClick="validateaddpalaute()"  />
 <input class="zc-formbutton" type="reset" value="Reset"/>
 </td>
 </tr>
