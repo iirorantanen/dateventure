@@ -1,0 +1,86 @@
+{% extends "index.html" %}
+{% block content %}
+<script type="text/javascript">
+
+
+function validatemodify()
+{
+    if(validateFormFields($("#modify")) & (Age.value >= 18))
+    {
+        document.modify.submit();
+    }
+}
+</script>
+
+<form method="post" id="modify" name="modify" action="modifyaction" enctype="multipart/form-data">
+
+<input type="hidden" name="key" value="{{key}}">
+
+<div class="zc-formheader"><span elname="zc-formNameEl"><label class="zc-formtitle">Muokkaa ilmoitusta</label></span></div>
+<table class="zc-formtable zc-appformtable" border="0" cellspacing="0" cellpadding="0">
+<tbody>
+
+<tr>
+<td class="zc-labelheader" style="width: auto;"><label>Olen<font color="#ec3e3e">*</font></label></td>
+<td class="zc-inputheader" style="width: auto;"><select name="Olen" default="{{Olen}}">
+<option value="Mies">Mies</option>
+<option value="Nainen">Nainen</option>
+<option value="En kerro">En kerro</option>
+</select>
+</td>
+</tr>
+
+<tr>
+<td class="zc-labelheader" style="width: auto;"><label>Etsin<font color="#ec3e3e">*</font></label></td>
+<td class="zc-inputheader" style="width: auto;"><select name="Etsin" default="{{Etsin}}">
+<option value="Miestä">Miestä</option>
+<option value="Naista">Naista</option>
+<option value="Ei väliä">Ei väliä</option>
+</select>
+</td>
+</tr>
+
+<tr>
+<td class="zc-labelheader" style="width: auto;"><label>Ikäni<font color="#ec3e3e">*</font></label></td>
+<td class="zc-inputheader" style="width: auto;"><input class="zc-inputtext" id="Age" name="Age" value="{{Age}}" datatype="age" type="integer" mandatory="true" maxlength="2">
+<p id="Age_Error"></p></td>
+</tr>
+
+<tr>
+<td class="zc-labelheader" style="width: 150px;"><label>Oma kuvauksesi</label></td>
+<td class="zc-inputheader" style="width: auto;"><input class="zc-inputtext" id="Kuvaus" name="Kuvaus" value="{{description}}" type="text"> </td>
+</tr>
+
+<tr>
+<td class="zc-labelheader" style="width: auto;"><label>Kello<font color="#ec3e3e">*</font></label></td>
+<td class="zc-inputheader" style="width: auto;"><input maxlength="2" size="2" id="Hour" datatype="hour" name="Hour" value="{{hour}}" type="text" mandatory="true">:<input maxlength="2" size="2" datatype="min" id="Min" name="Min" value="{{minute}}" type="text" mandatory="true"><p id="Min_Error"></p></td>
+</tr>
+
+<tr>
+<td class="zc-labelheader" style="width: auto;"><label>Päivä<font color="#ec3e3e">*</font></label></td>
+<td class="zc-inputheader" style="width: auto;"><input class="zc-inputtext" type="text" class="zc-inputtext" readonly="readonly" value="{{date}}" id="Date" name="Date" mandatory="true">&nbsp;&nbsp;<a href="javascript:void(0);"><img id="IMG_Date" width="16" height="17" border="0" src="/images/date_icon.gif" name="Img_Date"></a>
+<script type="text/javascript">Calendar.setup({
+inputField     :    "Date",
+ifFormat     :    "%d.%m.%Y",
+showsTime   : false,
+button     :    "IMG_Date"
+});
+</script><p id="Min_Error"></p></td></tr>
+
+<tr> 
+<td class="zc-labelheader" style="width: 150px;"><label>Paikka</label></td>
+<td class="zc-inputheader" style="width: auto;"><input class="zc-inputtext" id="Paikka" name="Paikka" value="{{location}}" type="text" mandatory="true"></td>
+</tr>
+
+<tr>
+<td class="zc-labelheader" style="width: 150px;"></td>
+<td class="zc-inputheader" style="width: auto;"><input type="button" class="zc-formbutton" value="Vahvista muokkaus" onClick="validatemodify()"></td>
+</tbody>
+</table>
+
+</div>
+
+</form>
+
+
+{% endblock %}
