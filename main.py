@@ -329,15 +329,17 @@ class palauteAction(webapp.RequestHandler):
 
 	palauteVar.hyodyllisyys = self.request.get('hyodyllisyys')
 	if self.request.get('hyodyllisyysrating') != "valitse":
-            palauteVar.hyodyllisyysrating = int(self.request.get('hyodyllisyysrating'))
+            palauteVar.hyodyllisyysRating = int(self.request.get('hyodyllisyysrating'))
 
         palauteVar.kaytettavyys = self.request.get('kaytettavyys')
 	if self.request.get('kaytettavyysrating') != "valitse":
 	    palauteVar.kaytettavyysRating = int(self.request.get('kaytettavyysrating'))
 
+
 	palauteVar.kehitys = self.request.get('kehitys')
+	palauteVar.vapaaSana = self.request.get('vapaasana')
 	
-	# pannaan kantaan ja muistetaan ylistaa palautteenantajaa
+	# pannaan kantaan ja muistetaan ylistaa palautteenantajaaa
 	palauteVar.put()
 	self.redirect('/kiitos')
 
