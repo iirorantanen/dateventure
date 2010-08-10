@@ -1,8 +1,7 @@
 {% extends "index.html" %}
 {% block content %}
 <script>
-function delete(key) {
-
+function del(key) {
     var form = document.createElement("form");
     form.setAttribute("method", "post");
     form.setAttribute("action", "confirmdelete");
@@ -17,7 +16,6 @@ function delete(key) {
     form.submit();
 }
 function modify(key) {
-
     var form = document.createElement("form");
     form.setAttribute("method", "post");
     form.setAttribute("action", "modify");
@@ -67,7 +65,7 @@ function modify(key) {
 <td align="center"> {{x.Kuvaus }}</td>
 <td align="center"> {% if x.Vastattu %}{{x.vKuvaus }}{% else %}&nbsp;{% endif %} </td>
 <td align="center"> <a href="#" onClick="modify('{{x.key}}')" class="zc-formbutton"> Muokkaa </a>
-<a href="#" onClick="delete('{{x.key}}')" class="zc-formbutton" style="margin-left:5px"> Poista </a></td>
+<a href="#" onClick="del('{{x.key}}')" class="zc-formbutton" style="margin-left:5px"> Poista </a></td>
 
 </tr>
 {% endfor %}

@@ -1,10 +1,47 @@
 {% extends "index.html" %}
 {% block content %}
+<script>
+function del(key) {
+    alert('kakkaaaa');
+    var form = document.createElement("form");
+    form.setAttribute("method", "post");
+    form.setAttribute("action", "confirmdelete");
+
+    var hiddenField = document.createElement("input");
+    hiddenField.setAttribute("type", "hidden");
+    hiddenField.setAttribute("name", "key");
+    hiddenField.setAttribute("value", key);
+    form.appendChild(hiddenField);
+
+    document.body.appendChild(form);    
+    form.submit();
+}
+function modify(key) {
+    alert('kakkaaa');
+    var form = document.createElement("form");
+    form.setAttribute("method", "post");
+    form.setAttribute("action", "modify");
+
+    var hiddenField = document.createElement("input");
+    hiddenField.setAttribute("type", "hidden");
+    hiddenField.setAttribute("name", "key");
+    hiddenField.setAttribute("value", key);
+    form.appendChild(hiddenField);
+
+    document.body.appendChild(form);    
+    form.submit();
+}
+
+</script>
+
+
 <div class="zc-formcontainer" style="width: auto;">
 
 <div class="zc-formheader">
 <span elname="zc-formNameEl"><label class="zc-formtitle">Lisäämäni ilmoitukset</label></span>
+<div class="question">Vihreällä taustalla näkyviin ilmoituksiin on vastattu.</div>
 </div>
+
 
 <div class="zc-formcontent zc-appformcontent">
 <table class="zc-formtable zc-appformtable" border="0" cellspacing="0">
@@ -16,6 +53,7 @@
 <td align="center"><b>Päivämäärä & Aika</b></td>
 <td align="center"><b>Kuvaus</b></td>
 <td align="center"><b>Vastaajan Kuvaus</b></td>
+<td align="center"></td>
 </tr>
 
 
@@ -27,7 +65,9 @@
 <td align="center"> {{x.Paikka }}</td>
 <td align="center"> {{x.Datetime }}</td>
 <td align="center"> {{x.Kuvaus }}</td>
-<td align="center"> {% if x.Vastattu %}{{x.vKuvaus }}{% else %}.{% endif %} </td>
+<td align="center"> {% if x.Vastattu %}{{x.vKuvaus }}{% else %}&nbsp;{% endif %} </td>
+<td align="center"> <a href="#" onClick="modify('{{x.key}}')" class="zc-formbutton"> Muokkaa </a>
+<a href="#" onClick="del('{{x.key}}')" class="zc-formbutton" style="margin-left:5px"> Poista </a></td>
 
 </tr>
 {% endfor %}
@@ -38,7 +78,7 @@
 <br />
 
 <div class="zc-formheader">
-<span elname="zc-formNameEl"><label class="zc-formtitle">Lähettämäni vastaukset</label></span>
+<span elname="zc-formNameEl"><label class="zc-formtitle">Ilmoitukset, joihin olen vastannut</label></span>
 </div>
 
 <div class="zc-formcontent zc-appformcontent">
@@ -46,7 +86,7 @@
 <tbody>
 <thead>
 <tr class="zc-viewrowheader" height="25">
-<td align="center"><b>Olen</b></td>
+<td align="center"><b>Ilmoittaja</b></td>
 <td align="center"><b>Paikka</b></td>
 <td align="center"><b>Päivämäärä & Aika</b></td>
 <td align="center"><b>Ilmoittajan Kuvaus</b></td>
@@ -57,7 +97,7 @@
 <tr class="zc-viewrow zc-row-1">
 <td align="center"> {{y.Olen }} </td>
 <td align="center"> {{y.Paikka }}</td>
-<td align="center"> {{y.P_iv_m_r_Aika }}</td>
+<td align="center"> {{y.Datetime }}</td>
 <td align="center"> {{y.Kuvaus }}</td>
 <td align="center"> {{y.vKuvaus }}</td>
 </tr>

@@ -126,6 +126,21 @@ class Showomat_ilmoitukset(webapp.RequestHandler):
 	  
           path=os.path.join(os.path.dirname(__file__),'omat_ilmoitukset.html')
           self.response.out.write(template.render(path,template_values))
+
+# This will delete the announcement
+class delete(webapp.RequestHandler):
+    def post(self):
+        user = users.get_current_user()
+	if not user:
+	    self.redirect(users.create_login_url(self.request.uri))
+	else: 
+	    path=os.path.join(os.path.dirname(__file__),'deleted.html')	
+	    postKey = self.request.get('key')
+	    ilmoitusVar = Model.get(postKey)
+	    ilmoitusVar.Poistettu = True
+	    ilmoitusVar.put()
+	    template_values = {"url":users.create_logout_url("/")}
+	    self.response.out.write(template.render(path,template_values))
 	  
 # This will review the details and ask the user if they really want to delete the date announcement.
 class confirmDelete(webapp.RequestHandler):
@@ -139,6 +154,7 @@ class confirmDelete(webapp.RequestHandler):
 	    ilmoitusVar = Model.get(postKey)
 	    template_values = {"url":users.create_logout_url("/"), 'datetime':ilmoitusVar.Datetime, 'location':ilmoitusVar.Paikka, 'description':ilmoitusVar.Kuvaus, 'key':postKey }
 	    self.response.out.write(template.render(path,template_values))
+
 
 # Modify the announcement -page
 class modify(webapp.RequestHandler):
@@ -202,20 +218,9 @@ class modifyAction (webapp.RequestHandler):
         ilmoitusVar.put()
         self.redirect('/modified')
 
-# This will delete the announcement
-class delete(webapp.RequestHandler):
-    def post(self):
-        user = users.get_current_user()
-	if not user:
-	    self.redirect(users.create_login_url(self.request.uri))
-	else: 
-	    path=os.path.join(os.path.dirname(__file__),'deleted.html')	
-	    postKey = self.request.get('key')
-	    ilmoitusVar = Model.get(postKey)
-	    ilmoitusVar.Poistettu = True
-	    ilmoitusVar.put()
-	    template_values = {"url":users.create_logout_url("/")}
-	    self.response.out.write(template.render(path,template_values))  
+  
+
+
 
 class Showilmoitus_View(webapp.RequestHandler):
     def get(self):

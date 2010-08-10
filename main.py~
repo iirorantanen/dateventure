@@ -339,7 +339,7 @@ class palauteAction(webapp.RequestHandler):
 	palauteVar.kehitys = self.request.get('kehitys')
 	palauteVar.vapaaSana = self.request.get('vapaasana')
 	
-	# pannaan kantaan ja muistetaan ylistaa palautteenantajaa
+	# pannaan kantaan ja muistetaan ylistaa palautteenantajaaa
 	palauteVar.put()
 	self.redirect('/kiitos')
 
