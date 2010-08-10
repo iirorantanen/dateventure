@@ -41,7 +41,8 @@ class palaute(search.SearchableModel):
 
     date = db.DateTimeProperty(auto_now_add=True)
 
-
+class time(search.SearchableModel):
+    datetime = db.DateTimeProperty(auto_now_add=True)
     
 
 #class selaus(search.SearchableModel):
