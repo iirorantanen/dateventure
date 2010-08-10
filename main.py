@@ -411,14 +411,15 @@ class ilmoitusVahvistettu(webapp.RequestHandler):
 	    ilmoitusVar.Vastaaja = user
 	    ilmoitusVar.put()
 
-	    mail.send_mail(sender="Example.com Support <support@dateventures.com>",
-              to=user.email(),
-              subject="Dateventures-ilmoitukseesi on vastattu",
-              body="""
-Dateventures-ilmoitukseesi on vastattu ja tapaaminen sovittu!
+#	    mail.send_mail(sender="Example.com Support <support@dateventures.com>",
+#              to=user.email(),
+#              subject="Dateventures-ilmoitukseesi on vastattu",
+#              body="""
+#Dateventures-ilmoitukseesi on vastattu ja tapaaminen sovittu!
 
-dateventure.appspot.com
-""")
+#dateventure.appspot.com
+#""")
+
 
 	    template_values = {"url":users.create_logout_url("/"), 'key':postKey, 'datetime':ilmoitusVar.Datetime, 'age':ilmoitusVar.Age, 'gender':ilmoitusVar.Olen, 'location':ilmoitusVar.Paikka, 'owndescription':ilmoitusVar.vKuvaus, 'description':ilmoitusVar.Kuvaus }
 	    self.response.out.write(template.render(path,template_values))
