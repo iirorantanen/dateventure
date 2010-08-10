@@ -68,7 +68,7 @@ function post(key) {
  
 </script>
 {% for x in records %}
-<tr class="zc-viewrow zc-row-1" {% if x.Vastattu %}style="background-color: #f4f4f4;"{% else %}style="background-color: #D3FFC4;"{% endif %} >
+<tr class="zc-viewrow zc-row-1" {% if x.Vastattu %}style=" color: grey"{% else %}style="background-color: #D3FFC4;"{% endif %} >
 <td align="center"> {{ x.Olen }} </td>
 <td align="center"> {{ x.Age }} </td>
 <td align="center"> {{ x.Etsin }} </td>
