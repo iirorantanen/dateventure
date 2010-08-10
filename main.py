@@ -13,6 +13,7 @@ from google.appengine.ext.db import Model
 from dateventure import ilmoitus
 from dateventure import alignment
 from dateventure import palaute
+from dateventure import time
 
 class MainPage(webapp.RequestHandler):
     def get(self):
@@ -114,11 +115,14 @@ class Showomat_ilmoitukset(webapp.RequestHandler):
         user = users.get_current_user()
 	if not user:
 	  self.redirect(users.create_login_url(self.request.uri))
-	else: 
-          ilmoitusVar = ilmoitus.gql("WHERE Ilmoittaja = :y AND Poistettu = False ORDER BY Datetime ASC", y = user)
+	else:
+	  timeVar = time()
+	  timeVar.put()
+
+          ilmoitusVar = ilmoitus.gql("WHERE Ilmoittaja = :y AND Poistettu = False AND Datetime > :t ORDER BY Datetime ASC", y = user, t = timeVar.datetime)
           records = ilmoitusVar.fetch(limit=100)
 	  
-	  query = ilmoitus.gql("WHERE Vastaaja = :x AND Poistettu = False ORDER BY Datetime ASC", x = user)
+	  query = ilmoitus.gql("WHERE Vastaaja = :x AND Poistettu = False AND Datetime > :t ORDER BY Datetime ASC", x = user, t = timeVar.datetime)
 	  responses = query.fetch(limit=100)
 
           template_values = { 'records': records, 'responses': responses, "nickname":user.nickname(),"url":users.create_logout_url("/")}
@@ -223,8 +227,11 @@ class Showilmoitus_View(webapp.RequestHandler):
         if not user:
 	  self.redirect(users.create_login_url(self.request.uri))
 	else:
+ 	  timeVar = time()
+	  timeVar.put()
+	  
           user = users.get_current_user()
-          ilmoitusVar = ilmoitus.gql("WHERE Vastattu = :y AND Poistettu = :y", y = False)
+          ilmoitusVar = ilmoitus.gql("WHERE Poistettu = :y AND Datetime > :t", y = False, t = timeVar.datetime)
           records = ilmoitusVar.fetch(limit=100)
           template_values = { 'records': records,"nickname":user.nickname(),"url":users.create_logout_url("/")}
           path=os.path.join(os.path.dirname(__file__),'ilmoitus_View.html')
@@ -396,6 +403,16 @@ class ilmoitusVahvistettu(webapp.RequestHandler):
 	    ilmoitusVar.Vastattu = True
 	    ilmoitusVar.Vastaaja = user
 	    ilmoitusVar.put()
+
+	    mail.send_mail(sender="Example.com Support <support@dateventures.com>",
+              to=user.email(),
+              subject="Dateventures-ilmoitukseesi on vastattu",
+              body="""
+Dateventures-ilmoitukseesi on vastattu ja tapaaminen sovittu!
+
+dateventure.appspot.com
+""")
+
 	    template_values = {"url":users.create_logout_url("/"), 'key':postKey, 'datetime':ilmoitusVar.Datetime, 'age':ilmoitusVar.Age, 'gender':ilmoitusVar.Olen, 'location':ilmoitusVar.Paikka, 'owndescription':ilmoitusVar.vKuvaus, 'description':ilmoitusVar.Kuvaus }
 	    self.response.out.write(template.render(path,template_values))
 

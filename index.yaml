@@ -24,8 +24,18 @@ indexes:
 - kind: ilmoitus
   properties:
   - name: Poistettu
+  - name: Datetime
+
+- kind: ilmoitus
+  properties:
+  - name: Poistettu
   - name: Vastaaja
   - name: Datetime
+
+- kind: ilmoitus
+  properties:
+  - name: Poistettu
+  - name: Vastattu
 
 - kind: ilmoitus
   properties:
