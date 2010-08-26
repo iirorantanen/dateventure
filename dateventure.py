@@ -22,6 +22,7 @@ class ilmoitus(search.SearchableModel):
     Vastaaja = db.UserProperty()
     Age = db.IntegerProperty(default=0)
     Poistettu = db.BooleanProperty(default=False)
+    Expired = db.BooleanProperty(default=False)
 
 
 # Kayttajan antama palaute
