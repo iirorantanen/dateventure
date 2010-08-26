@@ -3,6 +3,7 @@ import cgi
 import os
 import logging
 import datetime
+
 from google.appengine.ext import webapp
 from google.appengine.ext import db
 from google.appengine.ext.webapp import template
@@ -192,15 +193,28 @@ class browseAnnouncements(webapp.RequestHandler):
         if not user:
 	  self.redirect(users.create_login_url(self.request.uri))
 	else:
- 	  timeVar = time()
+ 	  checkExpired()
+	  
+	  timeVar = time()
 	  timeVar.put()
 	  
           user = users.get_current_user()
-          ilmoitusVar = ilmoitus.gql("WHERE Poistettu = :y AND Datetime > :t", y = False, t = timeVar.datetime)
+          ilmoitusVar = ilmoitus.gql("WHERE Poistettu = :y ORDER BY Datetime DESC", y = False, t = timeVar.datetime)
           records = ilmoitusVar.fetch(limit=100)
           template_values = { 'records': records,"nickname":user.nickname(),"url":users.create_logout_url("/")}
-          path=os.path.join(os.path.dirname(__file__),'ilmoitus_View.html')
+          path=os.path.join(os.path.dirname(__file__),'browse_announcements.html')
           self.response.out.write(template.render(path,template_values))
+
+# Checks all the announcements, if they are expired
+def checkExpired():
+    records = ilmoitus.all()
+    timeVar = time()
+    timeVar.put()
+
+    for x in records:
+        if not x.Expired and x.Datetime < timeVar.datetime:
+	    x.Expired = True
+	    x.put()
 
 
 # Shows the feedback adding page.
