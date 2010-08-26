@@ -9,34 +9,13 @@ from google.appengine.ext.webapp import template
 from google.appengine.api import users
 from google.appengine.api import mail
 from google.appengine.ext.db import Model
-#from dateventure import selaus
+
 from dateventure import ilmoitus
 from dateventure import alignment
 from dateventure import palaute
 from dateventure import time
 
-class MainPage(webapp.RequestHandler):
-    def get(self):
-        user = users.get_current_user()
-        global ilmoitus_Olen
-        if user:
-            template_values={
-
-            'Olen': alignment ,
-
-                "nickname":user.nickname(),
-                "url":users.create_logout_url("/")
-            }
-            theHtmlPage='etusivu.html'
-        else:
-            template_values={
-                "loginurl":users.create_login_url("/")
-            }
-            theHtmlPage='etusivu.html'
-
-        path = os.path.join(os.path.dirname(__file__),theHtmlPage)
-        self.response.out.write(template.render(path,template_values))
-
+# Shows the default main page
 class Showetusivu(webapp.RequestHandler):
     def get(self):
         user = users.get_current_user()
@@ -47,8 +26,8 @@ class Showetusivu(webapp.RequestHandler):
         path = os.path.join(os.path.dirname(__file__),'etusivu.html')
         self.response.out.write(template.render(path,template_values))        
 
-
-class Showilmoitus(webapp.RequestHandler):
+# Shows the announcement adding page
+class addIlmoitus(webapp.RequestHandler):
     def get(self):
         user = users.get_current_user()
 	if not user:
@@ -61,6 +40,8 @@ class Showilmoitus(webapp.RequestHandler):
         path = os.path.join(os.path.dirname(__file__),'ilmoitus.html')
         self.response.out.write(template.render(path,template_values))
 
+
+# Throws the announcement data into the datastore
 class ilmoitusAction (webapp.RequestHandler):
     def post(self):
         user = users.get_current_user()
@@ -82,19 +63,6 @@ class ilmoitusAction (webapp.RequestHandler):
 	ilmoitusVar.Date = datetime.date(int(Date_res[2]), int(Date_res[1]), int(Date_res[0]))
 	ilmoitusVar.Datetime = datetime.datetime(int(Date_res[2]), int(Date_res[1]), int(Date_res[0]), int(self.request.get('Hour')), int(self.request.get('Min')))
 
-#        Datetimetemp = self.request.get('Datetime')
-#        if Datetimetemp!="":
-#            DatetimeTemp = self.request.get('Datetime')
-#            Datetime_res = DatetimeTemp.split()
-#            Datetime_dt = Datetime_res[0]
-#            Datetime_mnth = Datetime_res[1]
-#            Datetime_yr = Datetime_res[2]
-#            Datetime_selTime = Datetime_res[3]
-#            Datetime_finalRes = Datetime_selTime.split(':')
-#            Datetime_hr = Datetime_finalRes[0]
-#            Datetime_min = Datetime_finalRes[1]
-#            Datetime_sec = Datetime_finalRes[2]
-#            ilmoitusVar.Datetime = datetime.datetime(int(Datetime_yr),int(Datetime_mnth),int(Datetime_dt),int(Datetime_hr),int(Datetime_min))
         KuvausTemp = self.request.get('Kuvaus')
         if KuvausTemp!="":
             ilmoitusVar.Kuvaus = self.request.get('Kuvaus')
@@ -109,27 +77,29 @@ class ilmoitusAction (webapp.RequestHandler):
         self.redirect('/kuittaus')
 
 
-
-class Showomat_ilmoitukset(webapp.RequestHandler):
+# Shows the user's own announcements -page
+class omatIlmoitukset(webapp.RequestHandler):
     def get(self):
         user = users.get_current_user()
 	if not user:
 	  self.redirect(users.create_login_url(self.request.uri))
 	else:
+	  # Get the current datetime
 	  timeVar = time()
 	  timeVar.put()
-
+	  
+	  # Gets the user's own date announcements
           ilmoitusVar = ilmoitus.gql("WHERE Ilmoittaja = :y AND Poistettu = False AND Datetime > :t ORDER BY Datetime ASC", y = user, t = timeVar.datetime)
           records = ilmoitusVar.fetch(limit=100)
 	  
+	  # Gets the user's own date responses
 	  query = ilmoitus.gql("WHERE Vastaaja = :x AND Poistettu = False AND Datetime > :t ORDER BY Datetime ASC", x = user, t = timeVar.datetime)
 	  responses = query.fetch(limit=100)
 
           template_values = { 'records': records, 'responses': responses, "nickname":user.nickname(),"url":users.create_logout_url("/")}
-
-	  
           path=os.path.join(os.path.dirname(__file__),'omat_ilmoitukset.html')
           self.response.out.write(template.render(path,template_values))
+
 	  
 # This will review the details and ask the user if they really want to delete the date announcement.
 class confirmDelete(webapp.RequestHandler):
@@ -180,19 +150,7 @@ class modifyAction (webapp.RequestHandler):
 	ilmoitusVar.Date = datetime.date(int(Date_res[2]), int(Date_res[1]), int(Date_res[0]))
 	ilmoitusVar.Datetime = datetime.datetime(int(Date_res[2]), int(Date_res[1]), int(Date_res[0]), int(self.request.get('Hour')), int(self.request.get('Min')))
 
-#        Datetimetemp = self.request.get('Datetime')
-#        if Datetimetemp!="":
-#            DatetimeTemp = self.request.get('Datetime')
-#            Datetime_res = DatetimeTemp.split()
-#            Datetime_dt = Datetime_res[0]
-#            Datetime_mnth = Datetime_res[1]
-#            Datetime_yr = Datetime_res[2]
-#            Datetime_selTime = Datetime_res[3]
-#            Datetime_finalRes = Datetime_selTime.split(':')
-#            Datetime_hr = Datetime_finalRes[0]
-#            Datetime_min = Datetime_finalRes[1]
-#            Datetime_sec = Datetime_finalRes[2]
-#            ilmoitusVar.Datetime = datetime.datetime(int(Datetime_yr),int(Datetime_mnth),int(Datetime_dt),int(Datetime_hr),int(Datetime_min))
+
         KuvausTemp = self.request.get('Kuvaus')
         if KuvausTemp!="":
             ilmoitusVar.Kuvaus = self.request.get('Kuvaus')
@@ -221,7 +179,8 @@ class delete(webapp.RequestHandler):
 	    template_values = {"url":users.create_logout_url("/")}
 	    self.response.out.write(template.render(path,template_values))  
 
-class Showilmoitus_View(webapp.RequestHandler):
+# Shows the view with all date announcements, which are not deleted and the datetime has not passed.
+class browseAnnouncements(webapp.RequestHandler):
     def get(self):
         user = users.get_current_user()
         if not user:
@@ -238,78 +197,8 @@ class Showilmoitus_View(webapp.RequestHandler):
           self.response.out.write(template.render(path,template_values))
 
 
-class sortilmoitus_ViewAction(webapp.RequestHandler):
-    def post(self):
-        user = users.get_current_user()
-        ilmoitusVar = ilmoitus.all()
-        ilmoitus_tempVal = self.request.get('SortBy')
-        ilmoitus_tempOrder = self.request.get('order')
-        ilmoitusVar = db.GqlQuery("SELECT * FROM ilmoitus ORDER BY " + ilmoitus_tempVal+ " " + ilmoitus_tempOrder)
-        records = ilmoitusVar.fetch(limit=100)
-        template_values = { 'records': records,"nickname":user.nickname(),"url":users.create_logout_url("/")}
-        path=os.path.join(os.path.dirname(__file__),'ilmoitus_View.html')
-        self.response.out.write(template.render(path,template_values))
-
-
-class searchilmoitus_ViewAction(webapp.RequestHandler):
-    def post(self):
-        user = users.get_current_user()
-        ilmoitusVar = ilmoitus.all()
-        ilmoitus_Olen = self.request.get('Olen')
-        queryString_ilmoitus_Olen = ""
-        if ilmoitus_Olen!="":
-            queryString_ilmoitus_Olen = " Olen = \'" + ilmoitus_Olen + "\'"
-        ilmoitus_Paikka = self.request.get('Paikka')
-        queryString_ilmoitus_Paikka = ""
-        if ilmoitus_Paikka!="":
-            queryString_ilmoitus_Paikka = " Paikka = \'" + ilmoitus_Paikka + "\'"
-        ilmoitus_Datetime = self.request.get('Datetime')
-        queryString_ilmoitus_Datetime = ""
-        if ilmoitus_Datetime!="":
-            queryString_ilmoitus_Datetime = " Datetime = \'" + ilmoitus_Datetime + "\'"
-        ilmoitus_Kuvaus = self.request.get('Kuvaus')
-        queryString_ilmoitus_Kuvaus = ""
-        if ilmoitus_Kuvaus!="":
-            queryString_ilmoitus_Kuvaus = " Kuvaus = \'" + ilmoitus_Kuvaus + "\'"
-        ilmoitus_Vastattu = self.request.get('Vastattu')
-        queryString_ilmoitus_Vastattu = ""
-        if ilmoitus_Vastattu!="":
-            queryString_ilmoitus_Vastattu = " Vastattu = " + ilmoitus_Vastattu
-        query = "SELECT * FROM ilmoitus WHERE "
-        queryString =""
-        if queryString_ilmoitus_Olen!="":
-            queryString = queryString + queryString_ilmoitus_Olen
-        if queryString != "":
-            if queryString_ilmoitus_Paikka !="":
-                queryString = queryString + " AND " + queryString_ilmoitus_Paikka
-        else:
-            queryString = queryString + queryString_ilmoitus_Paikka
-        if queryString != "":
-            if queryString_ilmoitus_Datetime !="":
-                queryString = queryString + " AND " + queryString_ilmoitus_Datetime
-        else:
-            queryString = queryString + queryString_ilmoitus_Datetime
-        if queryString != "":
-            if queryString_ilmoitus_Kuvaus !="":
-                queryString = queryString + " AND " + queryString_ilmoitus_Kuvaus
-        else:
-            queryString = queryString + queryString_ilmoitus_Kuvaus
-        if queryString != "":
-            if queryString_ilmoitus_Vastattu !="":
-                queryString = queryString + " AND " + queryString_ilmoitus_Vastattu
-        else:
-            queryString = queryString + queryString_ilmoitus_Vastattu
-
-        finalQueryString = query + queryString
-        if queryString !="":
-            ilmoitusVar = db.GqlQuery(finalQueryString)
-        records = ilmoitusVar.fetch(limit=100)
-        template_values = { 'records': records,"nickname":user.nickname(),"url":users.create_logout_url("/")}
-        path=os.path.join(os.path.dirname(__file__),'ilmoitus_View.html')
-        self.response.out.write(template.render(path,template_values))
-
-# palautelomake
-class palaute_View(webapp.RequestHandler):
+# Shows the feedback adding page.
+class feedbackView(webapp.RequestHandler):
     def get(self):
 	user=users.get_current_user()
         if user:
@@ -320,8 +209,8 @@ class palaute_View(webapp.RequestHandler):
 	self.response.out.write(template.render(path,template_values))
 	
 
-# Vie palautelomakkeesta lahetetyt tiedot tietokantaan
-class palauteAction(webapp.RequestHandler):
+# Puts the feedback data into the datastore
+class feedbackAction(webapp.RequestHandler):
     def post(self):
 	palauteVar = palaute()
 
@@ -349,13 +238,15 @@ class palauteAction(webapp.RequestHandler):
 	self.redirect('/kiitos')
 
 
-# Palautelomakkeen kiitossivu
+# Feedback form's "thank you" -page
 class kiitos(webapp.RequestHandler):
     def get(self):
         path=os.path.join(os.path.dirname(__file__),'kiitos.html')
         template_values = {}
 	self.response.out.write(template.render(path,template_values))
 
+
+# Shows the confirmation page, that the date announcement was successfully added
 class kuittaus(webapp.RequestHandler):
     def get(self):
 	user = users.get_current_user
@@ -363,6 +254,7 @@ class kuittaus(webapp.RequestHandler):
         template_values = {"url":users.create_logout_url("/")}
 	self.response.out.write(template.render(path,template_values))
 
+# Shows the confirmation page, that the date announcement was successfully modified
 class modified(webapp.RequestHandler):
     def get(self):
 	user = users.get_current_user
@@ -370,6 +262,7 @@ class modified(webapp.RequestHandler):
         template_values = {"url":users.create_logout_url("/")}
 	self.response.out.write(template.render(path,template_values))
 
+# Shows the FAQ-page
 class ukk(webapp.RequestHandler):
     def get(self):
 	path=os.path.join(os.path.dirname(__file__),'ukk.html')
@@ -404,23 +297,14 @@ class ilmoitusVahvistettu(webapp.RequestHandler):
 	    ilmoitusVar.Vastaaja = user
 	    ilmoitusVar.put()
 
-	    mail.send_mail(sender="Example.com Support <support@dateventures.com>",
-              to=user.email(),
-              subject="Dateventures-ilmoitukseesi on vastattu",
-              body="""
-Dateventures-ilmoitukseesi on vastattu ja tapaaminen sovittu!
-
-dateventure.appspot.com
-""")
-
 	    template_values = {"url":users.create_logout_url("/"), 'key':postKey, 'datetime':ilmoitusVar.Datetime, 'age':ilmoitusVar.Age, 'gender':ilmoitusVar.Olen, 'location':ilmoitusVar.Paikka, 'owndescription':ilmoitusVar.vKuvaus, 'description':ilmoitusVar.Kuvaus }
 	    self.response.out.write(template.render(path,template_values))
 
 def main():
     application = webapp.WSGIApplication(
-                [('/', MainPage),
-		('/palaute', palaute_View),
-		('/addpalaute', palauteAction),
+                [('/', Showetusivu),
+		('/palaute', feedbackView),
+		('/addpalaute', feedbackAction),
 		('/kiitos', kiitos),
 		('/kuittaus',kuittaus),
 		('/ukk', ukk),
@@ -430,11 +314,9 @@ def main():
 		('/confirm', vahvistaIlmoituksenAvaus),
 		('/confirmed', ilmoitusVahvistettu),
                 ('/addilmoitus',ilmoitusAction),
-                ('/showilmoitus',Showilmoitus),
-                ('/showilmoitus_View',Showilmoitus_View),
-                ('/sortilmoitus_View',sortilmoitus_ViewAction),
-                ('/searchilmoitus_View',searchilmoitus_ViewAction),
-		('/showomat_ilmoitukset',Showomat_ilmoitukset),
+                ('/ilmoita',addIlmoitus),
+                ('/selaa', browseAnnouncements),
+		('/omatilmoitukset',omatIlmoitukset),
 		('/delete', delete),
 		('/confirmdelete', confirmDelete),
 		('/showetusivu',Showetusivu)],

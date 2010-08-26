@@ -5,7 +5,7 @@ K_ytt_j_Sukupuolis=('Mies','Nainen','En kerro')
 alignment=('Mies','Nainen','En kerro')
 etsin=('Mies', 'Nainen', 'Ei')
 
-
+# Deitti-ilmoitus
 class ilmoitus(search.SearchableModel):
     global alignment
     Olen = db.StringProperty(choices=alignment)
@@ -23,8 +23,10 @@ class ilmoitus(search.SearchableModel):
     Age = db.IntegerProperty(default=0)
     Poistettu = db.BooleanProperty(default=False)
 
-      
+
+# Kayttajan antama palaute
 class palaute(search.SearchableModel):
+
     # Palautteen lahettajan tiedot
     sukupuoli = db.StringProperty(choices=K_ytt_j_Sukupuolis)
     ika = db.StringProperty()
@@ -41,9 +43,7 @@ class palaute(search.SearchableModel):
 
     date = db.DateTimeProperty(auto_now_add=True)
 
+# Kaytetaan tamanhetkisen ajan ja paivamaaran hakemiseen
 class time(search.SearchableModel):
     datetime = db.DateTimeProperty(auto_now_add=True)
-    
 
-#class selaus(search.SearchableModel):
-#    Lookup_1 = db.ReferenceProperty(ilmoitus,collection_name="selaus_1_set")
