@@ -100,7 +100,23 @@ class omatIlmoitukset(webapp.RequestHandler):
           path=os.path.join(os.path.dirname(__file__),'omat_ilmoitukset.html')
           self.response.out.write(template.render(path,template_values))
 
-	  
+
+# This will delete the announcement
+class delete(webapp.RequestHandler):
+    def post(self):
+        user = users.get_current_user()
+	if not user:
+	    self.redirect(users.create_login_url(self.request.uri))
+	else: 
+	    path=os.path.join(os.path.dirname(__file__),'deleted.html')	
+	    postKey = self.request.get('key')
+	    ilmoitusVar = Model.get(postKey)
+	    ilmoitusVar.Poistettu = True
+	    ilmoitusVar.put()
+	    template_values = {"url":users.create_logout_url("/")}
+	    self.response.out.write(template.render(path,template_values))
+
+
 # This will review the details and ask the user if they really want to delete the date announcement.
 class confirmDelete(webapp.RequestHandler):
     def post(self):
@@ -113,6 +129,7 @@ class confirmDelete(webapp.RequestHandler):
 	    ilmoitusVar = Model.get(postKey)
 	    template_values = {"url":users.create_logout_url("/"), 'datetime':ilmoitusVar.Datetime, 'location':ilmoitusVar.Paikka, 'description':ilmoitusVar.Kuvaus, 'key':postKey }
 	    self.response.out.write(template.render(path,template_values))
+
 
 # Modify the announcement -page
 class modify(webapp.RequestHandler):
@@ -164,20 +181,9 @@ class modifyAction (webapp.RequestHandler):
         ilmoitusVar.put()
         self.redirect('/modified')
 
-# This will delete the announcement
-class delete(webapp.RequestHandler):
-    def post(self):
-        user = users.get_current_user()
-	if not user:
-	    self.redirect(users.create_login_url(self.request.uri))
-	else: 
-	    path=os.path.join(os.path.dirname(__file__),'deleted.html')	
-	    postKey = self.request.get('key')
-	    ilmoitusVar = Model.get(postKey)
-	    ilmoitusVar.Poistettu = True
-	    ilmoitusVar.put()
-	    template_values = {"url":users.create_logout_url("/")}
-	    self.response.out.write(template.render(path,template_values))  
+  
+
+
 
 # Shows the view with all date announcements, which are not deleted and the datetime has not passed.
 class browseAnnouncements(webapp.RequestHandler):
@@ -225,15 +231,17 @@ class feedbackAction(webapp.RequestHandler):
 
 	palauteVar.hyodyllisyys = self.request.get('hyodyllisyys')
 	if self.request.get('hyodyllisyysrating') != "valitse":
-            palauteVar.hyodyllisyysrating = int(self.request.get('hyodyllisyysrating'))
+            palauteVar.hyodyllisyysRating = int(self.request.get('hyodyllisyysrating'))
 
         palauteVar.kaytettavyys = self.request.get('kaytettavyys')
 	if self.request.get('kaytettavyysrating') != "valitse":
 	    palauteVar.kaytettavyysRating = int(self.request.get('kaytettavyysrating'))
 
+
 	palauteVar.kehitys = self.request.get('kehitys')
+	palauteVar.vapaaSana = self.request.get('vapaasana')
 	
-	# pannaan kantaan ja muistetaan ylistaa palautteenantajaa
+	# pannaan kantaan ja muistetaan ylistaa palautteenantajaaa
 	palauteVar.put()
 	self.redirect('/kiitos')
 
@@ -296,7 +304,6 @@ class ilmoitusVahvistettu(webapp.RequestHandler):
 	    ilmoitusVar.Vastattu = True
 	    ilmoitusVar.Vastaaja = user
 	    ilmoitusVar.put()
-
 	    template_values = {"url":users.create_logout_url("/"), 'key':postKey, 'datetime':ilmoitusVar.Datetime, 'age':ilmoitusVar.Age, 'gender':ilmoitusVar.Olen, 'location':ilmoitusVar.Paikka, 'owndescription':ilmoitusVar.vKuvaus, 'description':ilmoitusVar.Kuvaus }
 	    self.response.out.write(template.render(path,template_values))
 

@@ -1,8 +1,14 @@
 <html>
 <head>
+<<<<<<< HEAD:index.html
+<title>Dateventures - uudenlainen deittisivusto</title>
+=======
+<meta name="description" content="Dateventures on uudenlainen deittisivusto. Täällä et kahlaa läpi satoja enemmän tai vähemmän totuudenmukaisia profiileja vaan menet suoraan asiaan.">
+>>>>>>> eeb7ace42f6fadd6178cd2f80818cedc966b50f5:index.html
 <meta http-equiv="Cache-Control" content="no-cache" />
 <meta http-equiv="Pragma" content="no-cache" />
-<link href="/images/favicon.gif" rel="SHORTCUT ICON">
+<meta name="google-site-verification" content="Anu8VVZAJm0wcaCY8wlRKniDivE58fv99bIdzZEBNog" />
+<link href="/images/favicon.ico" rel="SHORTCUT ICON">
 <script type="text/javascript" src="/js/calendar.js"></script>
 <script type="text/javascript" src="/js/calendar-en.js"></script>
 <script type="text/javascript" src="/js/calendar-setup_stripped.js"></script>
@@ -14,6 +20,8 @@
 div.piilo
 {
 visibility:hidden;
+height:1px;
+width:1px;
 }
 input.readonly
 {
@@ -23,16 +31,51 @@ background:gray;
 div.beta
 {
 font-size:small;
+}
+p.question
+{
+font-size: small;
+font-weight:bold;
+}
+div.question
+{
+font-size: small;
+font-weight:bold;
+}
+p.answer
+{
+font-size: small;
+}
+div.answer
+{
+font-size: small;
+}
 </style>
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-17520757-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
 </head>
 <body class="body-class">
+
 <table border="0" width="100%" class="zc-pane-header-table zc-header-table">
 <tr>
 <!--<td width="104" height="53">
 <img src="/images/creator-logo.png">
 </td>!-->
+
 <td class="zc-pane-header-appname">
-Dateventures <br /><div id="beta" class="beta">Beta <br /></div>
+<a href="/showetusivu"><img src="/images/Deittilogo_small3.png"></img></a>
+Dateventures <span style="font-size:small;">beta</span>
 </td>
 <td valign="top" align="right">
 
@@ -57,14 +100,18 @@ document.write("<a href={{url}} class=\"zc-pane-header-a-menu\">Sign Out</a>&nbs
 <table border="0" width="100%" class="zc-pane">
 <tr>
 <td width="10%" valign="top"  class="zc-pane-left-th">
-<div class="zc-pane-left-section zc-pane-left-section">Dateventure
+<div class="zc-pane-left-section zc-pane-left-section">Dateventures
 </div>
 <div comelname="zc-panesection" id="page-Home">
+
 <a class="zc-pane-left-a" href="/showetusivu">Etusivu</a>
 <a class="zc-pane-left-a" href="/showilmoitus">Jätä ilmoitus</a>
 <a class="zc-pane-left-a" href="/showilmoitus_View">Selaa ilmoituksia</a>
 <a class="zc-pane-left-a" href="/showomat_ilmoitukset">Omat ilmoitukseni</a>
+<a class="zc-pane-left-a" href="/ukk">Usein kysytyt kysymykset</a>
 <a class="zc-pane-left-a" href="/palaute"> Anna palautetta</a>
 </div>
+<!-- white-space:normal on purkkaviritys, joka tuntuu toimivan !-->
 </td><td width="90%" class="zc-component zc-pane-right"><div id="content" align="center" style="white-space:normal">
+
 {% block content %} {% endblock %}</div></td></tr></table></body></html>
